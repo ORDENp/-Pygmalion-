@@ -1,0 +1,129 @@
+{
+  "hero": {
+    "title": "Recognizing Human Value Beyond Money",
+    "subtitle": "Pygmalion / C.R.I.S.T.A.L.L. is a social-tech research platform designed to recognize and account for non-material human value: participation, trust, gratitude, and conscious contribution — without money, coercion, or KPI logic.",
+    "tagline": "Created for the 7th technological wave (Noonomics).",
+    "cta_primary": "Explore the concept",
+    "cta_secondary": "Join the research"
+  },
+
+  "why_now": {
+    "title": "Why Now",
+    "points": [
+      "Modern systems measure price, productivity, and efficiency.",
+      "They fail to recognize what actually sustains society.",
+      "Invisible contributions disappear.",
+      "Care remains unaccounted for.",
+      "Gratitude turns into obligation."
+    ],
+    "question": "What if social infrastructure could recognize value without turning it into debt or control?"
+  },
+
+  "problem": {
+    "title": "The Problem",
+    "points": [
+      "Reduce human contribution to metrics and incentives",
+      "Turn participation into obligation",
+      "Optimize behavior instead of respecting dignity"
+    ],
+    "result": [
+      "Erosion of trust",
+      "Decline of voluntary contribution",
+      "Disappearance of meaningful action"
+    ],
+    "conclusion": "This is not a technical bug. It is a systemic limitation."
+  },
+
+  "solution": {
+    "title": "The Solution",
+    "subtitle": "TIUP(h) — Human-Centered Navigation Technology",
+    "points": [
+      "Does not coerce",
+      "Does not punish",
+      "Does not optimize humans as resources"
+    ],
+    "description": "TIUP(h) helps people see the consequences of their actions while preserving freedom of choice, responsibility, and meaning."
+  },
+
+  "architecture": {
+    "title": "Platform Architecture",
+    "pygmalion": {
+      "title": "Pygmalion — Initial NOD Environment",
+      "points": [
+        "Recording conscious actions",
+        "Recognizing participation",
+        "Forming a non-material footprint"
+      ]
+    },
+    "cristall": {
+      "title": "C.R.I.S.T.A.L.L. — Accounting Core",
+      "points": [
+        "Registers acts of recognition and trust",
+        "Prohibits accumulation and speculation",
+        "Allows transfer but not storage of accounting markers"
+      ],
+      "note": "Accounting units cannot be accumulated — only passed on."
+    },
+    "flower": {
+      "title": "Flower of Life — NOD Sphere",
+      "status": "In development",
+      "description": "An ethical and evaluative layer integrating biological, social, and cognitive dimensions of the human being."
+    }
+  },
+
+  "mvp": {
+    "title": "What Already Works (MVP)",
+    "points": [
+      "Online MVP (React): flows of reflection and gratitude",
+      "Offline MVP (HTML / CSS / JS): facilitation and group reflection tool",
+      "Non-material accounting (first contour)",
+      "No gamification, no accumulation, no rankings"
+    ],
+    "note": "MVPs are used as tools for reflection and pilot studies, not as consumer products."
+  },
+
+  "audience": {
+    "title": "Who This Is For",
+    "points": [
+      "Researchers — testing post-economic models of value accounting",
+      "Developers — building ethical social-tech infrastructure",
+      "Practitioners — education, therapy, community facilitation",
+      "Systems thinkers — working with Noonomics as a living prototype",
+      "Philanthropists — supporting human-centered infrastructure outside politics"
+    ]
+  },
+
+  "ethics": {
+    "title": "Ethical Filter",
+    "not_about": [
+      "Speculation or tokenization",
+      "Behavioral manipulation",
+      "Political agendas",
+      "Monetization of attention or personal data"
+    ],
+    "principle": "Human dignity is higher than efficiency. Ethics is higher than technical optimization."
+  },
+
+  "join": {
+    "title": "How to Join",
+    "points": [
+      "Explore documentation and research",
+      "Open an Issue with an idea or use case",
+      "Propose a pilot group or scenario",
+      "Contribute to code, research, or translations"
+    ],
+    "note": "Pygmalion develops as an open research platform, not as a closed product."
+  },
+
+  "final_cta": {
+    "title": "Build technology that amplifies humanity — not replaces it.",
+    "cta_repo": "Visit the GitHub repository",
+    "cta_summary": "Read the Executive Summary",
+    "cta_join": "Join the research"
+  },
+
+  "footer": {
+    "license": "MIT License (MVP phase)",
+    "values": "Privacy-respecting · Non-political · Human-centered"
+  }
+}
