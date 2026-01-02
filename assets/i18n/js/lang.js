@@ -1,21 +1,16 @@
-../i18n/i18n  ../i18n
-  let translations = {};
+let translations = {};
 let currentLang = localStorage.getItem('lang') || 'en';
 
 async function loadLanguage(lang) {
-  try {
-    const response = await fetch(`../i18n/i18n/${lang}.json`);
-    translations = await response.json();
+  const response = await fetch(`/assets/i18n/${lang}.json`);
+  translations = await response.json();
 
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const keys = el.dataset.i18n.split('.');
-      let value = translations;
-      keys.forEach(k => value = value?.[k]);
-      if (value) el.textContent = value;
-    });
-  } catch (error) {
-    console.error('Error loading language:', error);
-  }
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const keys = el.dataset.i18n.split('.');
+    let value = translations;
+    keys.forEach(k => value = value?.[k]);
+    if (value) el.textContent = value;
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
