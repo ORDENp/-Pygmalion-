@@ -97,13 +97,8 @@
             box-shadow: 0 8px 25px rgba(42, 82, 152, 0.4);
         }
 
-        .content {
-            display: none;
+      
             animation: contentFade 0.4s ease-out;
-        }
-
-        .content.active {
-            display: block;
         }
 
         @keyframes contentFade {
@@ -238,7 +233,6 @@
                 <a href="./manifesto/index.html" class="cta-btn cta-secondary">Прочитать манифест</a>
             </div>
         </div>
-
         <!-- English version -->
         <div class="content" id="content-en">
             <h2 class="subtitle">Pygmalion / C.R.I.S.T.A.L.L.</h2>
@@ -254,24 +248,7 @@
             </div>
         </div>
     </div>
-
-            // Убираем active у всех кнопок
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Убираем active у всего контента
-            document.querySelectorAll('.content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Добавляем active нужной кнопке
-            event.target.classList.add('active');
-            
-            // Показываем нужный контент
-            document.getElementById('content-' + lang).classList.add('active');
-        }
-    </script>
+    
     <script src="/assets/js/lang.js"></script>
     </body>
 </html>
