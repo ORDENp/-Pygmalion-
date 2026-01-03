@@ -72,14 +72,79 @@
   },
 
   "mvp": {
-    "title": "What Already Works (MVP)",
-    "points": [
-      "Online MVP (React): flows of reflection and gratitude",
-      "Offline MVP (HTML / CSS / JS): facilitation and group reflection tool",
-      "Non-material accounting (first contour)",
-      "No gamification, no accumulation, no rankings"
-    ],
-    "note": "MVPs are used as tools for reflection and pilot studies, not as consumer products."
+    "back": "← Back to Home",
+    "hero_title": "This is a working MVP — not a product",
+    "hero_subtitle": "Pygmalion MVP is a functional prototype used for research, reflection, and pilot practices. It demonstrates how non-material human value can be recognized without money, coercion, ratings, or gamification.",
+    "hero_note": "This MVP exists to be tested, discussed, and evolved — not consumed.",
+    
+    "what_does": {
+      "title": "What the MVP Does",
+      "points": [
+        "Record acts of conscious participation",
+        "Express and register gratitude without creating obligations",
+        "Work with non-monetary accounting markers (first contour)",
+        "Observe a non-material footprint of actions, not a score or ranking"
+      ],
+      "note": "There is no accumulation, no competition, and no conversion into value or status."
+    },
+    
+    "formats": {
+      "title": "Two Formats — Online & Offline",
+      "online": {
+        "title": "Online MVP (React)",
+        "points": [
+          "Individual reflection flows",
+          "Acknowledgment of participation and trust",
+          "Experimental interface for non-material accounting"
+        ]
+      },
+      "offline": {
+        "title": "Offline MVP (HTML / CSS / JS)",
+        "points": [
+          "Group facilitation tool",
+          "Used in discussions, workshops, and pilot communities",
+          "Supports collective reflection without digital pressure"
+        ]
+      },
+      "note": "Both versions are intentionally minimal and transparent."
+    },
+    
+    "how_used": {
+      "title": "How It Is Used Today",
+      "points": [
+        "Facilitation instrument for small groups",
+        "Research tool for testing post-economic hypotheses",
+        "Prototype for ethical social-technology design",
+        "Discussion medium, not a behavioral controller"
+      ]
+    },
+    
+    "what_not": {
+      "title": "What the MVP Is Not",
+      "points": [
+        "Not a social network",
+        "Not a DAO or token system",
+        "Not a reputation or scoring mechanism",
+        "Not a productivity or KPI tool"
+      ],
+      "note": "The MVP deliberately avoids mechanics that undermine trust or human dignity."
+    },
+    
+    "participate": {
+      "title": "How to Participate",
+      "points": [
+        "Explore the source code on GitHub",
+        "Open an Issue with a question, idea, or use-case",
+        "Propose a pilot group or research scenario",
+        "Contribute to code, documentation, or translations"
+      ],
+      "note": "This MVP evolves through dialogue, not through \"growth hacking\"."
+    },
+    
+    "links": {
+      "github": "View MVP source on GitHub",
+      "home": "Return to main page"
+    }
   },
 
   "audience": {
