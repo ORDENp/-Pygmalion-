@@ -220,8 +220,8 @@
         </div>
 
         <div class="lang-switch">
-            <button class="lang-btn acwitchLang('ru')">RU</button>
-            <button class="lang-btn" onclick="switchLang('en')">EN</button>
+            <button class="lang-btn >RU</button>
+            <button class="lang-btn" >EN</button>
         </div>
 
         <!-- Русская версия -->
@@ -255,8 +255,6 @@
         </div>
     </div>
 
-    <script>
-        function switchLang(lang) {
             // Убираем active у всех кнопок
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -274,5 +272,6 @@
             document.getElementById('content-' + lang).classList.add('active');
         }
     </script>
-</body>
+    <script src="/assets/js/lang.js"></script>
+    </body>
 </html>
