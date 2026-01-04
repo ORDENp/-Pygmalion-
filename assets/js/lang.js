@@ -1,75 +1,73 @@
-// /assets/js/lang.js - Исправленная версия
-(function () {
-    'use strict';
+console.log('lang.js loaded');
 
-    let currentLang = localStorage.getItem('preferredLang') || 'ru';
-    const VALID_LANGS = ['ru', 'en'];
-    const langToggleButtons = document.querySelectorAll('[data-set-lang]');
+const VALID_LANGS = ['ru', 'en'];
+const DEFAULT_LANG = 'ru';
 
-    // Функция загрузки JSON файла с переводом
-    async function loadLanguageFile(lang) {
-        try {
-            // Используем абсолютный путь от корня сайта
-            const response = await fetch(`/assets/i18n/${lang}.json`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return await response.json();
-        } catch (error) {
-            console.error(`Failed to load language file for "${lang}":`, error);
-            // Возвращаем пустой объект, если загрузка не удалась
-            return {};
-        }
-    }
+/**
+ * Определяем корень репозитория GitHub Pages
+ * https://username.github.io/repo-name/...
+ */
+function getRepoRoot() {
+  const parts = window.location.pathname.split('/');
+  // ["", "-Pygmalion-", "C.R.I.S.T.A.L.L", ""]
+  return '/' + parts[1] + '/';
+}
 
-    // Основная функция применения перевода
-    async function applyTranslations(lang) {
-        const translations = await loadLanguageFile(lang);
-        const elements = document.querySelectorAll('[data-i18n]');
+const REPO_ROOT = getRepoRoot(); // "/-Pygmalion-/"
 
-        elements.forEach(element => {
-            const key = element.getAttribute('data-i18n');
-            if (translations[key]) {
-                // Обновляем textContent для текста и placeholder для input/textarea
-                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    const placeholderKey = element.getAttribute('data-i18n-placeholder');
-                    if (placeholderKey && translations[placeholderKey]) {
-                        element.placeholder = translations[placeholderKey];
-                    }
-                } else {
-                    element.textContent = translations[key];
-                }
-            }
-        });
+function getLanguage() {
+  const saved = localStorage.getItem('selectedLang');
+  if (saved && VALID_LANGS.includes(saved)) return saved;
 
-        // Обновляем активную кнопку выбора языка
-        langToggleButtons.forEach(btn => {
-            if (btn.getAttribute('data-set-lang') === lang) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
+  const browser = navigator.language.slice(0, 2);
+  return VALID_LANGS.includes(browser) ? browser : DEFAULT_LANG;
+}
 
-        currentLang = lang;
-        localStorage.setItem('preferredLang', lang);
-        document.documentElement.lang = lang; // Для семантики и доступности
-    }
+async function loadLanguage(lang) {
+  const url = `${REPO_ROOT}assets/i18n/${lang}.json`;
+  console.log('[i18n] loading:', url);
 
-    // Инициализация: ждём готовности DOM
-    document.addEventListener('DOMContentLoaded', function () {
-        // Назначаем обработчики кнопкам смены языка
-        langToggleButtons.forEach(button => {
-            button.addEventListener('click', function (e) {
-                e.preventDefault();
-                const newLang = this.getAttribute('data-set-lang');
-                if (newLang !== currentLang) {
-                    applyTranslations(newLang);
-                }
-            });
-        });
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(res.status);
+    const translations = await res.json();
 
-        // Применяем язык по умолчанию при первой загрузке
-        applyTranslations(currentLang);
+    localStorage.setItem('selectedLang', lang);
+    applyTranslations(translations);
+    updateActiveButtons(lang);
+
+  } catch (e) {
+    console.error('[i18n] load failed', e);
+  }
+}
+
+function applyTranslations(translations) {
+  const nodes = document.querySelectorAll('[data-i18n]');
+  console.log('[i18n] nodes found:', nodes.length);
+
+  nodes.forEach(el => {
+    const key = el.dataset.i18n;
+    const text = key.split('.').reduce((o, k) => o?.[k], translations);
+    if (text) el.innerHTML = text;
+  });
+
+  document.documentElement.lang = localStorage.getItem('selectedLang') || DEFAULT_LANG;
+}
+
+function updateActiveButtons(lang) {
+  document.querySelectorAll('[data-set-lang]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.setLang === lang);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const lang = getLanguage();
+  loadLanguage(lang);
+
+  document.querySelectorAll('[data-set-lang]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      loadLanguage(btn.dataset.setLang);
     });
-})();
+  });
+});
