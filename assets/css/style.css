@@ -143,6 +143,23 @@ footer {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
+.cta-btn {
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta-primary {
+  background: linear-gradient(135deg, #2a5298, #7e22ce);
+  color: white;
+}
+
+.cta-secondary {
+  border: 2px solid #2a5298;
+  color: #2a5298;
+}
 
 /* =========================
    Responsive
