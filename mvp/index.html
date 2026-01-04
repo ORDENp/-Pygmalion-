@@ -1,40 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Pygmalion — MVP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="./assets/css/style.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
-<header class="top-bar">
-  <a href="../" class="back-link">← На главный экран</a>
-  
-  <div class="lang-switch">
-    <button data-set-lang="ru">RU</button>
-    <button data-set-lang="en">EN</button>
-  </div>
-</header>
+  <header class="header">
+    <a href="../" class="back-link" data-i18n="back_home">
+      ← На главный экран
+    </a>
 
-<main class="container">
+    <div class="lang-switch">
+      <button data-set-lang="ru" class="lang-btn">RU</button>
+      <button data-set-lang="en" class="lang-btn">EN</button>
+    </div>
+  </header>
 
-  <h1 data-i18n="mvp.title"></h1>
+  <main class="content">
+    <h1 data-i18n="mvp_title">
+      Минимально жизнеспособный продукт (MVP)
+    </h1>
 
-  <p data-i18n="mvp.description"></p>
+    <p data-i18n="mvp_description">
+      Это демонстрационная версия платформы, подтверждающая работоспособность
+      принципов учёта нематериального человеческого вклада.
+    </p>
+  </main>
 
-  <ul>
-    <li data-i18n="mvp.point1"></li>
-    <li data-i18n="mvp.point2"></li>
-    <li data-i18n="mvp.point3"></li>
-  </ul>
+  <footer class="footer">
+    <p>MIT License · Human-centered · Non-political</p>
+  </footer>
 
-  <a href="https://github.com/ORDENp/-Pygmalion-" target="_blank"
-     class="cta-btn" data-i18n="mvp.cta_repo"></a>
-
-</main>
-
-<script src="./assets/js/lang.js" defer></script>
+  <!-- i18n -->
+  <script src="../assets/js/lang.js" defer></script>
 </body>
 </html>
