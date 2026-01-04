@@ -1,85 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pygmalion Manifesto</title>
+  <meta charset="UTF-8">
+  <title>Pygmalion — Manifesto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- OpenGraph -->
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Pygmalion / C.R.I.S.T.A.L.L.">
-  <meta property="og:title" content="Pygmalion Manifesto">
-  <meta property="og:description" content="Realization and Flourishing of Human Value beyond money, coercion, and KPI logic.">
-  <meta property="og:url" content="https://ordenp.github.io/-Pygmalion-/manifesto/">
-  <meta property="og:image" content="https://ordenp.github.io/-Pygmalion-/assets/img/og-coverOF.png">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Pygmalion Manifesto">
-  <meta name="twitter:description" content="Human-centered ethics for post-economic technology.">
-  <meta name="twitter:image" content="https://ordenp.github.io/-Pygmalion-/assets/img/og-coverOF.png">
-
+  <!-- Canonical CSS -->
   <link rel="stylesheet" href="../assets/css/style.css">
-  <script src="../assets/js/lang.js" defer></script>
-  <a href="../" class="back-link">← Back to home</a>
 </head>
-
 <body>
 
-<header>
-  <nav>
-    <a href="../" class="nav-back" data-i18n="manifesto.back"></a>
-    <div>
-      <button data-set-lang="en">EN</button>
-      <button data-set-lang="ru">RU</button>
+  <!-- Header -->
+  <header class="header">
+    <a href="../" class="back-link" data-i18n="back_home">
+      ← На главный экран
+    </a>
+
+    <div class="lang-switch">
+      <button data-set-lang="ru" class="lang-btn">RU</button>
+      <button data-set-lang="en" class="lang-btn">EN</button>
     </div>
-  </nav>
-</header>
+  </header>
 
-<main class="container">
+  <!-- Content -->
+  <main class="content manifesto">
 
-  <!-- HERO -->
-  <section class="section">
-    <h1 data-i18n="manifesto.title"></h1>
-    <p class="lead" data-i18n="manifesto.subtitle"></p>
-  </section>
+    <h1 data-i18n="manifesto_title">
+      Манифест
+    </h1>
 
-  <!-- PRINCIPLES -->
-  <section class="section">
-    <h2 data-i18n="manifesto.principles_title"></h2>
-    <ul class="manifesto-list">
-      <li data-i18n="manifesto.p1"></li>
-      <li data-i18n="manifesto.p2"></li>
-      <li data-i18n="manifesto.p3"></li>
-      <li data-i18n="manifesto.p4"></li>
-      <li data-i18n="manifesto.p5"></li>
-      <li data-i18n="manifesto.p6"></li>
-    </ul>
-  </section>
+    <section>
+      <h2 data-i18n="manifesto_idea_title">
+        Идея
+      </h2>
+      <p data-i18n="manifesto_idea_body">
+        Современные системы умеют измерять цену, но плохо распознают ценность.
+      </p>
+    </section>
 
-  <!-- EXECUTIVE SUMMARY -->
-  <section class="section">
-    <h2 data-i18n="manifesto.summary_title"></h2>
-    <p data-i18n="manifesto.summary_body"></p>
-  </section>
+    <section>
+      <h2 data-i18n="manifesto_principles_title">
+        Принципы
+      </h2>
+      <p data-i18n="manifesto_principles_body">
+        Добровольность, отсутствие принуждения, отказ от KPI-логики и приоритет человеческого достоинства.
+      </p>
+    </section>
 
-  <!-- ETHICAL BOUNDARY -->
-  <section class="section">
-    <h2 data-i18n="manifesto.boundary_title"></h2>
-    <p data-i18n="manifesto.boundary_body"></p>
-  </section>
+    <section>
+      <h2 data-i18n="manifesto_goal_title">
+        Цель
+      </h2>
+      <p data-i18n="manifesto_goal_body">
+        Создание среды, где нематериальная человеческая ценность может быть признана, зафиксирована и осмыслена — без превращения в долг или товар.
+      </p>
+    </section>
 
-  <!-- CTA -->
-  <section class="section cta">
-    <a href="../mvp/" class="btn btn-primary" data-i18n="manifesto.cta_mvp"></a>
-    <a href="https://github.com/ORDENp/-Pygmalion-" class="btn btn-secondary" target="_blank" data-i18n="manifesto.cta_repo"></a>
-  </section>
+  </main>
 
-</main>
-
-<footer>
-  <small>MIT License · Open Research Platform</small>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>MIT License · Human-centered · Non-political</p>
   </footer>
-  <script src="/assets/js/lang.js"></script>
-  </body>
+
+  <!-- i18n engine -->
+  <script src="../assets/js/lang.js" defer></script>
+</body>
 </html>
