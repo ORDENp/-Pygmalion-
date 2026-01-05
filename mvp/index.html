@@ -1,120 +1,84 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Pygmalion — MVP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Canonical CSS -->
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <a href="../" class="back-link" data-i18n="back_home">
-      ← На главный экран
-    </a>
+<header class="header">
+  <a href="../" class="back-link" data-i18n="back_home">
+    ← Back to home
+  </a>
 
-    <div class="lang-switch">
-      <button data-set-lang="ru" class="lang-btn">RU</button>
-      <button data-set-lang="en" class="lang-btn">EN</button>
-    </div>
-  </header>
+  <div class="lang-switch">
+    <button data-set-lang="en" class="lang-btn">EN</button>
+    <button data-set-lang="ru" class="lang-btn">RU</button>
+  </div>
+</header>
 
-  <!-- Content -->
-  <main class="content">
-    <h1 data-i18n="mvp_title">
-      Минимально жизнеспособный продукт (MVP)
-    </h1>
+<main class="content narrow">
 
-    <p data-i18n="mvp_description">
-      Это демонстрационная версия платформы, подтверждающая работоспособность
-      принципов учёта нематериального человеческого вклада.
+  <h1 data-i18n="mvp_title">
+    Minimum Viable Presence (MVP)
+  </h1>
+
+  <p class="lead" data-i18n="mvp_intro">
+    MVP is not a product and not a system.
+    It is a demonstration of principle and a space of personal experience.
+  </p>
+
+  <section>
+    <h2 data-i18n="mvp_what_title">What MVP is</h2>
+    <p data-i18n="mvp_what_body">
+      MVP demonstrates the possibility of recognizing non-material human value
+      without money, coercion, KPI or obligations.
     </p>
+  </section>
 
-    <section class="mvp-table-section">
-  <h2 data-i18n="mvp_table_title">
-    Таблица конов (дней)
-  </h2>
+  <section>
+    <h2 data-i18n="mvp_structure_title">Structure of MVP</h2>
+    <p data-i18n="mvp_structure_body">
+      MVP represents a complete chain of human acts:
+      intention, emission, transfer, reflection, summary, registry and contact.
+      MVP is the whole chain, not a single action.
+    </p>
+  </section>
 
-  <p class="mvp-table-note" data-i18n="mvp_table_note">
-    Один кон соответствует одному дню, в MVP это акт 2.0 эмиссия.
-    Таблица фиксирует нематериальное участие без оценки и принуждения.
-  </p>
+  <section>
+    <h2 data-i18n="mvp_participants_title">Participants</h2>
+    <p data-i18n="mvp_participants_body">
+      MVP can be experienced individually or with 2–5 direct participants.
+      Participation is voluntary. Interpretation belongs to the participant.
+    </p>
+  </section>
 
-  <table class="mvp-table">
-    <thead>
-      <tr>
-        <th data-i18n="mvp_col_day">Кон</th>
-        <th data-i18n="mvp_col_received">Получено у.е.</th>
-        <th data-i18n="mvp_col_given">Передано у.е.</th>
-        <th data-i18n="mvp_col_balance">Баланс дня</th>
-        <th data-i18n="mvp_col_note">Комментарий</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>—</td>
-        <td>—</td>
-        <td>—</td>
-        <td data-i18n="mvp_placeholder_note">
-          Пример строки наблюдения
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+  <section>
+    <h2 data-i18n="mvp_not_title">What MVP is not</h2>
+    <p data-i18n="mvp_not_body">
+      MVP does not fix daily results, does not impose obligations,
+      does not rank people and does not simulate the full platform.
+    </p>
+  </section>
 
-    <section class="mvp-summary-section">
-  <h2 data-i18n="mvp_summary_title">
-    Итоговая таблица MVP
-  </h2>
+  <section>
+    <h2 data-i18n="mvp_ethics_title">Ethics</h2>
+    <p data-i18n="mvp_ethics_body">
+      MVP is based on voluntary participation, liberated labor,
+      respect for attention and time, and numerical restraint
+      instead of digital expansion.
+    </p>
+  </section>
 
-  <p class="mvp-summary-note" data-i18n="mvp_summary_note">
-    Итоговая таблица отражает суммарное наблюдение за период MVP.
-    Она не используется для оценки, сравнения или принятия решений.
-  </p>
+</main>
 
-  <table class="mvp-summary-table">
-    <tbody>
-      <tr>
-        <td data-i18n="mvp_sum_days">Количество конов (дней)</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_sum_received">Всего получено у.е.</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_sum_given">Всего передано у.е.</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_sum_balance">Суммарный баланс</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_avg_received">Среднее получено в день</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_avg_given">Среднее передано в день</td>
-        <td>—</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+<footer class="footer">
+  <p>MIT License · Human-centered · Non-political</p>
+</footer>
 
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>MIT License · Human-centered · Non-political</p>
-  </footer>
-
-  <!-- i18n -->
-  <script src="../assets/js/lang.js" defer></script>
+<script src="../assets/js/lang.js" defer></script>
 </body>
 </html>
