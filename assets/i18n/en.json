@@ -20,5 +20,16 @@
   "mvp_meaning_body": "The MVP does not propose a utopia and does not impose a path. It creates a neutral environment where voluntary labor is fully liberated, and meaning emerges later — through reflection on lived days, not at the moment of action.",
 
   "mvp_future_title": "Further development",
-  "mvp_future_body": "After the MVP phase, a final table will be formed across all kons (days) in two MVP versions. It exists solely for analysis and understanding, without influencing participant behavior."
+  "mvp_future_body": "After the MVP phase, a final table will be formed across all kons (days) in two MVP versions. It exists solely for analysis and understanding, without influencing participant behavior.",
+  "mvp_table_title": "Daily Cons Table",
+  "mvp_table_note": "One con corresponds to one day of observation. The table records non-material participation without evaluation, debt, or coercion.",
+
+  "mvp_col_day": "Con",
+  "mvp_col_received": "Received u.e.",
+  "mvp_col_given": "Given u.e.",
+  "mvp_col_balance": "Daily balance",
+  "mvp_col_note": "Comment",
+
+  "mvp_placeholder_note": "Example observation entry"
+
 }
