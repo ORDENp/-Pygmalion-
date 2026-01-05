@@ -1,7 +1,7 @@
 console.log('lang.js loaded');
 
 const VALID_LANGS = ['ru', 'en'];
-const DEFAULT_LANG = 'en';
+const DEFAULT_LANG = 'ru';
 
 /**
  * Определяем корень репозитория GitHub Pages
