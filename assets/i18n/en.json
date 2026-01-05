@@ -1,35 +1,24 @@
 {
   "title": "Pygmalion / C.R.I.S.T.A.L.L.",
-  "description": "An accounting-and-learning innovative NOD platform of the 7th technological wave (progressive Noonomics). The startup is focused on the realization, recognition, and flourishing of non-material human value: participation, trust, gratitude, and conscious contribution — beyond money, coercion, and KPI logic.",
-
-  "idea_title": "Startup Idea",
-  "idea_body": "Modern systems can measure price but fail to recognize value. Pygmalion creates an environment where contribution does not turn into obligation, gratitude does not become debt, and value is not reduced to money or cost.",
-
-  "audience_title": "Who This Is For",
-  "audience_body": "Researchers, developers, practitioners, systems thinkers, philanthropists, and anyone working with human contribution beyond economic incentives.",
-
-  "core_title": "Technology Core",
-  "core_body": "TIUP (Human-Centered Navigation Technology) helps people see the consequences of their actions while preserving freedom of choice, responsibility, and human dignity.",
-
-  "status_title": "Project Status",
-  "status_body": "Online and offline MVPs have been created. The startup is in an open research and applied development stage.",
+  "description": "An accounting-and-learning platform of progressive noonomics. The MVP explores non-material human values — participation, trust, gratitude, and conscious contribution — beyond money, coercion, and KPI logic. The project follows the path of numerical restraint, aiming to reduce digital inequality, dependencies, and forms of voluntary submission.",
 
   "cta_mvp": "Explore MVP",
   "cta_manifesto": "Read Manifesto",
 
   "back_home": "← Back to home",
-  
+
   "mvp_title": "Minimum Viable Product (MVP)",
-  "mvp_description": "This is a demonstration version of the platform confirming the viability of principles for accounting non-material human contribution.",
+  "mvp_description": "The MVP demonstrates the possibility of accounting for non-material human participation without ratings, accumulation, or competition. The focus is on the person, their choice, and their action — not their utility to the system.",
 
-  "manifesto_title": "Manifesto",
+  "mvp_kon_title": "Kon and daily recording",
+  "mvp_kon_body": "The MVP uses a kon table — a simple form of daily recording. One kon equals one day. Facts of participation and transfer of non-material units are recorded without interpretation, evaluation, or sanctions.",
 
-  "manifesto_idea_title": "Idea",
-  "manifesto_idea_body": "Modern systems are good at measuring price, but poor at recognizing value.",
+  "mvp_values_title": "System of non-material values",
+  "mvp_values_body": "The project is grounded in non-material spiritual values and the principle of numerical restraint. Its aim is to reduce dependence on financial mechanisms, wage servitude, accumulation, coercion, systemic education, political and ethnic division, as well as forms of tribal consciousness.",
 
-  "manifesto_principles_title": "Principles",
-  "manifesto_principles_body": "Voluntariness, absence of coercion, rejection of KPI logic, and priority of human dignity.",
+  "mvp_meaning_title": "Meaning of the MVP",
+  "mvp_meaning_body": "The MVP does not propose a utopia and does not impose a path. It creates a neutral environment where voluntary labor is fully liberated, and meaning emerges later — through reflection on lived days, not at the moment of action.",
 
-  "manifesto_goal_title": "Goal",
-  "manifesto_goal_body": "To create an environment where non-material human value can be recognized, recorded, and understood — without turning it into debt or commodity."
+  "mvp_future_title": "Further development",
+  "mvp_future_body": "After the MVP phase, a final table will be formed across all kons (days) in two MVP versions. It exists solely for analysis and understanding, without influencing participant behavior."
 }
