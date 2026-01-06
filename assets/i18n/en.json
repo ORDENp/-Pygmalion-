@@ -56,6 +56,16 @@
 "mvp_not_body": "MVP does not fix daily results, does not impose obligations, does not rank people, and does not simulate the full platform.",
 
 "mvp_ethics_title": "Ethics",
-"mvp_ethics_body": "MVP is based on voluntary participation, liberated labor, respect for attention and time, and numerical restraint instead of digital expansion."
+"mvp_ethics_body": "MVP is based on voluntary participation, liberated labor, respect for attention and time, and numerical restraint instead of digital expansion.",
+
+ "mvp_kon_title": "Kon observation table",
+  "mvp_col_observation": "Observation",
+
+  "btn_new_kon": "New kon",
+  "btn_clear": "Clear",
+  "btn_copy": "Copy table",
+
+  "mvp_summary_title": "Observation summary",
+  "mvp_summary_count": "Number of recorded kons:"
 
 }
