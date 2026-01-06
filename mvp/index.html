@@ -73,21 +73,57 @@
     </p>
   </section>
   <h2 data-i18n="mvp_table_title">
-    Таблица конов (дней)
+    Итог наблюдения
+    <p>
+Итог — это отражение опыта, а не оценка.
+Интерпретация принадлежит участнику.
+</p>
+    
   </h2>
 
   <p class="mvp-table-note" data-i18n="mvp_table_note">
-    Один кон соответствует одному условному дню в MVP версии
-    Таблица фиксирует нематериальное участие без оценки и принуждения.
+    Кон — это момент фиксации внимания.
+Он не измеряет ценность и не требует интерпретации.
+</p>
+<section id="kon-section">
+  <h2>Таблица конов</h2>
+
+  <table class="mvp-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Наблюдение</th>
+      </tr>
+    </thead>
+    <tbody id="konTableBody">
+      <!-- строки добавляются пользователем -->
+    </tbody>
+  </table>
+
+  <div class="mvp-actions">
+    <button onclick="addKon()">Новый кон</button>
+    <button onclick="clearKons()">Очистить</button>
+    <button onclick="copyKons()">Скопировать таблицу</button>
+  </div>
+</section>
+<section id="summary-section">
+  <h2>Итог наблюдения</h2>
+
+  <p>
+    Количество зафиксированных конов:
+    <strong><span id="konCount">0</span></strong>
   </p>
+
+  <textarea id="reflection"
+    placeholder="Свободная рефлексия (по желанию)"
+    rows="4"></textarea>
+</section>
 
   <table class="mvp-table">
     <thead>
       <tr>
         <th data-i18n="mvp_col_day">Кон</th>
-        <th data-i18n="mvp_col_received">Получено у.е.</th>
-        <th data-i18n="mvp_col_given">Передано у.е.</th>
-        <th data-i18n="mvp_col_balance">Баланс дня</th>
+       
         <th data-i18n="mvp_col_note">Комментарий</th>
       </tr>
     </thead>
@@ -103,49 +139,6 @@
       </tr>
     </tbody>
   </table>
-</section>
-
-    <!-- ⬇️ ЗДЕСЬ БУДЕТ ДОБАВЛЯТЬСЯ:
-         - таблица итоги) -->
-    <section class="mvp-summary-section">
-  <h2 data-i18n="mvp_summary_title">
-    Итоговая таблица MVP
-  </h2>
-
-  <p class="mvp-summary-note" data-i18n="mvp_summary_note">
-    Итоговая таблица отражает суммарное наблюдение за период MVP.
-    Она не используется для оценки, сравнения или принятия решений.
-  </p>
-
-  <table class="mvp-summary-table">
-    <tbody>
-      <tr>
-        <td data-i18n="mvp_sum_days">Количество конов (дней)</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_sum_received">Всего получено у.е.</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_sum_given">Всего передано у.е.</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_sum_balance">Суммарный баланс</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_avg_received">Среднее получено в день</td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td data-i18n="mvp_avg_given">Среднее передано в день</td>
-        <td>—</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
 
   </main>
 
@@ -156,5 +149,52 @@
 
   <!-- i18n -->
   <script src="../assets/js/lang.js" defer></script>
+  <script>
+let kons = [];
+
+function addKon() {
+  kons.push('');
+  renderKons();
+}
+
+function renderKons() {
+  const body = document.getElementById('konTableBody');
+  body.innerHTML = '';
+
+  kons.forEach((text, i) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${i + 1}</td>
+      <td>
+        <input type="text"
+          value="${text}"
+          oninput="updateKon(${i}, this.value)"
+        />
+      </td>
+    `;
+    body.appendChild(row);
+  });
+
+  document.getElementById('konCount').textContent = kons.length;
+}
+
+function updateKon(index, value) {
+  kons[index] = value;
+}
+
+function clearKons() {
+  if (confirm('Очистить все коны?')) {
+    kons = [];
+    renderKons();
+  }
+}
+
+function copyKons() {
+  const text = kons.map((k, i) => `${i + 1}. ${k}`).join('\n');
+  navigator.clipboard.writeText(text);
+  alert('Таблица скопирована');
+}
+</script>
+
 </body>
 </html>
