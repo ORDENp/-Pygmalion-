@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pygmalion — MVP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <a href="../" class="back-link" data-i18n="back_home">
+    ← Back to home
+  </a>
+
+  <div class="lang-switch">
+    <button data-set-lang="en" class="lang-btn">EN</button>
+    <button data-set-lang="ru" class="lang-btn">RU</button>
+  </div>
+</header>
+
+<main class="content narrow">
+
+  <h1 data-i18n="mvp_title">
+    Minimum Viable Presence (MVP)
+  </h1>
+
+  <p class="lead" data-i18n="mvp_intro">
+    MVP is not a product and not a system.
+    It is a demonstration of principle and a space of personal experience.
+  </p>
+
+  <section>
+    <h2 data-i18n="mvp_what_title">What MVP is</h2>
+    <p data-i18n="mvp_what_body">
+      MVP demonstrates the possibility of recognizing non-material human value
+      without money, coercion, KPI or obligations.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-i18n="mvp_structure_title">Structure of MVP</h2>
+    <p data-i18n="mvp_structure_body">
+      MVP represents a complete chain of human acts:
+      intention, emission, transfer, reflection, summary, registry and contact.
+      MVP is the whole chain, not a single action.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-i18n="mvp_participants_title">Participants</h2>
+    <p data-i18n="mvp_participants_body">
+      MVP can be experienced individually or with 2–5 direct participants.
+      Participation is voluntary. Interpretation belongs to the participant.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-i18n="mvp_not_title">What MVP is not</h2>
+    <p data-i18n="mvp_not_body">
+      MVP does not fix daily results, does not impose obligations,
+      does not rank people and does not simulate the full platform.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-i18n="mvp_ethics_title">Ethics</h2>
+    <p data-i18n="mvp_ethics_body">
+      MVP is based on voluntary participation, liberated labor,
+      respect for attention and time, and numerical restraint
+      instead of digital expansion.
+    </p>
+  </section>
+
+<p class="mvp-table-note" data-i18n="mvp_table_note">
+  Кон — это момент фиксации внимания.
+  Он не измеряет ценность и не требует интерпретации.
+</p>
+    <!-- Таблица конов -->
+<section id="kon-section">
+  <h2 data-i18n="mvp_kon_title">Таблица конов</h2>
+
+  <table class="mvp-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th data-i18n="mvp_col_observation">Наблюдение</th>
+      </tr>
+    </thead>
+    <tbody id="konTableBody"></tbody>
+  </table>
+
+  <div class="mvp-actions">
+    <button onclick="addKon()" data-i18n="btn_new_kon">Новый кон</button>
+    <button onclick="clearKons()" data-i18n="btn_clear">Очистить</button>
+    <button onclick="copyKons()" data-i18n="btn_copy">Скопировать таблицу</button>
+  </div>
+</section>
+
+<!-- Итог -->
+<section id="summary-section">
+  <h2 data-i18n="mvp_summary_title">Итог наблюдения</h2>
+
+  <p data-i18n="mvp_summary_count">
+    Количество зафиксированных конов:
+    <strong><span id="konCount">0</span></strong>
+  </p>
+
+  <textarea
+    id="reflection"
+    rows="4"
+    data-i18n-placeholder="mvp_reflection_placeholder"
+    placeholder="Свободная рефлексия (по желанию)">
+  </textarea>
+</section>
+  
+ <section class="mvp-transition">
+  <h2>Вход в пространство</h2>
+  
+  <p>
+   Эта страница описывает принцип.<br>
+   Ниже — возможность прожить его напрямую.
+  </p>
+  
+  <a href="./app/" class="btn-neutral">
+   Войти в пространство наблюдения →
+  </a>
+  
+  <p class="note">
+   Не требует регистрации.<br>
+   Данные остаются на вашем устройстве.
+  </p>
+ </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>MIT License · Human-centered · Non-political</p>
+  </footer>
+
+  <!-- i18n -->
+  <script src="../assets/js/lang.js" defer></script>
+  <script>
+let kons = [];
+
+function addKon() {
+  kons.push('');
+  renderKons();
+}
+
+function renderKons() {
+  const body = document.getElementById('konTableBody');
+  body.innerHTML = '';
+
+  kons.forEach((text, i) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${i + 1}</td>
+      <td>
+        <input type="text"
+          value="${text}"
+          oninput="updateKon(${i}, this.value)"
+        />
+      </td>
+    `;
+    body.appendChild(row);
+  });
+
+  document.getElementById('konCount').textContent = kons.length;
+}
+
+function updateKon(index, value) {
+  kons[index] = value;
+}
+
+function clearKons() {
+  if (confirm('Очистить все коны?')) {
+    kons = [];
+    renderKons();
+  }
+}
+
+function copyKons() {
+  const text = kons.map((k, i) => `${i + 1}. ${k}`).join('\n');
+  navigator.clipboard.writeText(text);
+  alert('Таблица скопирована');
+}
+</script>
+
+</body>
+</html>
+125

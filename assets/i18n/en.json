@@ -1,0 +1,41 @@
+{
+  "title": "Pygmalion / C.R.I.S.T.A.L.L.",
+  "description": "A minimally viable space of experience. The MVP is not a product or a system. It is a form of observing non-material human participation without money, coercion, or evaluation.",
+
+  "back_home": "← Back to home",
+  
+  "cta_explore_mvp": "Explore MVP",
+  "cta_read_manifesto": "Read Manifesto",
+
+
+  "mvp_title": "Minimum Viable Presence (MVP)",
+  "mvp_intro": "MVP is not a product and not a system. It is a demonstration of principle and a space of personal experience.",
+
+  "mvp_what_title": "What MVP is",
+  "mvp_what_body": "MVP demonstrates the possibility of recognizing non-material human participation without money, coercion, KPI, or obligations.",
+
+  "mvp_structure_title": "Structure of MVP",
+  "mvp_structure_body": "MVP represents a complete chain of human experience: intention, action, attention fixation, reflection, and understanding. MVP is the whole chain, not a single act.",
+
+  "mvp_participants_title": "Participants",
+  "mvp_participants_body": "MVP can be experienced individually or with 2–5 participants. Participation is fully voluntary. Interpretation belongs to the participant.",
+
+  "mvp_not_title": "What MVP is not",
+  "mvp_not_body": "MVP does not fix daily results, does not impose obligations, does not rank people, and does not simulate a full platform.",
+
+  "mvp_ethics_title": "Ethics",
+  "mvp_ethics_body": "MVP is based on voluntary participation, liberated labor, respect for human attention and time, and the principle of numerical restraint instead of digital expansion.",
+
+  "mvp_table_note": "A kon is a moment of attention fixation. It does not measure value and does not require interpretation.",
+
+  "mvp_kon_title": "Kon table",
+  "mvp_col_observation": "Observation",
+
+  "btn_new_kon": "New kon",
+  "btn_clear": "Clear",
+  "btn_copy": "Copy table",
+
+  "mvp_summary_title": "Observation summary",
+  "mvp_summary_count": "Number of recorded kons:",
+  "mvp_reflection_placeholder": "Free reflection (optional)"
+}
