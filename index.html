@@ -1,44 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Pygmalion / C.R.I.S.T.A.L.L. — Human-centered NOD platform">
-
-  <title>Pygmalion / C.R.I.S.T.A.L.L.</title>
-
-  <link rel="stylesheet" href="./assets/css/style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пигмалион — Пространство добровольного опыта</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        /* HERO SECTION - Первое впечатление */
+        .hero {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px 60px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+        
+        .hero .tagline {
+            font-size: 1.3em;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        
+        /* WHAT IT IS - Суть за 10 секунд */
+        .what-it-is {
+            background: white;
+            padding: 60px 20px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+        
+        .what-it-is .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .what-it-is h2 {
+            font-size: 2em;
+            font-weight: 400;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .what-it-is p {
+            font-size: 1.15em;
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+        
+        /* WHAT IT'S NOT - Снимаем напряжение */
+        .what-its-not {
+            background: #ecf0f1;
+            padding: 50px 20px;
+        }
+        
+        .what-its-not .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .what-its-not h2 {
+            font-size: 1.8em;
+            font-weight: 400;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #7f8c8d;
+        }
+        
+        .not-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .not-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.05em;
+            color: #7f8c8d;
+        }
+        
+        /* CTA - Призыв к действию */
+        .cta {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .cta-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .cta-note {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        /* WHY TRY - Зачем попробовать */
+        .why-try {
+            background: white;
+            padding: 60px 20px;
+        }
+        
+        .why-try .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .why-try h2 {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .why-try p {
+            font-size: 1.15em;
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+        
+        /* FOOTER */
+        .footer {
+            background: #34495e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            .hero .tagline {
+                font-size: 1.1em;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-<header class="top-bar">
-  <strong class="brand">Pygmalion</strong>
-
-  <div class="lang-switch">
-    <button data-set-lang="ru">RU</button>
-    <button data-set-lang="en">EN</button>
-  </div>
-</header>
-
-<main class="container">
-
-  <h1 data-i18n="title"></h1>
-
-  <p class="description" data-i18n="description"></p>
-
-  <div class="cta-buttons">
-<a href="./mvp/" class="btn btn-primary" data-i18n="cta_explore_mvp">Explore MVP</a>
-<a href="./manifesto/" class="btn btn-secondary" data-i18n="cta_read_manifesto">Read Manifesto</a>
-  </div>
-
-</main>
-
-<footer class="footer">
-  <small>MIT License · Human-centered · Non-political</small>
-</footer>
-
-<script src="./assets/js/lang.js" defer></script>
+    <!-- HERO - Первое впечатление -->
+    <section class="hero">
+        <h1>Пигмалион</h1>
+        <p class="tagline">Не проект. Не продукт. Не система.<br>Пространство добровольного опыта.</p>
+    </section>
+    
+    <!-- ЧТО ЭТО - За 10 секунд -->
+    <section class="what-it-is">
+        <div class="container">
+            <h2>Что это такое?</h2>
+            <p>Пигмалион — это экспериментальное пространство, где человек может наблюдать, как меняется его внимание, когда благодарность перестаёт быть словом и становится действием.</p>
+            <p>Здесь нет денег, рейтингов, лайков и алгоритмов.<br>Ничего не продаётся и не покупается.<br>Ничего не требуется взамен.</p>
+            <p>Вы можете войти, посмотреть и выйти.<br>Или остаться на 10 минут и проверить на собственном опыте.</p>
+        </div>
+    </section>
+    
+    <!-- ЧЕМ ЭТО НЕ ЯВЛЯЕТСЯ - Снимаем напряжение -->
+    <section class="what-its-not">
+        <div class="container">
+            <h2>Чем это НЕ является</h2>
+            <div class="not-list">
+                <div class="not-item">Не социальная сеть</div>
+                <div class="not-item">Не игра</div>
+                <div class="not-item">Не криптопроект</div>
+                <div class="not-item">Не финансовая система</div>
+                <div class="not-item">Не религия</div>
+                <div class="not-item">Не идеология</div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.1em; color: #7f8c8d;">
+                Здесь нет цели вовлечь вас, удержать или монетизировать.
+            </p>
+        </div>
+    </section>
+    
+    <!-- ЗАЧЕМ ПОПРОБОВАТЬ -->
+    <section class="why-try">
+        <div class="container">
+            <h2>Зачем это пробовать?</h2>
+            <p>Мы живём в мире, где почти всё измеряется деньгами, статусом или вниманием.</p>
+            <p>Этот эксперимент задаёт простой вопрос:</p>
+            <p style="text-align: center; font-size: 1.3em; font-weight: 500; margin: 30px 0;">
+                <em>А что, если благодарность не нужно продавать, доказывать или копить?</em>
+            </p>
+            <p>Ответ не предлагается.<br>Его можно только прожить.</p>
+        </div>
+    </section>
+    
+    <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
+    <section class="cta">
+        <a href="mvp/app/" class="cta-button">Войти в пространство опыта</a>
+        <p class="cta-note">Это эксперимент. Ничего не продаётся. Ничего не требуется.</p>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Пигмалион / К.Р.И.С.Т.А.Л.Л.</p>
+        <p style="margin-top: 20px;">
+            <a href="manifesto/">Манифест</a> • 
+            <a href="docs/">Документация</a> • 
+            <a href="https://github.com/ORDENp/-Pygmalion-">GitHub</a>
+        </p>
+        <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
+            Не поле битвы. Сад.
+        </p>
+    </footer>
 </body>
 </html>
