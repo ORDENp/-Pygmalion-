@@ -1,97 +1,218 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Pygmalion — MVP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
-<h1>Minimum Viable Presence (MVP)</h1>
+<header class="header">
+  <a href="../" class="back-link" data-i18n="back_home">
+    ← Back to home </a>
 
-<p>
-  MVP is not a product and not a system. It is a demonstration of principle and a space of personal experience.
+  <div class="lang-switch">
+    <button data-set-lang="en" class="lang-btn">EN</button>
+    <button data-set-lang="ru" class="lang-btn">RU</button>
+  </div>
+</header>
+
+<main class="content narrow">
+
+  <h1 data-i18n="mvp_title">
+    Minimum Viable Presence (MVP)
+  </h1>
+
+  <p class="lead" data-i18n="mvp_intro">
+    MVP is not a product and not a system.
+    It is a demonstration of principle and a space of personal experience.
+  </p>
+
+  <section class="mvp-transition">
+  <h2>Для Вас 5 вариантов сразу:</h2>
+     <div class="not-list">
+         <div class="not-item">1. browser-offline демо v.0.1.6. (работает в браузере без интернета)</div>   
+      
+        <p style="text-align: center; margin-top: 30px; font-size: 1.1em; color: #7f8c8d;">
+        <!-- OFFLINE DEMO -->
+    <p>
+     <!-- А ТАК (абсолютный путь): -->
+ <a href="/-Pygmalion-/mvp/app/offline-mvp/">browser-offline MVP Пигмалион 0.1.6.</a>
+      <small>Рекомендуется сейчас</small>
+    </p>
+      <div class="not-item">2. Online MVP /DIST v.0.2.2. (сборка работает КРИВО без нужных стилей и экранов ...АКТ 3 трудно юзать НО можно ,,, v. требует СПЕЦИАЛИСТА !!)</div>
+       <p>
+     <!-- белый экран -->
+ <a href="/-Pygmalion-/mvp/app/dist/">Online /DIST v.0.2.2.</a>
+        </p>
+       
+       <div class="not-item">3. исходный код Online MVP Пигмалион v.0.2.2. (работает криво, не как канон, но работает АКТ 1-4 , и Т.П.)</div>
+                    <!-- ГЛАВНЫЙ КАНАЛ -->
+     <p>
+    <a href="./app/" class="btn-neutral">Online MVP Пигмалион v.0.2.2. (основной) →
+    </a><br>
+    </p>
+             <!-- СКАЧИВАНИЕ -->
+            <div class="not-item">4. взять с собой .7z Offline MVP версия 0.1.6.</div>
+            </div>
+                  <p>  
+   <a href="./download/offline-mvp-0.1.6.7z">
+      Скачать, browser-offline демо v 0.1.6.(локально)</a> 
+            <small>Рекомендуется сейчас</small>           
+  </p>            
+  <div class="not-item">5. взять с собой .7z /dist Online MVP версия 0.2.2.</div>
+      <a href="./download/dist.7z">
+          доп. cкачать. /dist Online MVP v 0.2.2. (архив, "белый экран" БЕЗ НУЖНЫХ ССЫЛОК из репозитория на сайт)
+        </a>
+  </p>
+
+<body>
+    <div class="container">
+        <h1>Перед тем, как войти</h1>
+        
+        <div class="intro">
+            <p>Вы сейчас попадёте в пространство. Это не инструкция и не гайд — это опыт, который можно только прожить.</p>
+        </div>
+        
+        <div class="expectations">
+            <h2>Что вас ждёт:</h2>
+            <ul>
+                <li>Четыре простых действия (Акта)</li>
+                <li>Никаких объяснений до завершения</li>
+                <li>Возможность прервать в любой момент</li>
+             </ul>
+        </div>
+        
+        <div class="time-info">
+            <p><strong>Время:</strong> От 5 до 15 минут, зависит от вашего темпа.</p>
+        </div>
+        
+        <div class="expectations">
+            <h2>Чего НЕT:</h2>
+            <ul>
+                <li>Регистрации или сохранения данных</li>
+                <li>Правильных или неправильных ответов</li>
+                <li>Требований что-либо доказать</li>
+            </ul>
+         </div>
+
+  <section>
+    <h2 data-i18n="mvp_what_title">What MVP is</h2>
+    <p data-i18n="mvp_what_body">
+      MVP demonstrates the possibility of recognizing non-material human value
+      without money, coercion, KPI or obligations.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-i18n="mvp_structure_title">Structure of MVP</h2>
+    <p data-i18n="mvp_structure_body">
+      MVP represents a complete chain of human acts:
+      intention, emission, transfer, reflection, summary, registry and contact.
+      MVP is the whole chain, not a single action.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-i18n="mvp_participants_title">Participants</h2>
+    <p data-i18n="mvp_participants_body">
+      MVP can be experienced individually or with 2–5 direct participants.
+      Participation is voluntary. Interpretation belongs to the participant.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-i18n="mvp_not_title">What MVP is not</h2>
+    <p data-i18n="mvp_not_body">
+      MVP does not fix daily results, does not impose obligations,
+      does not rank people and does not simulate the full platform.
+    </p>
+  </section>
+
+  <section>
+    <h2 data-i18n="mvp_ethics_title">Ethics</h2>
+    <p data-i18n="mvp_ethics_body">
+      MVP is based on voluntary participation, liberated labor,
+      respect for attention and time, and numerical restraint
+      instead of digital expansion.
+    </p>
+  </section>
+
+<p class="mvp-table-note" data-i18n="mvp_table_note">
+  Кон — это момент фиксации внимания.
+  Он не измеряет ценность и не требует интерпретации.
 </p>
+   
 
-<h2>Для вас 5 вариантов сразу:</h2>
+  <textarea
+    id="reflection"
+    rows="4"
+    data-i18n-placeholder="mvp_reflection_placeholder"
+    placeholder="Свободная рефлексия (по желанию)">
+  </textarea>
+</section>
+  
+  </main>
 
-<p>
-  <a href="https://ordenp.github.io/-Pygmalion-/mvp/app/offline-mvp/"
-     target="_blank" rel="noopener noreferrer">
-    browser-offline MVP Пигмалион 0.1.6
-  </a><br />
-  <small>Рекомендуется сейчас.</small>
-</p>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>MIT License · Human-centered · Non-political</p>
+     <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
+                   Не поле битвы. Сад.</p>
+  </footer>
 
-<p>
-  <a href="https://ordenp.github.io/-Pygmalion-/mvp/app/dist/"
-     target="_blank" rel="noopener noreferrer">
-    Online MVP Пигмалион v.0.2.2
-  </a><br />
-  <small>Основной онлайн‑вариант.</small>
-</p>
+  <!-- i18n -->
+ <script src="../assets/js/lang.js" defer></script>
+ <script src="/-Pygmalion-/mvp/offline/logic.js"></script>
+      <link href="style.css">
+  <script>
+let kons = [];
 
-<p>
-  <a href="https://ordenp.github.io/-Pygmalion-/mvp/app/"
-     target="_blank" rel="noopener noreferrer">
-    Скачать browser-offline демо v 0.1.6 (локально)
-  </a><br />
-  <small>Рекомендуется сейчас для локального использования.</small>
-</p>
+function addKon() {
+  kons.push('');
+  renderKons();
+}
 
-<p>4. (ваш четвёртый вариант — оставьте или допишите по смыслу)</p>
-<p>5. (пятый вариант — по необходимости)</p>
+function renderKons() {
+  const body = document.getElementById('konTableBody');
+  body.innerHTML = '';
 
-<h1>Перед тем, как войти</h1>
+  kons.forEach((text, i) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${i + 1}</td>
+      <td>
+        <input type="text"
+          value="${text}"
+          oninput="updateKon(${i}, this.value)"
+        />
+      </td>
+    `;
+    body.appendChild(row);
+  });
 
-<p>
-  Вы сейчас попадёте в пространство. Это не инструкция и не гайд — это опыт, который можно только прожить.
-</p>
+  document.getElementById('konCount').textContent = kons.length;
+}
 
-<h2>Что вас ждёт:</h2>
-<ul>
-  <li>Четыре простых действия (Акта).</li>
-  <li>Никаких объяснений до завершения.</li>
-  <li>Возможность прервать в любой момент.</li>
-</ul>
+function updateKon(index, value) {
+  kons[index] = value;
+}
 
-<p><strong>Время:</strong> От 5 до 15 минут, зависит от вашего темпа.</p>
+function clearKons() {
+  if (confirm('Очистить все коны?')) {
+    kons = [];
+    renderKons();
+  }
+}
 
-<h2>Чего НЕТ:</h2>
-<ul>
-  <li>Регистрации или сохранения данных.</li>
-  <li>Правильных или неправильных ответов.</li>
-  <li>Требований что-либо доказать.</li>
-</ul>
-
-<h2>What MVP is</h2>
-<p>
-  MVP demonstrates the possibility of recognizing non-material human value without money, coercion, KPI or obligations.
-</p>
-
-<h2>Structure of MVP</h2>
-<p>
-  MVP represents a complete chain of human acts: intention, emission, transfer, reflection, summary, registry and contact. MVP is the whole chain, not a single action.
-</p>
-
-<h2>Participants</h2>
-<p>
-  MVP can be experienced individually or with 2–5 direct participants. Participation is voluntary. Interpretation belongs to the participant.
-</p>
-
-<h2>What MVP is not</h2>
-<p>
-  MVP does not fix daily results, does not impose obligations, does not rank people and does not simulate the full platform.
-</p>
-
-<h2>Ethics</h2>
-<p>
-  MVP is based on voluntary participation, liberated labor, respect for attention and time, and numerical restraint instead of digital expansion.
-</p>
-
-<p>
-  Кон — это момент фиксации внимания. Он не измеряет ценность и не требует интерпретации.
-</p>
+function copyKons() {
+  const text = kons.map((k, i) => `${i + 1}. ${k}`).join('\n');
+  navigator.clipboard.writeText(text);
+  alert('Таблица скопирована');
+}
+</script>
 
 </body>
 </html>
-```
