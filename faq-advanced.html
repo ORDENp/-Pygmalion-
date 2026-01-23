@@ -3,67 +3,336 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <div class="lang-switch">
-      <button data-set-lang="ru" class="lang-btn">RU</button>
-      <button data-set-lang="en" class="lang-btn">EN</button>
-    </div>
-  
-  <title>FAQ — кратко. — Pygmalion / К.Р.И.С.Т.А.Л.Л. — </title>
+  <title>FAQ — кратко. — Pygmalion / К.Р.И.С.Т.А.Л.Л. —</title>
   <style>
-    body { background: black; color: white; font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
-    h1, h2 { text-align: center; }
-    details { margin-bottom: 20px; }
-    summary { cursor: pointer; font-weight: bold; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body { 
+      background: #000; 
+      color: #fff; 
+      font-family: Arial, sans-serif; 
+      line-height: 1.6; 
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 40px;
+      align-items: start;
+    }
+    
+    .main-content {
+      padding: 20px;
+    }
+    
+    .sidebar {
+      position: sticky;
+      top: 20px;
+      background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+      border: 2px solid #333;
+      border-radius: 16px;
+      padding: 30px 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    
+    .sidebar-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .mvp-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .mvp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .mvp-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .mvp-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .mvp-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+    
+    .mvp-btn:active {
+      transform: translateY(-1px);
+    }
+    
+    .mvp-btn span {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .btn-green {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+    
+    .btn-green:hover {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+    }
+    
+    .btn-orange {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+    }
+    
+    .btn-orange:hover {
+      background: linear-gradient(135deg, #ea580c, #c2410c);
+    }
+    
+    .btn-icon {
+      font-size: 1.2rem;
+    }
+    
+    h1, h2 { 
+      text-align: center; 
+      margin-bottom: 30px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #3b82f6, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .intro {
+      text-align: center;
+      color: #999;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+    
+    details { 
+      margin-bottom: 20px; 
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    details:hover {
+      border-color: #555;
+      background: #222;
+    }
+    
+    details[open] {
+      border-color: #3b82f6;
+      background: #1a2332;
+    }
+    
+    summary { 
+      cursor: pointer; 
+      font-weight: bold; 
+      font-size: 1.1rem;
+      padding: 5px 0;
+      color: #3b82f6;
+    }
+    
+    summary:hover {
+      color: #60a5fa;
+    }
+    
+    details p {
+      margin-top: 15px;
+      padding-left: 10px;
+      color: #ccc;
+      line-height: 1.8;
+    }
+    
+    .lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+    
+    .lang-btn {
+      padding: 8px 16px;
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+    
+    .lang-btn:hover {
+      background: #444;
+      border-color: #777;
+    }
+    
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 12px 24px;
+      background: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .back-link:hover {
+      background: #444;
+      transform: translateX(-5px);
+    }
+    
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        position: static;
+        order: -1;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .sidebar {
+        padding: 20px 15px;
+      }
+      
+      .mvp-btn {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>FAQ кратко</h1>
-  <p>Вопросы и ответы без объяснений — для осмысления.</p>
+  <div class="lang-switch">
+    <button data-set-lang="ru" class="lang-btn">RU</button>
+    <button data-set-lang="en" class="lang-btn">EN</button>
+  </div>
 
-  <details>
-    <summary>1. Что это такое?</summary>
-    Пространство, где человеческое действие может быть замечено — без оценки, обмена или выгоды. Это не продукт и не сервис.
-  </details>
+  <div class="container">
+    <div class="main-content">
+      <h1>FAQ кратко</h1>
+      <p class="intro">Вопросы и ответы без объяснений — для осмысления.</p>
 
-  <details>
-    <summary>2. Это игра, соцсеть или эксперимент?</summary>
-    Нет. Здесь нет целей, сценариев, побед и рейтингов. Это опыт, а не формат развлечения.
-  </details>
+      <details>
+        <summary>1. Что это такое?</summary>
+        <p>Пространство, где человеческое действие может быть замечено — без оценки, обмена или выгоды. Это не продукт и не сервис.</p>
+      </details>
 
-  <details>
-    <summary>3. Это готовая система?</summary>
-    Нет. Сейчас доступна демонстрация принципов — без обещаний, развития и обязательств.
-  </details>
+      <details>
+        <summary>2. Это игра, соцсеть или эксперимент?</summary>
+        <p>Нет. Здесь нет целей, сценариев, побед и рейтингов. Это опыт, а не формат развлечения.</p>
+      </details>
 
-  <details>
-    <summary>4. Нужно ли регистрироваться или оставлять данные?</summary>
-    Нет. Ничего вводить, подтверждать или отправлять не требуется.
-  </details>
+      <details>
+        <summary>3. Это готовая система?</summary>
+        <p>Нет. Сейчас доступна демонстрация принципов — без обещаний, развития и обязательств.</p>
+      </details>
 
-  <details>
-    <summary>5. Обязательно ли участвовать активно?</summary>
-    Нет. Можно просто посмотреть, попробовать или уйти сразу. Участие — только по желанию.
-  </details>
+      <details>
+        <summary>4. Нужно ли регистрироваться или оставлять данные?</summary>
+        <p>Нет. Ничего вводить, подтверждать или отправлять не требуется.</p>
+      </details>
 
-  <details>
-    <summary>6. Что я потеряю, если не буду участвовать?</summary>
-    Ничего. Здесь нет дефицита, наград или упущенной выгоды.
-  </details>
+      <details>
+        <summary>5. Обязательно ли участвовать активно?</summary>
+        <p>Нет. Можно просто посмотреть, попробовать или уйти сразу. Участие — только по желанию.</p>
+      </details>
 
-  <details>
-    <summary>7. Можно ли сделать что-то неправильно?</summary>
-    Нет. Здесь нет правильных и неправильных действий, нет инструкций «как надо».
-  </details>
+      <details>
+        <summary>6. Что я потеряю, если не буду участвовать?</summary>
+        <p>Нет. Здесь нет дефицита, наград или упущенной выгоды.</p>
+      </details>
 
-  <details>
-    <summary>8. А если я захочу уйти?</summary>
-    Выход там же, где и вход. В любой момент. Без последствий.
-  </details>
+      <details>
+        <summary>7. Можно ли сделать что-то неправильно?</summary>
+        <p>Нет. Здесь нет правильных и неправильных действий, нет инструкций «как надо».</p>
+      </details>
 
- <header class="header">
-    <a href="./" class="back-link" data-i18n="back_home">
-      ← На главный экран
-    </a>
+      <details>
+        <summary>8. А если я захочу уйти?</summary>
+        <p>Выход там же, где и вход. В любой момент. Без последствий.</p>
+      </details>
+
+      <a href="./" class="back-link">← На главный экран</a>
+    </div>
+
+    <aside class="sidebar">
+      <h3 class="sidebar-title">Попробовать демо-версии</h3>
+      <div class="mvp-buttons">
+        <a href="https://ordenp.github.io/-Pygmalion-/mvp/app/" class="mvp-btn btn-green" target="_blank">
+          <span class="btn-icon">🚀</span>
+          <span>Исследовать MVP</span>
+        </a>
+        
+        <a href="https://ordenp.github.io/-Pygmalion-/mvp/app/offline-mvp/" class="mvp-btn btn-green" target="_blank">
+          <span class="btn-icon">🌐</span>
+          <span>Вторая версия</span>
+        </a>
+        
+        <a href="https://ordenp.github.io/-Pygmalion-/mvp/download/offline-mvp-0.1.6.7z" class="mvp-btn btn-orange" download>
+          <span class="btn-icon">📦</span>
+          <span>Взять с собой</span>
+        </a>
+      </div>
+    </aside>
+  </div>
 </body>
 </html>
