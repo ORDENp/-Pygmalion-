@@ -93,25 +93,25 @@
   </main>
 
   <script>
-    const documents = {
-      en: [
-        { name: 'Black Paper Pygmalion', file: './en/Black_Paper_Pygmalion_v1.1.EN.pdf', type: 'PDF' },
-        { name: 'Whitepaper', file: './en/White_Paper_Pygmalion_v1.1.EN.pdf', type: 'TXT' },
-        { name: "Pygmalion's Ledger of Invisible Capital", file: './assets/audio/Pygmalion's_Ledger_of_Invisible_Capital.mp3', type: 'MP3' }
-      ],
+   const documents = {
+  en: [
+    { name: 'Black Paper Pygmalion', file: './en/Black_Paper_Pygmalion_v1.1.EN.pdf', type: 'PDF' },
+    { name: 'Whitepaper', file: './en/White_Paper_Pygmalion_v1.1.EN.pdf', type: 'TXT' },
+     { name: 'Pygmalion’s Ledger of Invisible Capital', file: '../assets/audio/Pygmalion’s_Ledger_of_Invisible_Capital.mp3', type: 'AUDIO' }
+  ],
 
-      main: [
-        { name: 'Чёрная Бумага', file: './black-paper/Black_Paper_Pygmalion_v1.1.pdf', type: 'PDF' },
-        { name: 'Белая Книга (для стартапа)', file: './white-paper/White_Paper_Pygmalion_v1.1.pdf', type: 'TXT' },
-        { name: 'Благодарность со сроком годности', file: './assets/audio/blagodarnost.m4a', type: 'M4A' }
-      ],
+  main: [
+    { name: 'Чёрная Бумага', file: './black-paper/Black_Paper_Pygmalion_v1.1.pdf', type: 'PDF' },
+    { name: 'Белая Книга (для стартапа)', file: './white-paper/White_Paper_Pygmalion_v1.1.pdf', type: 'TXT' },
+    { name: 'Благодарность со сроком годности', file: '../assets/audio/blagodarnost.m4a', type: 'AUDIO' }
+  ],
 
-      presentations: [
-        { name: 'Пигмалион К.Р.И.С.Т.А.Л.Л. Ноономика', file: 'presentations/Pygmalion_KRISTALL_Noonomics.pdf', type: 'DOCX' },
-        { name: 'Pygmalion_Social_Architecture', file: 'presentations/Pygmalion_Social_Architecture.pdf', type: 'DOCX' },
-        { name: 'Pygmalion_The_Value_Protocol', file: 'presentations/Pygmalion_The_Value_Protocol.pdf', type: 'DOCX' },
-      ],
-    };
+  presentations: [
+    { name: 'Пигмалион К.Р.И.С.Т.А.Л.Л. Ноономика', file: 'presentations/Pygmalion_KRISTALL_Noonomics.pdf', type: 'PPTX' },
+    { name: 'Pygmalion_Social_Architecture', file: 'presentations/Pygmalion_Social_Architecture.pdf', type: 'PPTX' },
+    { name: 'Pygmalion_The_Value_Protocol', file: 'presentations/Pygmalion_The_Value_Protocol.pdf', type: 'PPTX' },
+  ],
+};
 
     // Иконки по типам файлов
     const fileIcons = {
@@ -120,10 +120,7 @@
       DOCX: '📘',
       TXT: '📄',
       MD: '📝',
-      MP3: '🎵',
-      WAV: '🎵',
-      OGG: '🎵',
-      M4A: '🎵'
+      AUDIO: '🎵'
     };
     
     // Получаем текущий язык из i18n движка
@@ -131,55 +128,49 @@
       return window.Pygmalion?.i18n?.getCurrentLang() || 'ru';
     }
 
-    // Функция отрисовки карточек (с поддержкой аудио)
-    function renderDocs(docs, gridId) {
-      const grid = document.getElementById(gridId);
-      const currentLang = getCurrentLang();
-      const emptyMessage = currentLang === 'ru' ? 'Документы скоро появятся' : 'Documents coming soon';
-      
-      if (!docs || docs.length === 0) {
-        grid.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon">📭</div>
-            <p>${emptyMessage}</p>
-          </div>
-        `;
-        return;
-      }
+    // Функция отрисовки карточек
+function renderDocs(docs, gridId) {
+  const grid = document.getElementById(gridId);
+  const currentLang = getCurrentLang();
+  const emptyMessage = currentLang === 'ru' ? 'Документы скоро появятся' : 'Documents coming soon';
 
-      grid.innerHTML = docs.map(doc => {
-        const isAudio = ['MP3', 'WAV', 'OGG', 'M4A'].includes(doc.type);
-        
-        if (isAudio) {
-          // Рендерим аудио-плеер
-          return `
-            <div class="doc-card audio-card">
-              <div class="doc-icon">${fileIcons[doc.type] || '🎵'}</div>
-              <div class="doc-title">${doc.name}</div>
-              <audio controls preload="metadata" style="width: 100%; margin-top: 10px;">
-                <source src="${doc.file}" type="audio/${doc.type.toLowerCase()}">
-                Your browser does not support audio.
-              </audio>
-              <div class="doc-meta">
-                <span class="doc-badge">${doc.type}</span>
-              </div>
-            </div>
-          `;
-        } else {
-          // Обычная карточка документа
-          return `
-            <a href="${doc.file}" class="doc-card" target="_blank" rel="noopener noreferrer">
-              <div class="doc-icon">${fileIcons[doc.type] || '📄'}</div>
-              <div class="doc-title">${doc.name}</div>
-              <div class="doc-meta">
-                <span class="doc-badge">${doc.type}</span>
-              </div>
-            </a>
-          `;
-        }
-      }).join('');
+  if (!docs || docs.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <p>${emptyMessage}</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = docs.map(doc => {
+    if (doc.type === 'AUDIO') {
+      return `
+        <div class="doc-card audio-card">
+          <div class="doc-icon">${fileIcons[doc.type] || '🎵'}</div>
+          <div class="doc-title">${doc.name}</div>
+          <audio controls class="audio-player">
+            <source src="${doc.file}" type="audio/m4a">
+            Ваш браузер не поддерживает аудио.
+          </audio>
+        </div>
+      `;
+    } else {
+      return `
+        <a href="${doc.file}" class="doc-card" target="_blank" rel="noopener noreferrer">
+          <div class="doc-icon">${fileIcons[doc.type] || '📄'}</div>
+          <div class="doc-title">${doc.name}</div>
+          <div class="doc-meta">
+            <span class="doc-badge">${doc.type}</span>
+          </div>
+        </a>
+      `;
     }
-   
+  }).join('');
+}
+
+
     // Инициализация
     function init() {
       renderDocs(documents.en, 'en-docs-grid');
