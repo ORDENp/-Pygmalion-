@@ -93,23 +93,24 @@
   </main>
 
   <script>
-    const documents = {
-      en: [
-        { name: 'Black Paper Pygmalion', file: './en/Black_Paper_Pygmalion_v1.1.EN.pdf', type: 'PDF' },
-        { name: 'Whitepaper', file: './en/White_Paper_Pygmalion_v1.1.EN.pdf', type: 'TXT' },
-      ],
-      
-      main: [
-        { name: 'Чёрная Бумага', file: './black-paper/Black_Paper_Pygmalion_v1.1.pdf', type: 'PDF' },
-        { name: 'Белая Книга (для стартапа)', file: './white-paper/White_Paper_Pygmalion_v1.1.pdf', type: 'TXT' }
-      ],
-      
-      presentations: [
-        { name: 'Пигмалион К.Р.И.С.Т.А.Л.Л. Ноономика', file: 'presentations/Pygmalion_KRISTALL_Noonomics.pdf', type: 'PPTX' },
-        { name: 'Pygmalion_Social_Architecture', file: 'presentations/Pygmalion_Social_Architecture.pdf', type: 'PPTX' },
-        { name: 'Pygmalion_The_Value_Protocol', file: 'presentations/Pygmalion_The_Value_Protocol.pdf', type: 'PPTX' },
-      ],
-    };
+   const documents = {
+  en: [
+    { name: 'Black Paper Pygmalion', file: './en/Black_Paper_Pygmalion_v1.1.EN.pdf', type: 'PDF' },
+    { name: 'Whitepaper', file: './en/White_Paper_Pygmalion_v1.1.EN.pdf', type: 'TXT' },
+  ],
+
+  main: [
+    { name: 'Чёрная Бумага', file: './black-paper/Black_Paper_Pygmalion_v1.1.pdf', type: 'PDF' },
+    { name: 'Белая Книга (для стартапа)', file: './white-paper/White_Paper_Pygmalion_v1.1.pdf', type: 'TXT' },
+    { name: 'Благодарность со сроком годности', file: './assets/audio/Благодарность_со_сроком_годности_в_системе_Пигмалион.m4a', type: 'AUDIO' }
+  ],
+
+  presentations: [
+    { name: 'Пигмалион К.Р.И.С.Т.А.Л.Л. Ноономика', file: 'presentations/Pygmalion_KRISTALL_Noonomics.pdf', type: 'PPTX' },
+    { name: 'Pygmalion_Social_Architecture', file: 'presentations/Pygmalion_Social_Architecture.pdf', type: 'PPTX' },
+    { name: 'Pygmalion_The_Value_Protocol', file: 'presentations/Pygmalion_The_Value_Protocol.pdf', type: 'PPTX' },
+  ],
+};
 
     // Иконки по типам файлов
     const fileIcons = {
@@ -117,7 +118,8 @@
       PPTX: '📊',
       DOCX: '📘',
       TXT: '📄',
-      MD: '📝'
+      MD: '📝',
+      AUDIO: '🎵'
     };
     
     // Получаем текущий язык из i18n движка
@@ -126,22 +128,35 @@
     }
 
     // Функция отрисовки карточек
-    function renderDocs(docs, gridId) {
-      const grid = document.getElementById(gridId);
-      const currentLang = getCurrentLang();
-      const emptyMessage = currentLang === 'ru' ? 'Документы скоро появятся' : 'Documents coming soon';
-      
-      if (!docs || docs.length === 0) {
-        grid.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon">📭</div>
-            <p>${emptyMessage}</p>
-          </div>
-        `;
-        return;
-      }
+function renderDocs(docs, gridId) {
+  const grid = document.getElementById(gridId);
+  const currentLang = getCurrentLang();
+  const emptyMessage = currentLang === 'ru' ? 'Документы скоро появятся' : 'Documents coming soon';
 
-      grid.innerHTML = docs.map(doc => `
+  if (!docs || docs.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <p>${emptyMessage}</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = docs.map(doc => {
+    if (doc.type === 'AUDIO') {
+      return `
+        <div class="doc-card audio-card">
+          <div class="doc-icon">${fileIcons[doc.type] || '🎵'}</div>
+          <div class="doc-title">${doc.name}</div>
+          <audio controls class="audio-player">
+            <source src="${doc.file}" type="audio/m4a">
+            Ваш браузер не поддерживает аудио.
+          </audio>
+        </div>
+      `;
+    } else {
+      return `
         <a href="${doc.file}" class="doc-card" target="_blank" rel="noopener noreferrer">
           <div class="doc-icon">${fileIcons[doc.type] || '📄'}</div>
           <div class="doc-title">${doc.name}</div>
@@ -149,8 +164,11 @@
             <span class="doc-badge">${doc.type}</span>
           </div>
         </a>
-      `).join('');
+      `;
     }
+  }).join('');
+}
+
 
     // Инициализация
     function init() {
