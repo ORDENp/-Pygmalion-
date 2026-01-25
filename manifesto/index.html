@@ -128,12 +128,12 @@
       return window.Pygmalion?.i18n?.getCurrentLang() || 'ru';
     }
 
-    // Функция отрисовки карточек
+    // Функция отрисовки карточек (ОБНОВЛЕННАЯ)
 function renderDocs(docs, gridId) {
   const grid = document.getElementById(gridId);
   const currentLang = getCurrentLang();
   const emptyMessage = currentLang === 'ru' ? 'Документы скоро появятся' : 'Documents coming soon';
-
+  
   if (!docs || docs.length === 0) {
     grid.innerHTML = `
       <div class="empty-state">
@@ -145,18 +145,25 @@ function renderDocs(docs, gridId) {
   }
 
   grid.innerHTML = docs.map(doc => {
-    if (doc.type === 'AUDIO') {
+    const isAudio = ['MP3', 'WAV', 'OGG', 'M4A'].includes(doc.type);
+    
+    if (isAudio) {
+      // Рендерим аудио-плеер
       return `
         <div class="doc-card audio-card">
           <div class="doc-icon">${fileIcons[doc.type] || '🎵'}</div>
           <div class="doc-title">${doc.name}</div>
-          <audio controls class="audio-player">
-            <source src="${doc.file}" type="audio/m4a">
-            Ваш браузер не поддерживает аудио.
+          <audio controls preload="metadata" style="width: 100%; margin-top: 10px;">
+            <source src="${doc.file}" type="audio/${doc.type.toLowerCase()}">
+            Your browser does not support audio.
           </audio>
+          <div class="doc-meta">
+            <span class="doc-badge">${doc.type}</span>
+          </div>
         </div>
       `;
     } else {
+      // Обычная карточка документа
       return `
         <a href="${doc.file}" class="doc-card" target="_blank" rel="noopener noreferrer">
           <div class="doc-icon">${fileIcons[doc.type] || '📄'}</div>
@@ -169,7 +176,6 @@ function renderDocs(docs, gridId) {
     }
   }).join('');
 }
-
 
     // Инициализация
     function init() {
