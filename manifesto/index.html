@@ -56,6 +56,13 @@
         <!-- Заполняется JS -->
       </div>
     </section>
+    <section>
+  <h2>📄 Основные документы</h2>
+  <audio controls>
+    <source src="./assets/audio/Благодарность_со_сроком_годности_в_системе_Пигмалион.m4a" type="audio/m4a">
+    Ваш браузер не поддерживает аудио.
+  </audio>
+</section>
 
     <!-- БЛОК 2: Принципы -->
     <section>
@@ -91,7 +98,7 @@
       </div>
     </section>
   </main>
-<element data-i18n="translation_key">Дефолтный текст</element>
+
   <script>
     const documents = {
       en: [
@@ -119,7 +126,7 @@
       TXT: '📄',
       MD: '📝'
     };
-
+    
     // Получаем текущий язык из i18n движка
     function getCurrentLang() {
       return window.Pygmalion?.i18n?.getCurrentLang() || 'ru';
