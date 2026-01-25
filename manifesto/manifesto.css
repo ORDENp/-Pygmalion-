@@ -38,3 +38,24 @@
 .manifesto audio::-webkit-media-controls-volume-slider {
   filter: brightness(1.2);
 }
+/* Audio Card Styles */
+.manifesto .audio-card {
+  cursor: default;
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.manifesto .audio-card:hover {
+  transform: none;
+  border-color: #3b82f6;
+}
+
+.manifesto audio {
+  margin-top: 10px;
+  border-radius: 8px;
+  outline: none;
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.manifesto audio::-webkit-media-controls-panel {
+  background: rgba(15, 23, 42, 0.9);
+}
