@@ -1,66 +1,249 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Pygmalion / C.R.I.S.T.A.L.L. — Human-centered NOD platform">
-
   <title>Pygmalion / C.R.I.S.T.A.L.L.</title>
-
   <link rel="stylesheet" href="./assets/css/style.css">
+  
+  <style>
+    /* Унифицированные стили для главной страницы */
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
+    /* Header */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #3b82f6, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+    }
+
+    .lang-switch button {
+      padding: 8px 16px;
+      background: rgba(51, 65, 85, 0.6);
+      color: #fff;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .lang-switch button:hover {
+      background: rgba(71, 85, 105, 0.8);
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .lang-switch button.active {
+      background: #3b82f6;
+      border-color: #60a5fa;
+    }
+
+    /* Main Content */
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #3b82f6, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .description {
+      font-size: 1.3rem;
+      color: #cbd5e1;
+      margin-bottom: 3rem;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    /* CTA Buttons */
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .cta-buttons p {
+      margin: 0;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .btn-primary {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #60a5fa;
+    }
+
+    .btn-primary:hover {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.6);
+      border-color: rgba(148, 163, 184, 0.3);
+      color: #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(148, 163, 184, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(30, 41, 59, 0.5);
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+      color: #64748b;
+    }
+
+    .footer small {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .footer p {
+      margin: 10px 0;
+    }
+
+    .footer a {
+      color: #60a5fa;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .footer a:hover {
+      color: #3b82f6;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .top-bar {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .description {
+        font-size: 1.1rem;
+      }
+
+      .btn {
+        font-size: 1rem;
+        padding: 0.9rem 1.5rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Header -->
+  <header class="top-bar">
+    <strong class="brand">Pygmalion</strong>
+    <div class="lang-switch">
+      <button data-set-lang="ru" class="lang-btn">RU</button>
+      <button data-set-lang="en" class="lang-btn">EN</button>
+    </div>
+  </header>
 
-<header class="top-bar">
-  <strong class="brand">Pygmalion</strong>
+  <!-- Main Content -->
+  <main class="container">
+    <h1 data-i18n="title">Pygmalion / C.R.I.S.T.A.L.L.</h1>
+    <p class="description" data-i18n="description">Human-centered platform for recognizing intangible value</p>
+    
+    <div class="cta-buttons">
+      <p>
+        <a href="./mvp/" class="btn btn-primary" data-i18n="cta_explore_mvp">Explore MVP</a>
+      </p>
+      
+      <p>
+        <a href="./manifesto/" class="btn btn-secondary" data-i18n="cta_read_manifesto">Read Manifesto</a>
+        <span class="note" data-i18n="cta_note">These texts are not required to proceed.</span>
+      </p>
+    </div>
+  </main>
 
-  <div class="lang-switch">
-    <button data-set-lang="ru">RU</button>
-    <button data-set-lang="en">EN</button>
-  </div>
-</header>
+  <!-- Footer -->
+  <footer class="footer">
+    <small data-i18n="footer_license">· MIT License · Human-centered · Non-political ·</small>
+    <p data-i18n="footer_quote">Не поле битвы. Сад.</p>
+    <a href="faq-advanced.html" data-i18n="faq_link">· FAQ — кратко ·</a>
+  </footer>
 
-<main class="container">
-
-  <h1 data-i18n="title"></h1>
-
-  <p class="description" data-i18n="description"></p>
-
-  <div class="cta-buttons">
-  <p>
-    <a href="./mvp/" class="btn btn-primary" data-i18n="cta_explore_mvp">Explore MVP</a></p>
-  <p>
-    <a href="./manifesto/" class="btn btn-secondary" data-i18n="cta_read_manifesto">Read Manifesto</a>These texts are not required to proceed.</p> 
-  </div>
-</main>
-
-<footer class="footer">
-  <small>MIT License · Human-centered · Non-political</small>
-       <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
-            Не поле битвы. Сад.</p> 
-  <a href="faq-advanced.html">FAQ — кратко</a>
-</footer>
-
-<script src="./assets/js/lang.js" defer></script>   
-  <style>
-  .language-toggle {
-    text-align: center;
-    margin: 20px 0;
-  }
-  .language-toggle a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  .language-toggle select {
-    background: black;
-    color: white;
-    border: 1px solid white;
-    padding: 5px;
-  }
-</style>
-
- </body>
-  </html>
+  <!-- i18n engine -->
+  <script src="./assets/js/lang.js" defer></script>
+</body>
+</html>
