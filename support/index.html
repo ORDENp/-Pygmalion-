@@ -1,5 +1,434 @@
 <!DOCTYPE html>
 <html lang="ru">
+<function_calls>
+<invoke name="artifacts">
+<parameter name="command">update</parameter>
+<parameter name="id">support_page</parameter>
+<parameter name="new_str">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — Pygmalion</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      flex: 1;
+      padding: 40px 20px;
+    }
+
+    .header {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      background: rgba(51, 65, 85, 0.6);
+      color: #fff;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .lang-btn:hover {
+      background: rgba(71, 85, 105, 0.8);
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .lang-btn.active {
+      background: #3b82f6;
+      border-color: #60a5fa;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      text-align: center;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    /* Унифицированный блок */
+    .support-block {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s;
+    }
+
+    .support-block:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+    }
+
+    .block-number {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .block-title {
+      font-size: 1.1rem;
+      color: #e2e8f0;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    /* QR Section */
+    .qr-wrapper {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .qr-wrapper img {
+      max-width: 250px;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .qr-caption {
+      font-size: 0.8rem;
+      color: #64748b;
+      opacity: 0.8;
+    }
+
+    .payment-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 8px;
+      color: #60a5fa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      word-break: break-all;
+    }
+
+    .payment-link:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+    }
+
+    /* "Бумажный чек" */
+    .receipt {
+      background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .receipt-line {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.5rem 0;
+      padding: 0.25rem 0;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+    }
+
+    .receipt-line:last-child {
+      border-bottom: none;
+    }
+
+    .receipt-label {
+      color: #94a3b8;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .receipt-value {
+      color: #e2e8f0;
+      font-weight: bold;
+      text-align: right;
+      word-break: break-all;
+    }
+
+    /* Grid для блоков 2 и 3 */
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .two-columns {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background: rgba(51, 65, 85, 0.6);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .back-link:hover {
+      background: rgba(71, 85, 105, 0.8);
+      transform: translateX(-5px);
+    }
+
+    .canon-mark {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      opacity: 0.5;
+      color: #64748b;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .intro {
+        font-size: 0.95rem;
+      }
+
+      .support-block {
+        padding: 1.5rem;
+      }
+
+      .qr-wrapper img {
+        max-width: 200px;
+      }
+
+      .receipt {
+        font-size: 0.8rem;
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 20px 10px;
+      }
+
+      .support-block {
+        padding: 1rem;
+      }
+
+      .receipt-line {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .receipt-value {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="lang-switch">
+      <button data-set-lang="ru" class="lang-btn">RU</button>
+      <button data-set-lang="en" class="lang-btn">EN</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1 data-i18n="support_title">Support</h1>
+
+    <div class="content">
+      <p data-i18n="support_text">
+        Сбор средств на пилотную НОД.- Платформу П./ К. с нагрузкой до 100 миллионов пользователей ежедневно.
+      </p>
+       <p data-i18n="support_text2">
+Для продолжения работы над проектом в 2026 году требуется поддержка в форме добровольных переводов на условиях полной прозрачности и взаимной благодарности (включая возможность использования технологии ТИУП(ч.) с фиксацией на Учётных Единицах) — ориентировочно до 1 миллиона рублей.
+Эта сумма вполне реалистична для такого пространства.
+Для достижения цели в феврале планируется участие в грантовых программах и конкурсах на 6–7 площадках (от президентских грантов до специализированных фондов в сфере технологий — точный список уточнится по мере подачи).
+При этом достаточно и помощи одного частного лица или фонда.
+Есть идея совместно с партнёрами создать собственный фонд поддержки подобных инициатив (по закону достаточно двух юридических лиц и нотариально заверенного договора о создании инвестиционного товарищества для такого вида деятельности).
+    </p>
+         <p data-i18n="support_text3"> 1. Если Вы клиент СБЕРА 
+сейчас можно поддержать наш стартап любой суммой через  СберБанк Онлайн
+            <a href="https://messenger.online.sberbank.ru/sl/VvHl8yfbJQhRQugcf" 
+         class="payment-link" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         data-i18n="support_link">
+        messenger.online.sberbank.ru/sl/
+              </a>
+          </p>
+      </div>
+  
+    <!-- Блок 1: СберБанк -->
+    <div class="support-block">
+      <div class="block-number">Вариант 1</div>
+      <div class="block-title" data-i18n="support_sber_title">Через СберБанк Онлайн (любая сумма)</div>
+      
+      <div class="qr-wrapper">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://messenger.online.sberbank.ru/sl/VvHl8yfbJQhRQugcf" 
+             alt="QR-код для поддержки проекта" 
+             loading="lazy">
+        <div class="qr-caption" data-i18n="qr_caption">QR-код для перевода</div>
+        <a href="https://messenger.online.sberbank.ru/sl/VvHl8yfbJQhRQugcf" 
+           class="payment-link" 
+           target="_blank" 
+           rel="noopener noreferrer">
+          messenger.online.sberbank.ru
+        </a>
+      </div>
+    </div>
+
+    <!-- Блоки 2 и 3: Два чека рядом -->
+    <div class="two-columns">
+      <!-- Блок 2: USD -->
+      <div class="support-block">
+        <div class="block-number">Вариант 2</div>
+        <div class="block-title" data-i18n="support_usd_title">Перевод в долларах США (ВТБ)</div>
+        
+        <div class="receipt">
+          <div class="receipt-line">
+            <span class="receipt-label">Beneficiary name:</span>
+            <span class="receipt-value">GOLOVATYUK OLEG IVANOVICH</span>
+          </div>
+          <div class="receipt-line">
+            <span class="receipt-label">Account:</span>
+            <span class="receipt-value">40817840090009133267</span>
+          </div>
+          <div class="receipt-line">
+            <span class="receipt-label">Bank:</span>
+            <span class="receipt-value">VTB BANK (PJSC)</span>
+          </div>
+          <div class="receipt-line">
+            <span class="receipt-label">BIC:</span>
+            <span class="receipt-value">VTBRRUMM</span>
+          </div>
+          <div class="receipt-line">
+            <span class="receipt-label">Address:</span>
+            <span class="receipt-value">RUSSIA, MOSCOW, VORONTSOVSKAYA UL, 43</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Блок 3: EUR -->
+      <div class="support-block">
+        <div class="block-number">Вариант 3</div>
+        <div class="block-title" data-i18n="support_eur_title">Перевод в евро (ВТБ)</div>
+        
+        <div class="receipt">
+          <div class="receipt-line">
+            <span class="receipt-label">Beneficiary name:</span>
+            <span class="receipt-value">GOLOVATYUK OLEG IVANOVICH</span>
+          </div>
+          <div class="receipt-line">
+            <span class="receipt-label">Account:</span>
+            <span class="receipt-value">40817978290009043676</span>
+          </div>
+          <div class="receipt-line">
+            <span class="receipt-label">Bank:</span>
+            <span class="receipt-value">VTB BANK (PJSC)</span>
+          </div>
+          <div class="receipt-line">
+            <span class="receipt-label">BIC:</span>
+            <span class="receipt-value">VTBRRUMM</span>
+          </div>
+          <div class="receipt-line">
+            <span class="receipt-label">Address:</span>
+            <span class="receipt-value">RUSSIA, MOSCOW, VORONTSOVSKAYA UL, 43</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Блок 4: ВТБ рубли -->
+    <div class="support-block">
+      <div class="block-number">4.  перевести рубли (любая сумма) ВТБ тут:</div>
+      <div class="block-title" data-i18n="support_rub_title">Перевод в рублях (ВТБ, любая сумма)</div>
+      
+      <div class="qr-wrapper">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://vtb.paymo.ru/collect-money/?transaction=e0bbf146-0286-4bc1-a78e-035f3739c752" 
+             alt="QR-код для поддержки проекта" 
+             loading="lazy">
+        <div class="qr-caption" data-i18n="qr_caption">QR-код для перевода</div>
+        <a href="https://vtb.paymo.ru/collect-money/?transaction=e0bbf146-0286-4bc1-a78e-035f3739c752" 
+           class="payment-link" 
+           target="_blank" 
+           rel="noopener noreferrer">
+          vtb.paymo.ru/collect-money/
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <a href="../" class="back-link" data-i18n="back_home">← back</a>
+      <p class="canon-mark">Canon v1.0 · January 2026</p>
+    </div>
+  </div>
+
+  <script src="../assets/js/lang.js" defer></script>
+</body>
+</html></parameter>
+<parameter name="old_str">
+
+<!DOCTYPE html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -168,64 +597,14 @@
   <div class="container">
     <h1 data-i18n="support_title">Support</h1>
 
-    <div class="content">
-      <p data-i18n="support_text">
-        Сбор средств на пилотную НОД.- Платформу П./ К. с нагрузкой до 100 миллионов пользователей ежедневно.
-      </p>
-       <p data-i18n="support_text2">
-Для продолжения работы над проектом в 2026 году требуется поддержка в форме добровольных переводов на условиях полной прозрачности и взаимной благодарности (включая возможность использования технологии ТИУП(ч.) с фиксацией на Учётных Единицах) — ориентировочно до 1 миллиона рублей.
-Эта сумма вполне реалистична для такого пространства.
-Для достижения цели в феврале планируется участие в грантовых программах и конкурсах на 6–7 площадках (от президентских грантов до специализированных фондов в сфере технологий — точный список уточнится по мере подачи).
-При этом достаточно и помощи одного частного лица или фонда.
-Есть идея совместно с партнёрами создать собственный фонд поддержки подобных инициатив (по закону достаточно двух юридических лиц и нотариально заверенного договора о создании инвестиционного товарищества для такого вида деятельности).
-    </p>
-         <p data-i18n="support_text3"> 1. Если Вы клиент СБЕРА 
-сейчас можно поддержать наш стартап любой суммой через  СберБанк Онлайн
-            <a href="https://messenger.online.sberbank.ru/sl/VvHl8yfbJQhRQugcf" 
-         class="payment-link" 
-         target="_blank" 
-         rel="noopener noreferrer"
-         data-i18n="support_link">
-        messenger.online.sberbank.ru/sl/
-              </a>
-          </p>
-      
-          <p data-i18n="support_text4">
-        2. другой способ перевести доллар сша в «банк ВТБ» по реквезитам моего счёта:
-Beneficiary name (имя получателя): GOLOVATYUK OLEG IVANOVICH
-Beneficiary account (счет получателя): 40817840090009133267
-Beneficiary bank (банк получателя): VTB BANK (PJSC)
-Beneficiary's bank code (БИК банка получателя): VTBRRUMM
-Beneficiary's bank address (адрес банка): RUSSIA, MOSCOW, VORONTSOVSKAYA UL, 43
-      </p>
-          <p data-i18n="support_text5">
-        3. другой способ перевести евро в «банк ВТБ» по реквезитам моего счёта
-Beneficiary name (имя получателя): GOLOVATYUK OLEG IVANOVICH
-Beneficiary account (счет получателя): 40817978290009043676
-Beneficiary bank (банк получателя): VTB BANK (PJSC)
-Beneficiary's bank code (БИК банка получателя): VTBRRUMM
-Beneficiary's bank address (адрес банка): RUSSIA, MOSCOW, VORONTSOVSKAYA UL, 43
-      </p>
-    </div>
-
-    <div class="qr-section"> 4.  или перевести рубли (любая сумма) ВТБ тут:
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://vtb.paymo.ru/collect-money/?transaction=e0bbf146-0286-4bc1-a78e-035f3739c752" alt="Payment QR">
-      
-      <a href="https://vtb.paymo.ru/collect-money/?transaction=e0bbf146-0286-4bc1-a78e-035f3739c752" 
-         class="payment-link" 
-         target="_blank" 
-         rel="noopener noreferrer"
-         data-i18n="support_link">
-        vtb.paymo.ru/collect-money/
-              </a>
-    </div>
-
+  
+</div>
     <div class="footer">
       <a href="../" class="back-link" data-i18n="back_home">← back</a>
       <p class="canon-mark">Canon v1.0 · January 2026</p>
     </div>
-  </div>
+  
 
   <script src="../assets/js/lang.js" defer></script>
 </body>
-</html>
+</html></parameter>
