@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Pygmalion</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      flex: 1;
+      padding: 40px 20px;
+    }
+
+    .header {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .lang-btn:hover {
+      background: #444;
+      border-color: #777;
+    }
+
+    .lang-btn.active {
+      background: #3b82f6;
+      border-color: #60a5fa;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-info {
+      margin: 2rem 0;
+    }
+
+    .contact-item {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: rgba(30, 41, 59, 0.3);
+      border-left: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 4px;
+    }
+
+    .contact-label {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-value {
+      font-size: 1rem;
+      color: #cbd5e1;
+    }
+
+    .contact-value a {
+      color: #60a5fa;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-value a:hover {
+      color: #3b82f6;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .back-link:hover {
+      background: #444;
+      transform: translateX(-5px);
+    }
+
+    .canon-mark {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      opacity: 0.5;
+      color: #64748b;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .contact-value {
+        font-size: 0.9rem;
+        word-break: break-all;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="lang-switch">
+      <button data-set-lang="ru" class="lang-btn">RU</button>
+      <button data-set-lang="en" class="lang-btn">EN</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1 data-i18n="contact_title">Contact</h1>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-label" data-i18n="contact_author_label">Author</div>
+        <div class="contact-value">::OP𝕯EH 𝕯AP:: (Олег Головатюк)</div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-label" data-i18n="contact_phone_label">Phone</div>
+        <div class="contact-value">
+          <a href="tel:+79999891719">+7 999-989-17-19</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-label" data-i18n="contact_email_label">Email</div>
+        <div class="contact-value">
+          <a href="mailto:ORDENp@gmail.com">ORDENp@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="../" class="back-link" data-i18n="back_home">← back</a>
+      <p class="canon-mark">Canon v1.0 · January 2026</p>
+    </div>
+  </div>
+
+  <script src="../assets/js/lang.js" defer></script>
+</body>
+</html>
