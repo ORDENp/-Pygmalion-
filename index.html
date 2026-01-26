@@ -89,6 +89,29 @@
       line-height: 1.2;
     }
 
+    /* Project Meta */
+    .project-meta {
+      margin: 0.5rem 0 2rem;
+      font-size: 0.9rem;
+      color: #64748b;
+      opacity: 0.7;
+    }
+
+    .project-meta a {
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .project-meta a:hover {
+      color: #94a3b8;
+    }
+
+    .project-meta .separator {
+      margin: 0 0.5rem;
+      opacity: 0.5;
+    }
+
     .description {
       font-size: 1.3rem;
       color: #cbd5e1;
@@ -222,6 +245,14 @@
   <!-- Main Content -->
   <main class="container">
     <h1 data-i18n="title">Pygmalion / C.R.I.S.T.A.L.L.</h1>
+    
+    <!-- Project Meta (support · contact) -->
+    <div class="project-meta">
+      <a href="./support/" data-i18n="meta_support">support</a>
+      <span class="separator">·</span>
+      <a href="./contact/" data-i18n="meta_contact">contact</a>
+    </div>
+    
     <p class="description" data-i18n="description">Human-centered platform for recognizing intangible value</p>
     
     <div class="cta-buttons">
@@ -238,9 +269,10 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <small data-i18n="footer_license">MIT License · Human-centered · Non-political ·  | · Canon v1.0 · January 2026 ·</small>
+    <small data-i18n="footer_license">MIT License · Human-centered · Non-political</small>
     <p data-i18n="footer_quote">Не поле битвы. Сад.</p>
     <a href="faq-advanced.html" data-i18n="faq_link" target="_blank" rel="noopener noreferrer">FAQ — кратко</a>
+    <p style="margin-top: 1.5rem; font-size: 0.75rem; opacity: 0.5;">· Canon v1.0 · January 2026 ·</p>
   </footer>
 
   <!-- i18n engine -->
