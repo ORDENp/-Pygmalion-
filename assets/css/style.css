@@ -152,11 +152,6 @@ section:first-of-type p {
    Footer
    ========================= */
 
-.footer-links {
-  font-size: 0.85rem;
-  opacity: 0.7;
-}
-
 .footer-links a {
   color: #60a5fa;
   text-decoration: none;
@@ -164,6 +159,14 @@ section:first-of-type p {
 
 .footer-links a:hover {
   text-decoration: underline;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
 }
 
 .canon {
