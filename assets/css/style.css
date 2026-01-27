@@ -110,6 +110,14 @@ section:last-child {
   border-bottom: none;
 }
 
+section {
+  : 2.5rem; /* было ~4rem */
+}
+
+h2 {
+  : 0.5rem;
+}
+
 /* =========================
    Buttons
    ========================= */
