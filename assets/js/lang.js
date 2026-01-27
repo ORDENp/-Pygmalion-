@@ -68,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', e => {
       e.preventDefault();
       loadLanguage(btn.dataset.setLang);
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.classList.toggle('active', btn.dataset.setLang === currentLang);
     });
   });
 });
