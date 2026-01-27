@@ -281,6 +281,10 @@ section:first-of-type p {
   padding: 0 1rem;
 }
 
+.lang-btn.active {
+  color: #4da3ff;
+}
+
 /* =========================
    Responsive
    ========================= */
