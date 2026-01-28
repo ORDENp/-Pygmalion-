@@ -170,11 +170,13 @@ justify-content: center;
 gap: 2rem;
 margin-top: 2rem;
 }
+
 .mvp-image img {
-max-width: 200px;
-height: auto;
-display: block;
+  max-width: 320px;   /* или 360px */
+  width: 100%;
+  height: auto;
 }
+
 .mvp-image.left,
 .mvp-image.right {
 flex: 0 0 auto;
@@ -188,7 +190,7 @@ gap: 1rem;
 .mvp-image {
 display: flex;
 justify-content: center;
-opacity: 0.25;
+opacity: 0.7;
 }
 /* =========================
 MVP Tables
