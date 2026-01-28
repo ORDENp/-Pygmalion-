@@ -1,29 +1,73 @@
-const LANG_KEY = 'lang';
+console.log('lang.js loaded');
+
+const VALID_LANGS = ['ru', 'en'];
 const DEFAULT_LANG = 'ru';
 
-function getLang() {
-  return localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+/**
+ * Определяем корень репозитория GitHub Pages
+ * https://username.github.io/repo-name/...
+ */
+function getRepoRoot() {
+  const parts = window.location.pathname.split('/');
+  // ["", "-Pygmalion-", "C.R.I.S.T.A.L.L", ""]
+  return '/' + parts[1] + '/';
 }
 
-function setLang(lang) {
-  localStorage.setItem(LANG_KEY, lang);
-  loadLang(lang);
+const REPO_ROOT = getRepoRoot(); // "/-Pygmalion-/"
+
+function getLanguage() {
+  const saved = localStorage.getItem('selectedLang');
+  if (saved && VALID_LANGS.includes(saved)) return saved;
+
+  const browser = navigator.language.slice(0, 2);
+  return VALID_LANGS.includes(browser) ? browser : DEFAULT_LANG;
 }
 
-async function loadLang(lang) {
-  const res = await fetch(`/-Pygmalion-/assets/i18n/${lang}.json`);
-  const dict = await res.json();
+async function loadLanguage(lang) {
+  const url = `${REPO_ROOT}assets/i18n/${lang}.json`;
+  console.log('[i18n] loading:', url);
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(res.status);
+    const translations = await res.json();
+
+    localStorage.setItem('selectedLang', lang);
+    applyTranslations(translations);
+    updateActiveButtons(lang);
+
+  } catch (e) {
+    console.error('[i18n] load failed', e);
+  }
 }
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
+function applyTranslations(translations) {
+  const nodes = document.querySelectorAll('[data-i18n]');
+  console.log('[i18n] nodes found:', nodes.length);
+
+  nodes.forEach(el => {
     const key = el.dataset.i18n;
-    if (dict[key]) el.textContent = dict[key];
+    const text = key.split('.').reduce((o, k) => o?.[k], translations);
+    if (text) el.innerHTML = text;
   });
 
+  document.documentElement.lang = localStorage.getItem('selectedLang') || DEFAULT_LANG;
+}
+
+function updateActiveButtons(lang) {
+  document.querySelectorAll('[data-set-lang]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.setLang === lang);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  loadLang(getLang());
+  const lang = getLanguage();
+  loadLanguage(lang);
 
   document.querySelectorAll('[data-set-lang]').forEach(btn => {
-    btn.onclick = () => setLang(btn.dataset.setLang);
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      loadLanguage(btn.dataset.setLang);
+    });
   });
 });
