@@ -15,7 +15,24 @@
   "mvp_version_offline": "2.MVP 0.1.6 (offline)",
   "mvp_download": "Download offline version",
   "mvp_notice": "Entry is a choice. Exit at any moment.",
- 
+   "mvp_what_title": "What MVP is",
+  
+  "mvp_what_body": "MVP demonstrates the possibility of recognizing non-material human participation without money, coercion, KPI, or obligations.",
+
+  "mvp_structure_title": "Structure of MVP",
+  "mvp_structure_body": "MVP represents a complete chain of human experience: intention, action, attention fixation, reflection, and understanding. MVP is the whole chain, not a single act.",
+
+  "mvp_participants_title": "Participants",
+  "mvp_participants_body": "MVP can be experienced individually or with 2–5 participants. Participation is fully voluntary. Interpretation belongs to the participant.",
+
+  "mvp_not_title": "What MVP is not",
+  "mvp_not_body": "MVP does not fix daily results, does not impose obligations, does not rank people, and does not simulate a full platform.",
+
+  "mvp_ethics_title": "Ethics",
+  "mvp_ethics_body": "MVP is based on voluntary participation, liberated labor, respect for human attention and time, and the principle of numerical restraint instead of digital expansion.",
+
+  "mvp_table_note": "A kon is a moment of attention fixation. It does not measure value and does not require interpretation.",
+
   "manifesto_title": "Pygmalion Manifesto",
   "manifesto_subtitle": "Documents, presentations, and materials",
   "manifesto_subtitle_note": "For those who want to understand deeper",
