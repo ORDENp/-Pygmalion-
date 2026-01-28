@@ -276,6 +276,30 @@ section:first-of-type p {
   opacity: 0.75;
 }
 
+.mvp-layout {
+  display: flex;
+  align-items: center;      /* выравниваем по вертикали */
+  justify-content: center;  /* центрируем общий блок */
+  gap: 2rem;                /* расстояние между колонками */
+  margin-top: 2rem;
+}
+
+.mvp-image img {
+  max-width: 200px;    /* подбери нужный размер */
+  height: auto;
+  display: block;
+}
+
+.mvp-image.left,
+.mvp-image.right {
+  flex: 0 0 auto;      /* фиксированная ширина колонок с картинками */
+}
+
+.mvp-links {
+  flex: 1 1 auto;      /* центральная колонка тянется */
+}
+
+
 .english-note {
     font-style: italic;
     opacity: 0.8;
@@ -323,6 +347,22 @@ section:first-of-type p {
   .mvp-layout {
     grid-template-columns: 1fr;
   }
+
+   @media (max-width: 768px) {
+  .mvp-layout {
+    flex-direction: column;
+  }
+
+  .mvp-image.left,
+  .mvp-image.right {
+    order: 0;          /* картинки станут над и под кнопками */
+  }
+
+  .mvp-links {
+    order: 1;
+  }
+}
+
 
   .mvp-image {
     display: none;
