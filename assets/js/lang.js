@@ -40,6 +40,14 @@ async function loadLanguage(lang) {
     console.error('[i18n] load failed', e);
   }
 }
+// В функции applyTranslations():
+if (translations[key]) {
+  if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+    el.placeholder = translations[key];
+  } else {
+    el.innerHTML = translations[key]; // Было: textContent
+  }
+}
 
 function applyTranslations(translations) {
   const nodes = document.querySelectorAll('[data-i18n]');
