@@ -380,8 +380,7 @@ function openInfoModal() {
 function renderKeyboard(container) {
     container.innerHTML = `
         <div class="screen">
-            <h1 class="text-3xl text-gradient mb-2">ЧисСлоБукВ</h1>
-            <p class="text-secondary mb-4">Акт 1.0 — От ${MIN_OK_LENGTH} до ${MAX_OK_LENGTH} символов</p>
+            <h1 class="text-3xl text-gradient mb-2">ЧисСлоБукВ - Акт 1.0.</h1>
             
             <div class="input-display mb-2 w-full" style="max-width: 600px;" id="inputDisplay">
                 ${state.inputData.length === 0 
