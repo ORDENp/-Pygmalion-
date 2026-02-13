@@ -143,12 +143,15 @@ The project remains outside political parties and traditional economic logic.
 
 ---
 
-## 🗯 Roadmap (Near Term)
+## 🛣 Bridge to the Economy
 
-- **v1.2** — public offline MVP release
-- **v1.3** — pilot with limited participant groups
-- **v1.5** — documented use-cases and practice scenarios
-- **v2.0** — open NOD registry of non-material value
+
+While gratitude does not constitute an automatic exchange, the Record Marker (R.M.) may be subject to voluntary valuation by participants seeking to engage with the real economy of the Sixth Order.
+
+1.	The NOD platform is a mirror, not a judge. The architecture of C.R.I.S.T.A.L.L. does not award points for «good behaviour» and does not generate market quotes. This is what "Numerical Restraint" means.
+2.	The participant is a sovereign. Only someone who has received the R.M. (Record Marker) has the right to decide what this marker is worth in their life (nominal value, work, product).
+3.	Evaluation is not coercion. Assessing the marker in terms of resources and exchanging it for those resources is an act of goodwill between two parties, not a systemic requirement.
+4.	Transfer at «face value». This is provided for in the scenarios (e.g., Scenario 01), where a participant (Dima) evaluates the received markers in terms of «honey» or «snow removal» and transfers them to the performer in exchange for completing the task.
 
 ---
 
