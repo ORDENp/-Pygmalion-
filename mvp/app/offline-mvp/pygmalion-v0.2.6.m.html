@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JK86H56MJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-2JK86H56MJ');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ПИГМАЛИОН — Технология ТУТумУЕ</title>
+    <meta name="description" content="НОД.-платформа Пигмалион — механизм обмена ценностями между людьми">
+    
+    <!-- Favicon: Цветок жизни SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='20' fill='none' stroke='%233b82f6' stroke-width='2'/><circle cx='50' cy='30' r='20' fill='none' stroke='%23ef4444' stroke-width='2'/><circle cx='67.3' cy='40' r='20' fill='none' stroke='%2322c55e' stroke-width='2'/><circle cx='67.3' cy='60' r='20' fill='none' stroke='%23facc15' stroke-width='2'/><circle cx='50' cy='70' r='20' fill='none' stroke='%23a855f7' stroke-width='2'/><circle cx='32.7' cy='60' r='20' fill='none' stroke='%233b82f6' stroke-width='2'/><circle cx='32.7' cy='40' r='20' fill='none' stroke='%23ef4444' stroke-width='2'/></svg>">
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+/* ========================================
+   ПИГМАЛИОН — Оффлайн стили v0.3.1
+   Темная футуристическая тема
+   Все стили встроены в HTML
+======================================== */
+
+/* === СБРОС И БАЗОВЫЕ СТИЛИ === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-input: #1e293b;
+    --bg-digit: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --triad-red: #ef4444;
+    --triad-yellow: #facc15;
+    --triad-blue: #3b82f6;
+    --triad-green: #22c55e;
+    --triad-purple: #a855f7;
+    --accent-primary: #3b82f6;
+    --accent-success: #22c55e;
+    --accent-warning: #facc15;
+    --accent-danger: #ef4444;
+    --border-color: #334155;
+    --border-hover: #475569;
+    --glow-blue: 0 0 30px rgba(59, 130, 246, 0.4);
+    --glow-green: 0 0 30px rgba(34, 197, 94, 0.4);
+    --glow-purple: 0 0 30px rgba(168, 85, 247, 0.4);
+    --radius: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --transition: all 0.3s ease;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent-primary), var(--triad-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-success {
+    background: linear-gradient(135deg, var(--accent-success), var(--accent-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.screen-center {
+    justify-content: center;
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn:hover { transform: scale(1.02); }
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    box-shadow: var(--glow-blue);
+}
+
+.btn-primary:hover { background: #2563eb; }
+
+.btn-success {
+    background: var(--accent-success);
+    color: var(--text-primary);
+    box-shadow: var(--glow-green);
+}
+
+.btn-success:hover { background: #16a34a; }
+
+.btn-danger {
+    background: var(--accent-danger);
+    color: var(--text-primary);
+}
+
+.btn-danger:hover { background: #dc2626; }
+
+.btn-secondary {
+    background: var(--bg-digit);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover { background: var(--border-hover); }
+
+.btn-secondary.active {
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    box-shadow: var(--glow-blue);
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    border-radius: var(--radius-lg);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    z-index: 100;
+}
+
+.sacred-geometry {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    animation: spin-slow 20s linear infinite;
+}
+
+.sacred-circle {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(248, 250, 252, 0.3);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+}
+
+.sacred-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(248, 250, 252, 0.6);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.sacred-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--triad-purple);
+    animation: float 3s ease-in-out infinite;
+}
+
+.keyboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: var(--radius);
+    cursor: grab;
+    transition: var(--transition);
+}
+
+.keyboard-row.dragging { opacity: 0.5; }
+.keyboard-row.drag-over { box-shadow: 0 0 10px var(--accent-primary); }
+.keyboard-row.fixed { cursor: default; }
+
+.key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.key:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: scale(1.05);
+}
+
+.key:active { transform: scale(0.95); }
+
+.key-red { color: var(--triad-red); }
+.key-blue { color: var(--triad-blue); }
+.key-green { color: var(--triad-green); }
+.key-white { color: var(--text-primary); background: var(--bg-digit); }
+
+.key-func {
+    background: #7f1d1d;
+    color: var(--text-primary);
+    min-width: 3rem;
+}
+
+.key-space {
+    flex: 1;
+    max-width: 200px;
+    background: var(--bg-digit);
+    color: var(--text-secondary);
+}
+
+.key-split {
+    position: relative;
+    overflow: hidden;
+}
+
+.key-split-tl,
+.key-split-br {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.key-split-tl { clip-path: polygon(0 0, 100% 0, 0 100%); }
+.key-split-br {
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.input-display {
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    min-height: 80px;
+    font-size: 1.25rem;
+    font-family: monospace;
+    text-align: center;
+    word-break: break-all;
+    transition: var(--transition);
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-display.valid { border-color: var(--accent-success); }
+.input-display.invalid { border-color: var(--accent-danger); }
+.input-placeholder { color: var(--text-muted); font-style: italic; }
+
+.arena {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 768px) { .arena { height: 500px; } }
+
+.participant {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.participant:hover { transform: scale(1.05); }
+
+.participant-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 0.75rem;
+    width: 100px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .participant-card { width: 130px; padding: 1rem; }
+}
+
+.participant-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.participant-inventory {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.ue {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.625rem;
+    font-weight: 700;
+    cursor: grab;
+    transition: var(--transition);
+}
+
+.ue svg { width: 12px; height: 12px; }
+.ue:hover { transform: scale(1.1); }
+.ue.dragging { opacity: 0.5; cursor: grabbing; }
+
+.triad-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+@media (min-width: 768px) {
+    .triad-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.triad-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.triad-card:hover {
+    transform: scale(1.02);
+    border-color: var(--border-hover);
+}
+
+.triad-card.selected {
+    border-color: var(--accent-success);
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.triad-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: var(--accent-success);
+    font-size: 1.25rem;
+}
+
+.triad-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.triad-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 1rem;
+}
+
+.scenario-btn {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.scenario-btn:hover { background: var(--bg-digit); }
+.scenario-btn.active { border-color: var(--accent-primary); color: var(--accent-primary); }
+
+.table-container {
+    width: 100%;
+    max-width: 600px;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+thead { background: var(--bg-card); }
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th { color: var(--text-muted); font-weight: 600; }
+tbody tr:hover { background: rgba(30, 41, 59, 0.5); }
+tfoot { background: var(--bg-card); }
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-success { color: var(--accent-success); }
+.text-danger { color: var(--accent-danger); }
+.font-bold { font-weight: 700; }
+
+.registry {
+    width: 100%;
+    max-width: 600px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.registry-title {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.registry-item {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.registry-item:last-child { border-bottom: none; }
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    animation: fade-in 0.2s ease;
+}
+
+.modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: scale-in 0.2s ease;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.modal-content {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.progress-dots {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.progress-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: var(--transition);
+}
+
+.progress-dot.active {
+    background: var(--accent-primary);
+    transform: scale(1.25);
+}
+
+.progress-dot.done { background: var(--accent-success); }
+
+.spirituality-bar {
+    width: 100%;
+    max-width: 400px;
+    height: 1.5rem;
+    background: var(--bg-digit);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+}
+
+.spirituality-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-success));
+    transition: width 0.5s ease;
+    border-radius: var(--radius);
+}
+
+.contacts-section { text-align: center; }
+
+.manifest {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: var(--text-secondary);
+    max-width: 400px;
+}
+
+.info-modal {
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.info-modal h3 {
+    color: var(--accent-primary);
+    margin: 1rem 0 0.5rem;
+    font-size: 1rem;
+}
+
+.info-modal p, .info-modal li {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.info-modal ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.95); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    50% { transform: translate(-50%, -50%) translateY(-10px); }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scale-in {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.hidden { display: none !important; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.w-full { width: 100%; }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-primary { color: var(--accent-primary); }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <audio id="bgMusic" loop></audio>
+    
+    <script>
+/**
+ * ========================================
+ * ПИГМАЛИОН — Оффлайн логика v0.3.1
+ * ИСПРАВЛЕНО: "Новый кон" сохраняет историю
+ * Сводная таблица появляется после 2-го кона
+ * ========================================
+ */
+
+// === ГЛОБАЛЬНЫЕ КОНСТАНТЫ ===
+const MAX_OK_LENGTH = 70;
+const MIN_OK_LENGTH = 3;
+const MAX_SPACES = 5;
+
+// Триады У.Е. (с названиями на двух языках)
+const TRIADS = {
+    T1: { nameRu: 'Знания', nameEn: 'Knowledge', color: '#ef4444', range: [1, 2, 3] },
+    T2: { nameRu: 'Практики', nameEn: 'Practice', color: '#facc15', range: [4, 5, 6] },
+    T3: { nameRu: 'Творчество', nameEn: 'Creativity', color: '#22c55e', range: [7, 8, 9] },
+    T4: { nameRu: 'Досуг/ЗОЖ', nameEn: 'Leisure/Health', color: '#3b82f6', range: [10, 11, 12] },
+    T5: { nameRu: '№21', nameEn: '#21', color: '#a855f7', range: [21] }
+};
+
+function getTriadName(key) {
+    const triad = TRIADS[key];
+    if (!triad) return key;
+    return state.language === 'en' ? triad.nameEn : triad.nameRu;
+}
+
+// Сценарии эмиссии
+const SCENARIOS = [
+    { id: 1, total: 52, perParticipant: 13 },
+    { id: 2, total: 48, perParticipant: 12 },
+    { id: 3, total: 40, perParticipant: 10 },
+    { id: 4, total: 36, perParticipant: 9 },
+    { id: 5, total: 28, perParticipant: 7 },
+    { id: 6, total: 24, perParticipant: 6 },
+    { id: 7, total: 16, perParticipant: 4 },
+    { id: 8, total: 12, perParticipant: 3 }
+];
+
+// Участники
+const PARTICIPANTS = [
+    { id: '1', nameRu: 'Уч.1', nameEn: 'P.1', labelRu: 'Вы', labelEn: 'You' },
+    { id: '2', nameRu: 'Уч.2', nameEn: 'P.2', labelRu: 'Собеседник 2', labelEn: 'Interlocutor 2' },
+    { id: '3', nameRu: 'Уч.3', nameEn: 'P.3', labelRu: 'Собеседник 3', labelEn: 'Interlocutor 3' },
+    { id: '4', nameRu: 'Уч.4', nameEn: 'P.4', labelRu: 'Собеседник 4', labelEn: 'Interlocutor 4' },
+    { id: '5', nameRu: 'Уч.5', nameEn: 'P.5', labelRu: 'Все люди (Мир)', labelEn: 'All people (World)' }
+];
+
+function getParticipantName(p) {
+    return state.language === 'en' ? p.nameEn : p.nameRu;
+}
+
+function getParticipantLabel(p) {
+    return state.language === 'en' ? p.labelEn : p.labelRu;
+}
+
+// Раскладка клавиатуры "ЧисСлоБукВ"
+const KEYBOARD_ROWS = [
+    [
+        { val: 'Ё', color: 'RED' }, { val: 'Й', color: 'RED' },
+        { val: '8', color: 'WHITE', isDigit: true }, { val: '6', color: 'WHITE', isDigit: true },
+        { val: '4', color: 'WHITE', isDigit: true }, { val: '2', color: 'WHITE', isDigit: true },
+        { val: '0', color: 'WHITE', isDigit: true }, { val: '1', color: 'WHITE', isDigit: true },
+        { val: '3', color: 'WHITE', isDigit: true }, { val: '5', color: 'WHITE', isDigit: true },
+        { val: '7', color: 'WHITE', isDigit: true }, { val: '9', color: 'WHITE', isDigit: true },
+        { val: 'Ы', color: 'RED' }, { val: 'Э', color: 'RED' }
+    ],
+    [
+        { val: 'Q', color: 'BLUE' }, { val: 'X', color: 'GREEN' },
+        { val: 'C', color: 'GREEN' }, { val: 'T', color: 'GREEN' },
+        { val: '\u{1D56F}', color: 'GREEN', isDouble: true }, { val: 'M', color: 'GREEN' },
+        { val: 'O', color: 'GREEN' }, { val: 'A', color: 'GREEN' },
+        { val: 'K', color: 'GREEN' }, { val: 'E', color: 'GREEN' },
+        { val: 'B', color: 'GREEN' }, { val: 'H', color: 'GREEN' },
+        { val: 'P', color: 'GREEN' }, { val: 'Ю', color: 'RED' }
+    ],
+    [
+        { val: 'Z', color: 'BLUE' }, { val: 'Y', color: 'BLUE' },
+        { val: 'S', color: 'BLUE' }, { val: 'U', color: 'BLUE' },
+        { val: 'F', color: 'BLUE' }, { val: 'G', color: 'BLUE' },
+        { val: 'J', color: 'BLUE' }, { val: 'I', color: 'BLUE' },
+        { val: 'W', color: 'BLUE' }, { val: 'V', color: 'BLUE' },
+        { val: 'L', color: 'BLUE' }, { val: 'N', color: 'BLUE' },
+        { val: 'R', color: 'BLUE' }, { val: 'Я', color: 'RED' }
+    ],
+    [
+        { val: 'З', color: 'RED' }, { val: 'Ч', color: 'RED' },
+        { val: 'Ц', color: 'RED' }, { val: 'У', color: 'RED' },
+        { val: 'Ф', color: 'RED' }, { val: 'Г', color: 'RED' },
+        { val: 'Ж', color: 'RED' }, { val: 'И', color: 'RED' },
+        { val: 'Ш', color: 'RED' }, { val: 'Щ', color: 'RED' },
+        { val: 'Л', color: 'RED' }, { val: 'Б', color: 'RED' },
+        { val: 'П', color: 'RED' }, { val: 'Ь', alt: 'Ъ', color: 'RED', isSplit: true }
+    ],
+    [
+        { val: 'delete', type: 'func' },
+        { val: '+', color: 'WHITE', isDigit: true }, { val: '|', color: 'WHITE', isDigit: true },
+        { val: '(', color: 'WHITE', isDigit: true }, { val: ';', color: 'WHITE', isDigit: true },
+        { val: '!', color: 'WHITE', isDigit: true },
+        { val: ' ', type: 'space' },
+        { val: '@', color: 'WHITE', isDigit: true }, { val: '*', color: 'WHITE', isDigit: true },
+        { val: ')', color: 'WHITE', isDigit: true }, { val: '_', color: 'WHITE', isDigit: true },
+        { val: ',', color: 'WHITE', isDigit: true },
+        { val: 'backspace', type: 'func' }
+    ]
+];
+
+// === ГЛОБАЛЬНОЕ СОСТОЯНИЕ ===
+let state = {
+    currentStage: 0,
+    language: sessionStorage.getItem('pigmalion_lang') || 'ru',
+    okKey: '',
+    inputData: [],
+    rowsOrder: [0, 1, 2, 3],
+    draggedRowIndex: null,
+    
+    // Эмиссия
+    activeParticipant: 0,
+    participantSelections: { 1: [], 2: [], 3: [], 4: [] },
+    selectedScenario: null,
+    
+    // Перекидка
+    units: [],
+    receivedUnits: [],
+    transactions: [],
+    draggedUE: null,
+    
+    // Возврат
+    returnAttempts: 0,
+    violations: [],
+    
+    // Результаты и ИСТОРИЯ КОНОВ
+    gameHistory: [], // ← Массив для хранения истории всех конов
+    currentKon: 0,
+    
+    musicEnabled: false,
+    musicFile: null
+};
+
+// === ПЕРЕВОДЫ ===
+const TRANSLATIONS = {
+    ru: {
+        languageRu: 'RU', languageEn: 'EN',
+        musicTitle: 'Загрузить музыку', infoTitle: 'Информация', understood: 'Понятно', close: 'Закрыть',
+        title: 'ПИГМАЛИОН', subtitle: 'Технология «ТУТумУЕ» от Человека к Человеку',
+        startDemo: 'Начать демонстрацию', createOk: 'Придумать О.К.',
+        introNote: 'НОД.-платформа нашего "числового сдерживания" и обмена ценностями.',
+        act1Title: 'Акт 1.0 — ЧисСлоБукВ', act1Header: 'От {min} до {max} символов',
+        acceptOk: 'Принять О.К.', keyboardPlaceholder: 'Придумайте свой „О.К." — Открытый Ключик',
+        keyboardSpace: 'ПРОБЕЛ', characters: 'символов',
+        okAccepted: 'Ваш О.К. принят!', okLengthError: 'Длина от {min} до {max}', musicLoaded: 'Музыка загружена',
+        infoModalTitle: '"i" информер. Для ВСЕХ !!',
+        infoGoalTitle: 'Цель платформы',
+        infoGoalText: '"Механика ежедневного поЛУЧения и приМЕНение «Учётной единицы» У.Е. по своему желанию. Альтернатива для 7 го тех.уклада мир. Ноономики"',
+        infoParticipantsTitle: 'Участники',
+        infoParticipant1: 'Организатор с уникальным О.К.',
+        infoParticipantsOther: 'Собеседники', infoParticipant5: 'Все люди',
+        infoUnitTitle: 'У.Е. - "Учётные Единицы"',
+        infoUnitText: 'Каждый день участники заказывают сами себе от 3 до 13 У.Е. из 4 триад:',
+        infoNormTitle: 'Рекомендация нормы',
+        infoNormText: 'Получатель не сможет принять более 1 У.Е. из каждой триады от отправителя за кон. (не более 5 у.е. от каждого за день)',
+        infoSpiritualTitle: 'Подведение итогов и "Шкала Духовности"',
+        infoSpiritualFormula: '(Отдал × 2) + (Принял × 1) - (Сгорело × 1)',
+        act2Title: 'Эмиссия — Акт 2.0', organizer: 'Организатор',
+        selectedUE: 'Выбрано У.Е.:', prevParticipant: '← Назад',
+        nextParticipant: 'Следующий участник →', finishEmission: 'Завершить эмиссию ✓',
+        skipParticipant: 'Переход хода (0 У.Е.)',
+        only21Error: 'Нельзя только №21', ueRangeError: 'От 3 до 13 У.Е.',
+        act3Title: 'Акт 3.0 — Перекидка', act3Subtitle: 'Перетащите У.Е. между участниками',
+        transferRegistry: 'Реестр передач', dragUEHint: 'Перетащите У.Е. между участниками',
+        backToEmission: '← К эмиссии', finishTransfer: 'Завершить → Акт 3.5',
+        transferConfirm: 'Подтверждение передачи', transferFrom: 'от', transferTo: 'к',
+        yes: 'Да', no: 'Нет', ueTransferred: 'У.Е. №{num} передано!',
+        returnJournal: 'Журнал возвратов',
+        returnDetected: 'Система обнаружила нарушения нормы.',
+        returnAuto: 'Лишние У.Е. автоматически возвращены отправителям.',
+        attempt: 'Попытка:', returnedToSenders: 'Возвращено отправителям:',
+        continueRedistribution: 'Продолжить перераспределение',
+        normViolations: 'Обнаружены нарушения нормы!',
+        allUEDistributed: 'Все У.Е. распределены правильно!',
+        attemptsExhausted: 'Лимит попыток (3/3) исчерпан. Переход к итогам.',
+        resultsTitle: 'Акт 4.0 — Итоги дня', resultsSubtitle: 'Результаты обмена ценностями',
+        place: 'Место', participant: 'Участник', score: 'Баллы',
+        gave: 'Отдал', gaveShort: 'Отдал', received: 'Принял', receivedShort: 'Принял', burned: 'Сгорело',
+        totalSpirituality: 'Общая духовность:',
+        summaryTitle: 'Сводная таблица (все коны)',
+        summarySent: 'Отдал Σ', summaryReceived: 'Принял Σ', summaryBurned: 'Сгорело Σ', summaryScore: 'Баллы Σ',
+        registry: 'Реестр транзакций', contacts: 'Контакты',
+        newDay: 'Новый кон', restart: 'Начать заново', newDayToast: 'Новый кон начался!',
+        backToResults: '← Вернуться к итогам',
+        registryTitle: 'Реестр транзакций', registryNoData: 'Пока нет транзакций',
+        registryTime: 'Время', registryFrom: 'От', registryTo: 'Кому', registryTriad: 'Триада', registryUENum: '№ У.Е.',
+        contactsTitle: 'Контакты автора',
+        authorDesc: 'DevOps-архитектор, Автор концепции и визионер стартапа "Пигмалион".',
+        fundraising: 'Сбор средств на пилотную НОД.-Платформу «П./К.» (нагрузоустойчивость до 100 мил.пользователей каждый день)',
+        proverb: '«Делай добро и бросай в воду»',
+        donationRange: '(сумма от 50 руб. до 999 999 руб.)',
+        dataCorrupted: 'Данные были повреждены. Состояние сброшено.',
+        konNumber: 'Кон №{num}'
+    },
+    en: {
+        languageRu: 'RU', languageEn: 'EN',
+        musicTitle: 'Upload music', infoTitle: 'Information', understood: 'Got it', close: 'Close',
+        title: 'PYGMALION', subtitle: 'Technology "TUTumUE" from Human to Human',
+        startDemo: 'Start demo', createOk: 'Create O.K.',
+        introNote: 'NOD platform for "numerical restraint" and value exchange.',
+        act1Title: 'Act 1.0 — NumberLetterWord', act1Header: 'From {min} to {max} symbols',
+        acceptOk: 'Accept O.K.', keyboardPlaceholder: 'Create your "O.K." — Open Key',
+        keyboardSpace: 'SPACE', characters: 'symbols',
+        okAccepted: 'Your O.K. accepted!', okLengthError: 'Length from {min} to {max}', musicLoaded: 'Music loaded',
+        infoModalTitle: '"i" informer. For EVERYONE!!',
+        infoGoalTitle: 'Platform goal',
+        infoGoalText: '"Daily mechanics for receiving and applying the Accounting Unit (U.E.) by free choice. An alternative for the 7th technological paradigm of noonomics."',
+        infoParticipantsTitle: 'Participants',
+        infoParticipant1: 'Organizer with a unique O.K.',
+        infoParticipantsOther: 'Interlocutors', infoParticipant5: 'All people',
+        infoUnitTitle: 'U.E. — "Accounting Units"',
+        infoUnitText: 'Every day, participants request from 3 to 13 U.E. for themselves from 4 triads:',
+        infoNormTitle: 'Norm recommendation',
+        infoNormText: 'A receiver cannot accept more than 1 U.E. from each triad from the same sender per con. (max 5 U.E. per sender per day)',
+        infoSpiritualTitle: 'Summary and "Spirituality Scale"',
+        infoSpiritualFormula: '(Sent × 2) + (Received × 1) - (Burned × 1)',
+        act2Title: 'Emission — Act 2.0', organizer: 'Organizer',
+        selectedUE: 'Selected U.E.:', prevParticipant: '← Back',
+        nextParticipant: 'Next participant →', finishEmission: 'Finish emission ✓',
+        skipParticipant: 'Skip turn (0 U.E.)',
+        only21Error: 'Cannot select only #21', ueRangeError: 'From 3 to 13 U.E.',
+        act3Title: 'Act 3.0 — Transfer', act3Subtitle: 'Drag U.E. between participants',
+        transferRegistry: 'Transfer registry', dragUEHint: 'Drag U.E. between participants',
+        backToEmission: '← To emission', finishTransfer: 'Finish → Act 3.5',
+        transferConfirm: 'Transfer confirmation', transferFrom: 'from', transferTo: 'to',
+        yes: 'Yes', no: 'No', ueTransferred: 'U.E. #{num} transferred!',
+        returnJournal: 'Return journal',
+        returnDetected: 'The system detected norm violations.',
+        returnAuto: 'Excess U.E. automatically returned to senders.',
+        attempt: 'Attempt:', returnedToSenders: 'Returned to senders:',
+        continueRedistribution: 'Continue redistribution',
+        normViolations: 'Norm violations detected!',
+        allUEDistributed: 'All U.E. distributed correctly!',
+        attemptsExhausted: 'Attempt limit (3/3) exhausted. Proceeding to summary.',
+        resultsTitle: 'Act 4.0 — Day Summary', resultsSubtitle: 'Value exchange results',
+        place: 'Place', participant: 'Participant', score: 'Score',
+        gave: 'Sent', gaveShort: 'Sent', received: 'Received', receivedShort: 'Received', burned: 'Burned',
+        totalSpirituality: 'Total spirituality:',
+        summaryTitle: 'Summary table (all cons)',
+        summarySent: 'Sent Σ', summaryReceived: 'Received Σ', summaryBurned: 'Burned Σ', summaryScore: 'Score Σ',
+        registry: 'Transaction registry', contacts: 'Contacts',
+        newDay: 'New con', restart: 'Start over', newDayToast: 'New con started!',
+        backToResults: '← Back to summary',
+        registryTitle: 'Transaction Registry', registryNoData: 'No transactions yet',
+        registryTime: 'Time', registryFrom: 'From', registryTo: 'To', registryTriad: 'Triad', registryUENum: 'U.E. #',
+        contactsTitle: 'Author contacts',
+        authorDesc: 'DevOps architect, Concept author and visionary of "Pygmalion" startup.',
+        fundraising: 'Fundraising for pilot NOD platform "P./K." (capacity up to 100 million users daily)',
+        proverb: '"Do good and throw it into the water"',
+        donationRange: '(amount from 50 RUB to 999,999 RUB)',
+        dataCorrupted: 'Data was corrupted. State reset.',
+        konNumber: 'Con #{num}'
+    }
+};
+
+function t(key, params = {}) {
+    const langPack = TRANSLATIONS[state.language] || TRANSLATIONS.ru;
+    let value = langPack[key] || TRANSLATIONS.ru[key] || key;
+    Object.entries(params).forEach(([paramKey, paramValue]) => {
+        value = value.replace(`{${paramKey}}`, paramValue);
+    });
+    return value;
+}
+
+// === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem('pigmalion_state');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            const { language, ...rest } = parsed || {};
+            state = { ...state, ...rest };
+            
+            // Инициализация массивов если их нет
+            if (!state.receivedUnits) state.receivedUnits = [];
+            if (!Array.isArray(state.inputData)) state.inputData = [];
+            if (!Array.isArray(state.rowsOrder) || state.rowsOrder.length !== 4) state.rowsOrder = [0, 1, 2, 3];
+            if (!state.participantSelections || typeof state.participantSelections !== 'object') {
+                state.participantSelections = { 1: [], 2: [], 3: [], 4: [] };
+            }
+            if (!Array.isArray(state.units)) state.units = [];
+            if (!Array.isArray(state.receivedUnits)) state.receivedUnits = [];
+            if (!Array.isArray(state.transactions)) state.transactions = [];
+            if (!Array.isArray(state.violations)) state.violations = [];
+            // ВАЖНО: Инициализация истории конов
+            if (!Array.isArray(state.gameHistory)) state.gameHistory = [];
+            if (!Number.isInteger(state.currentStage) || state.currentStage < 0 || state.currentStage > 6) {
+                state.currentStage = 0;
+            }
+        }
+    } catch (e) {
+        console.warn('Ошибка загрузки состояния:', e);
+    }
+}
+
+function saveState() {
+    try {
+        const { language, ...rest } = state;
+        localStorage.setItem('pigmalion_state', JSON.stringify(rest));
+    } catch (e) {
+        console.warn('Ошибка сохранения состояния:', e);
+    }
+}
+
+function setLanguage(lang) {
+    state.language = lang;
+    sessionStorage.setItem('pigmalion_lang', lang);
+    render();
+}
+
+function icon(name, size = 20) {
+    const icons = {
+        music: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
+        info: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`,
+        sparkles: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>`,
+        delete: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`,
+        backspace: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/><path d="m18 9-6 6"/><path d="m12 9 6 6"/></svg>`,
+        move: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8L22 12L18 16"/><path d="M6 8L2 12L6 16"/><line x1="2" y1="12" x2="22" y2="12"/></svg>`,
+        check: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>`,
+        sun: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
+        alert: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`,
+        phone: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>`,
+        mail: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`
+    };
+    return icons[name] || '';
+}
+
+function toast(message, type = 'info') {
+    const existing = $('.toast');
+    if (existing) existing.remove();
+    
+    const toastEl = document.createElement('div');
+    toastEl.className = `toast toast-${type}`;
+    toastEl.style.cssText = `
+        position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+        padding: 0.75rem 1.5rem;
+        background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#22c55e' : type === 'warning' ? '#facc15' : '#3b82f6'};
+        color: ${type === 'warning' ? '#0f172a' : 'white'};
+        border-radius: 0.5rem; font-size: 0.875rem; z-index: 2000;
+        animation: fade-in 0.2s ease;
+    `;
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => toastEl.remove(), 3000);
+}
+
+// === РЕНДЕРИНГ ЭКРАНОВ ===
+function render() {
+    const app = $('#app');
+    if (!app) return;
+    
+    try {
+        switch (state.currentStage) {
+            case 0: renderIntro(app); break;
+            case 1: renderKeyboard(app); break;
+            case 2: renderEmission(app); break;
+            case 3: renderTransfer(app); break;
+            case 4: renderReturn(app); break;
+            case 5: renderResults(app); break;
+            case 6: renderContacts(app); break;
+            default: renderIntro(app);
+        }
+    } catch (error) {
+        console.error('Ошибка рендера:', error);
+        localStorage.removeItem('pigmalion_state');
+        state.currentStage = 0;
+        renderIntro(app);
+        toast(t('dataCorrupted'), 'error');
+    }
+    
+    saveState();
+}
+
+// === ЭКРАН 0: ЗАСТАВКА ===
+function renderIntro(container) {
+    container.innerHTML = `
+        <div class="screen screen-center">
+            <div class="top-bar">
+                <button class="btn btn-icon btn-secondary" id="btnMusic" title="${t('musicTitle')}">${icon('music')}</button>
+                <button class="btn btn-icon btn-secondary" id="btnInfo" title="${t('infoTitle')}">${icon('info')}</button>
+            </div>
+            <div class="flex gap-2 mb-4">
+                <button class="btn btn-secondary btn-sm ${state.language === 'ru' ? 'active' : ''}" id="btnLangRu">${t('languageRu')}</button>
+                <button class="btn btn-secondary btn-sm ${state.language === 'en' ? 'active' : ''}" id="btnLangEn">${t('languageEn')}</button>
+            </div>
+            <div class="sacred-geometry mb-8">
+                ${Array.from({ length: 7 }).map((_, i) => `
+                    <div class="sacred-circle" style="transform: rotate(${i * 60}deg) translate(40px) rotate(-${i * 60}deg);"></div>
+                `).join('')}
+                <div class="sacred-center"></div>
+                <div class="sacred-icon">${icon('sparkles', 32)}</div>
+            </div>
+            <h1 class="text-4xl text-gradient mb-2">${t('title')}</h1>
+            <p class="text-secondary text-lg mb-2">${t('subtitle')}</p>
+            <button class="btn btn-success btn-lg" id="btnStart">▶ ${state.okKey ? t('startDemo') : t('createOk')}</button>
+            <p class="text-muted text-sm mb-8" style="max-width: 400px; text-align: center;">${t('introNote')}</p>
+        </div>
+    `;
+    
+    $('#btnStart').onclick = () => {
+        if (state.okKey) { state.currentStage = 2; } else { state.currentStage = 1; }
+        render();
+    };
+    $('#btnMusic').onclick = openMusicDialog;
+    $('#btnInfo').onclick = openInfoModal;
+    $('#btnLangRu').onclick = () => setLanguage('ru');
+    $('#btnLangEn').onclick = () => setLanguage('en');
+}
+
+function openMusicDialog() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'audio/*';
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const audio = $('#bgMusic');
+            audio.src = URL.createObjectURL(file);
+            audio.play();
+            state.musicEnabled = true;
+            toast(t('musicLoaded'), 'success');
+        }
+    };
+    input.click();
+}
+
+function openInfoModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal info-modal">
+            <h2 class="modal-title text-gradient">${t('infoModalTitle')}</h2>
+            <h3>${t('infoGoalTitle')}</h3>
+            <p>${t('infoGoalText')}</p>
+            <h3>${t('infoParticipantsTitle')}</h3>
+            <ul>
+                <li><b>${getParticipantName(PARTICIPANTS[0])} (${getParticipantLabel(PARTICIPANTS[0])})</b> — ${t('infoParticipant1')}</li>
+                <li><b>${getParticipantName(PARTICIPANTS[1])}-${getParticipantName(PARTICIPANTS[3])}</b> — ${t('infoParticipantsOther')}</li>
+                <li><b>${getParticipantName(PARTICIPANTS[4])}</b> — ${t('infoParticipant5')}</li>
+            </ul>
+            <h3>${t('infoUnitTitle')}</h3>
+            <p>${t('infoUnitText')}</p>
+            <ul>
+                <li style="color: var(--triad-red);">${getTriadName('T1')}: 1-3</li>
+                <li style="color: var(--triad-yellow);">${getTriadName('T2')}: 4-6</li>
+                <li style="color: var(--triad-green);">${getTriadName('T3')}: 7-9</li>
+                <li style="color: var(--triad-blue);">${getTriadName('T4')}: 10-12</li>
+                <li style="color: var(--triad-purple);">${getTriadName('T5')}</li>
+            </ul>
+            <h3>${t('infoNormTitle')}</h3>
+            <p>${t('infoNormText')}</p>
+            <h3>${t('infoSpiritualTitle')}</h3>
+            <p><b>${t('infoSpiritualFormula')}</b></p>
+            <div class="modal-actions mt-6">
+                <button class="btn btn-primary" id="closeInfoModal">${t('understood')}</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    modal.onclick = (e) => { if (e.target === modal || e.target.id === 'closeInfoModal') modal.remove(); };
+}
+
+// === ЭКРАН 1: КЛАВИАТУРА ===
+function renderKeyboard(container) {
+    container.innerHTML = `
+        <div class="screen">
+            <h1 class="text-3xl text-gradient mb-2">${t('act1Title')}</h1>
+            <p class="text-secondary mb-4">${t('act1Header', { min: MIN_OK_LENGTH, max: MAX_OK_LENGTH })}</p>
+            <div class="input-display mb-2 w-full" id="inputDisplay">
+                ${state.inputData.length === 0 
+                    ? `<span class="input-placeholder">${t('keyboardPlaceholder')}</span>` 
+                    : renderInputChars()}
+            </div>
+            <div class="text-sm text-muted mb-4">${state.inputData.length} / ${MAX_OK_LENGTH} ${t('characters')}</div>
+            <div class="keyboard-container mb-6" id="keyboard">${renderKeyboardRows()}</div>
+            <button class="btn btn-success btn-lg" id="btnAcceptOK">${icon('check')} ${t('acceptOk')}</button>
+        </div>
+    `;
+    setupKeyboardHandlers();
+}
+
+function renderInputChars() {
+    return '::' + state.inputData.map(item => {
+        let colorClass = 'color: var(--text-primary)';
+        if (item.color === 'RED') colorClass = 'color: var(--triad-red)';
+        if (item.color === 'BLUE') colorClass = 'color: var(--triad-blue)';
+        if (item.color === 'GREEN') colorClass = 'color: var(--triad-green)';
+        return `<span style="${colorClass}">${item.char}</span>`;
+    }).join('') + '::';
+}
+
+function renderKeyboardRows() {
+    let html = '';
+    state.rowsOrder.forEach((rowIdx, visualIdx) => {
+        const row = KEYBOARD_ROWS[rowIdx];
+        html += `<div class="keyboard-row" draggable="true" data-row="${rowIdx}" data-visual="${visualIdx}">
+            <span class="text-muted" style="cursor: grab; margin-right: 0.5rem;">${icon('move', 16)}</span>
+            ${row.map(key => renderKey(key)).join('')}
+        </div>`;
+    });
+    html += `<div class="keyboard-row fixed" data-row="4">${KEYBOARD_ROWS[4].map(key => renderKey(key)).join('')}</div>`;
+    return html;
+}
+
+function renderKey(key) {
+    if (key.type === 'func') {
+        return `<button class="key key-func" data-action="${key.val}">${key.val === 'delete' ? icon('delete', 16) : icon('backspace', 16)}</button>`;
+    }
+    if (key.type === 'space') {
+        return `<button class="key key-space" data-char=" ">${t('keyboardSpace')}</button>`;
+    }
+    if (key.isSplit) {
+        return `<button class="key key-red key-split" data-char="${key.val}" data-char-alt="${key.alt}" data-color="${key.color || 'RED'}"><span class="key-split-tl">${key.val}</span><span class="key-split-br">${key.alt}</span></button>`;
+    }
+    let colorClass = 'key-white';
+    if (key.color === 'RED') colorClass = 'key-red';
+    if (key.color === 'BLUE') colorClass = 'key-blue';
+    if (key.color === 'GREEN') colorClass = 'key-green';
+    if (key.isDigit) colorClass = 'key-white';
+    return `<button class="key ${colorClass}" data-char="${key.val}" data-color="${key.color || 'WHITE'}">${key.val}</button>`;
+}
+
+function setupKeyboardHandlers() {
+    $$('.key').forEach(key => {
+        key.onclick = (event) => {
+            const action = key.dataset.action;
+            const char = key.dataset.char;
+            const color = key.dataset.color || 'WHITE';
+            
+            if (action === 'delete') state.inputData = [];
+            else if (action === 'backspace') state.inputData = state.inputData.slice(0, -1);
+            else if (char) {
+                const altChar = key.dataset.charAlt;
+                if (altChar) {
+                    const rect = key.getBoundingClientRect();
+                    const x = (event?.clientX || rect.left) - rect.left;
+                    const y = (event?.clientY || rect.top) - rect.top;
+                    handleKeyPress((x + y > rect.width) ? altChar : char, color);
+                } else {
+                    handleKeyPress(char, color);
+                }
+            }
+            updateInputDisplay();
+        };
+    });
+    
+    const rows = $$('.keyboard-row[draggable="true"]');
+    rows.forEach(row => {
+        row.ondragstart = () => { state.draggedRowIndex = parseInt(row.dataset.visual); row.classList.add('dragging'); };
+        row.ondragend = () => { row.classList.remove('dragging'); state.draggedRowIndex = null; $$('.keyboard-row').forEach(r => r.classList.remove('drag-over')); };
+        row.ondragover = (e) => { e.preventDefault(); row.classList.add('drag-over'); };
+        row.ondragleave = () => { row.classList.remove('drag-over'); };
+        row.ondrop = (e) => {
+            e.preventDefault();
+            const targetIdx = parseInt(row.dataset.visual);
+            if (state.draggedRowIndex !== null && state.draggedRowIndex !== targetIdx) {
+                const newOrder = [...state.rowsOrder];
+                const draggedRow = newOrder[state.draggedRowIndex];
+                newOrder.splice(state.draggedRowIndex, 1);
+                newOrder.splice(targetIdx, 0, draggedRow);
+                state.rowsOrder = newOrder;
+                $('#keyboard').innerHTML = renderKeyboardRows();
+                setupKeyboardHandlers();
+            }
+        };
+    });
+    
+    $('#btnAcceptOK').onclick = acceptOK;
+}
+
+function handleKeyPress(char, color) {
+    if (state.inputData.length >= MAX_OK_LENGTH) return;
+    const currentText = state.inputData.map(i => i.char).join('');
+    if (char === ' ') {
+        if (state.inputData.length === 0) return;
+        if (currentText.endsWith(' ')) return;
+        if ((currentText.match(/ /g) || []).length >= MAX_SPACES) return;
+    }
+    state.inputData.push({ char, color });
+}
+
+function updateInputDisplay() {
+    const display = $('#inputDisplay');
+    if (!display) return;
+    if (state.inputData.length === 0) {
+        display.innerHTML = `<span class="input-placeholder">${t('keyboardPlaceholder')}</span>`;
+        display.classList.remove('valid', 'invalid');
+    } else {
+        display.innerHTML = renderInputChars();
+        const text = state.inputData.map(i => i.char).join('');
+        const isValid = text.trim().length >= MIN_OK_LENGTH && text.length <= MAX_OK_LENGTH && !/  +/.test(text) && !text.endsWith(' ');
+        display.classList.toggle('valid', isValid);
+        display.classList.toggle('invalid', !isValid);
+    }
+    const counter = $('.text-sm.text-muted');
+    if (counter) counter.textContent = `${state.inputData.length} / ${MAX_OK_LENGTH} ${t('characters')}`;
+}
+
+function acceptOK() {
+    const text = state.inputData.map(i => i.char).join('').trim();
+    if (text.length < MIN_OK_LENGTH || text.length > MAX_OK_LENGTH) {
+        toast(t('okLengthError', { min: MIN_OK_LENGTH, max: MAX_OK_LENGTH }), 'error');
+        return;
+    }
+    state.okKey = text;
+    toast(t('okAccepted'), 'success');
+    state.currentStage = 2;
+    render();
+}
+
+// === ЭКРАН 2: ЭМИССИЯ ===
+function renderEmission(container) {
+    const participant = PARTICIPANTS[state.activeParticipant];
+    const selections = state.participantSelections[participant.id] || [];
+    const ueCount = calculateUECount(selections);
+    
+    container.innerHTML = `
+        <div class="screen">
+            <h1 class="text-2xl text-gradient mb-2">${t('act2Title')}</h1>
+            <p class="text-muted text-sm mb-4">${t('organizer')}: <span class="text-primary">::${state.okKey}::</span></p>
+            <div class="progress-dots mb-4">
+                ${PARTICIPANTS.slice(0, 4).map((p, idx) => `
+                    <div class="progress-dot ${idx === state.activeParticipant ? 'active' : (state.participantSelections[p.id]?.length > 0 ? 'done' : '')}"></div>
+                `).join('')}
+            </div>
+            <h2 class="text-lg mb-2">${getParticipantName(participant)} <span class="text-muted">(${getParticipantLabel(participant)})</span></h2>
+            <p class="text-sm mb-4">${t('selectedUE')} <span class="${ueCount >= 3 && ueCount <= 13 ? 'text-success' : 'text-danger'}">${ueCount}</span> / 3-13</p>
+            <div class="scenarios-grid mb-4">
+                ${SCENARIOS.map(s => `
+                    <button class="scenario-btn ${state.selectedScenario === s.id ? 'active' : ''}" data-scenario="${s.id}">№${s.id}: ${s.perParticipant} U.E.</button>
+                `).join('')}
+            </div>
+            <div class="triad-grid mb-6">
+                ${Object.entries(TRIADS).map(([key, val]) => {
+                    const isSelected = selections.includes(key);
+                    return `
+                        <div class="triad-card ${isSelected ? 'selected' : ''}" data-triad="${key}">
+                            <div class="triad-name" style="color: ${val.color}">${getTriadName(key)}</div>
+                            <div class="triad-count">${key === 'T5' ? '1 U.E.' : '3 U.E.'}</div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+            <div class="flex gap-4">
+                ${state.activeParticipant > 0 ? `<button class="btn btn-secondary" id="btnPrevParticipant">${t('prevParticipant')}</button>` : ''}
+                <button class="btn btn-primary" id="btnNextParticipant">
+                    ${state.activeParticipant < 3 ? t('nextParticipant') : t('finishEmission')}
+                </button>
+            </div>
+            <button class="btn btn-secondary mt-4" id="btnSkipParticipant">${t('skipParticipant')}</button>
+        </div>
+    `;
+    setupEmissionHandlers();
+}
+
+function calculateUECount(selections) {
+    let count = 0;
+    selections.forEach(s => { count += s === 'T5' ? 1 : 3; });
+    return count;
+}
+
+function setupEmissionHandlers() {
+    $$('.scenario-btn').forEach(btn => {
+        btn.onclick = () => {
+            const scenarioId = parseInt(btn.dataset.scenario);
+            state.selectedScenario = scenarioId;
+            const scenario = SCENARIOS.find(s => s.id === scenarioId);
+            applyScenario(scenario);
+            render();
+        };
+    });
+    
+    $$('.triad-card').forEach(card => {
+        card.onclick = () => {
+            const triad = card.dataset.triad;
+            const pId = PARTICIPANTS[state.activeParticipant].id;
+            const sel = state.participantSelections[pId] || [];
+            state.participantSelections[pId] = sel.includes(triad) ? sel.filter(t => t !== triad) : [...sel, triad];
+            state.selectedScenario = null;
+            render();
+        };
+    });
+    
+    if ($('#btnPrevParticipant')) $('#btnPrevParticipant').onclick = () => { state.activeParticipant--; render(); };
+    
+    $('#btnNextParticipant').onclick = () => {
+        const pId = PARTICIPANTS[state.activeParticipant].id;
+        const sel = state.participantSelections[pId] || [];
+        const ueCount = calculateUECount(sel);
+        
+        if (sel.length === 1 && sel[0] === 'T5') { toast(t('only21Error'), 'error'); return; }
+        if (sel.length > 0 && (ueCount < 3 || ueCount > 13)) { toast(t('ueRangeError'), 'error'); return; }
+        
+        if (state.activeParticipant < 3) {
+            state.activeParticipant++;
+            render();
+        } else {
+            generateUnits();
+            state.currentStage = 3;
+            render();
+        }
+    };
+    
+    $('#btnSkipParticipant').onclick = () => {
+        state.participantSelections[PARTICIPANTS[state.activeParticipant].id] = [];
+        if (state.activeParticipant < 3) {
+            state.activeParticipant++;
+            render();
+        } else {
+            generateUnits();
+            state.currentStage = 3;
+            render();
+        }
+    };
+}
+
+function applyScenario(scenario) {
+    const triadsForCount = {
+        13: ['T1', 'T2', 'T3', 'T4', 'T5'],
+        12: ['T1', 'T2', 'T3', 'T4'],
+        10: ['T1', 'T2', 'T3', 'T5'],
+        9:  ['T1', 'T2', 'T3'],
+        7:  ['T1', 'T2', 'T5'],
+        6:  ['T1', 'T2'],
+        4:  ['T1', 'T5'],
+        3:  ['T1']
+    };
+    const triads = triadsForCount[scenario.perParticipant] || ['T1'];
+    [1, 2, 3, 4].forEach(id => { state.participantSelections[id] = [...triads]; });
+}
+
+function generateUnits() {
+    state.units = [];
+    state.receivedUnits = [];
+    
+    [1, 2, 3, 4].forEach(participantId => {
+        const selections = state.participantSelections[participantId] || [];
+        selections.forEach(triadKey => {
+            const triad = TRIADS[triadKey];
+            triad.range.forEach(num => {
+                state.units.push({
+                    id: `${triadKey}_${num}_p${participantId}`,
+                    triad: triadKey,
+                    number: num,
+                    color: triad.color,
+                    owner: String(participantId),
+                    to: null
+                });
+            });
+        });
+    });
+    
+    state.transactions = [];
+}
+
+// === ЭКРАН 3: ПЕРЕКИДКА ===
+function renderTransfer(container) {
+    container.innerHTML = `
+        <div class="screen">
+            <h1 class="text-2xl text-gradient mb-2">${t('act3Title')}</h1>
+            <p class="text-muted text-sm mb-6">${t('act3Subtitle')}</p>
+            <div class="arena mb-4" id="arena">${renderArena()}</div>
+            <div class="registry mb-6">
+                <div class="registry-title">${t('transferRegistry')} (${state.transactions.length})</div>
+                ${state.transactions.length === 0 
+                    ? `<p class="text-muted text-xs">${t('dragUEHint')}</p>`
+                    : state.transactions.map(t => `
+                        <div class="registry-item" style="color: ${TRIADS[t.triad].color};">
+                            ${getParticipantName(PARTICIPANTS.find(p => p.id === t.from))} → ${getParticipantName(PARTICIPANTS.find(p => p.id === t.to))} — ${getTriadName(t.triad)} №${t.number}
+                        </div>
+                    `).join('')
+                }
+            </div>
+            <div class="flex gap-4">
+                <button class="btn btn-secondary" id="btnBackToEmission">${t('backToEmission')}</button>
+                <button class="btn btn-primary" id="btnFinishTransfer">${t('finishTransfer')}</button>
+            </div>
+        </div>
+    `;
+    setupTransferHandlers();
+}
+
+function renderArena() {
+    let html = `
+        <div class="participant" style="position: absolute; top: 50%; right: -20%; transform: translateY(-50%);">
+            <div class="participant-card" id="dropZone5">
+                <div class="participant-name" style="color: var(--triad-purple);">${getParticipantName(PARTICIPANTS[4])}</div>
+                <div class="text-xs text-muted">${getParticipantLabel(PARTICIPANTS[4])}</div>
+                <div class="participant-inventory">${renderParticipantUnits('5')}</div>
+            </div>
+        </div>
+    `;
+    
+    const positions = [
+        { top: '5%', left: '50%', transform: 'translateX(-50%)' },
+        { top: '50%', right: '9%', transform: 'translateY(-50%)' },
+        { bottom: '5%', left: '50%', transform: 'translateX(-50%)' },
+        { top: '50%', left: '9%', transform: 'translateY(-50%)' }
+    ];
+    const order = [3, 4, 1, 2];
+    
+    order.forEach((pId, idx) => {
+        const pos = positions[idx];
+        const style = Object.entries(pos).map(([k, v]) => `${k}: ${v}`).join('; ');
+        html += `
+            <div class="participant" style="position: absolute; ${style}">
+                <div class="participant-card" id="dropZone${pId}">
+                    <div class="participant-name">${getParticipantName(PARTICIPANTS[pId - 1])}</div>
+                    <div class="participant-inventory">${renderParticipantUnits(String(pId))}</div>
+                </div>
+            </div>
+        `;
+    });
+    
+    return html;
+}
+
+function renderParticipantUnits(ownerId) {
+    const units = state.units.filter(u => u.owner === ownerId);
+    if (units.length === 0) return '<span class="text-muted text-xs">—</span>';
+    
+    return units.map(u => {
+        const triadInfo = TRIADS[u.triad];
+        let iconSvg = '';
+        if (u.triad === 'T1') iconSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM12 20a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>';
+        if (u.triad === 'T2') iconSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3v7h7l-8 12v-9H5l8-10z"/></svg>';
+        if (u.triad === 'T3') iconSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM10 17l5-5-5-5v10z"/></svg>';
+        if (u.triad === 'T4') iconSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>';
+        if (u.triad === 'T5') iconSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+        
+        return `<div class="ue" draggable="true" data-ue-id="${u.id}" style="background: ${triadInfo.color}; cursor: grab;" title="${getTriadName(u.triad)}">${iconSvg}</div>`;
+    }).join('');
+}
+
+function setupTransferHandlers() {
+    $$('.ue').forEach(ue => {
+        ue.ondragstart = (e) => {
+            const ueId = ue.dataset.ueId;
+            state.draggedUE = state.units.find(u => u.id === ueId);
+            ue.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        };
+        ue.ondragend = () => { ue.classList.remove('dragging'); state.draggedUE = null; };
+    });
+    
+    $$('[id^="dropZone"]').forEach(zone => {
+        zone.ondragover = (e) => { e.preventDefault(); zone.style.boxShadow = '0 0 20px var(--accent-primary)'; };
+        zone.ondragleave = () => { zone.style.boxShadow = ''; };
+        zone.ondrop = (e) => {
+            e.preventDefault();
+            zone.style.boxShadow = '';
+            const targetId = zone.id.replace('dropZone', '');
+            if (state.draggedUE && state.draggedUE.owner !== targetId) {
+                showTransferConfirm(state.draggedUE, targetId);
+            }
+        };
+    });
+    
+    $('#btnBackToEmission').onclick = () => { state.currentStage = 2; render(); };
+    
+    $('#btnFinishTransfer').onclick = () => {
+        const violations = checkNormViolations();
+        
+        if (violations.length > 0) {
+            state.violations = violations;
+            state.returnAttempts++;
+            
+            if (state.returnAttempts >= 3) {
+                toast(t('attemptsExhausted'), 'warning');
+                state.currentStage = 5;
+            } else {
+                state.currentStage = 4;
+                toast(t('normViolations'), 'warning');
+            }
+        } else {
+            state.violations = [];
+            state.currentStage = 5;
+            toast(t('allUEDistributed'), 'success');
+        }
+        render();
+    };
+}
+
+function showTransferConfirm(ue, targetId) {
+    const fromName = getParticipantName(PARTICIPANTS.find(p => p.id === ue.owner));
+    const toName = getParticipantName(PARTICIPANTS.find(p => p.id === targetId));
+    const triadInfo = TRIADS[ue.triad];
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal">
+            <h3 class="modal-title">${t('transferConfirm')}</h3>
+            <p class="modal-content">
+                <b style="color: ${triadInfo.color};">${getTriadName(ue.triad)} №${ue.number}</b><br>
+                ${t('transferFrom')} <span class="text-primary font-bold">${fromName}</span> → <span class="text-success font-bold">${toName}</span>?
+            </p>
+            <div class="modal-actions">
+                <button class="btn btn-success" id="confirmTransfer">${t('yes')}</button>
+                <button class="btn btn-danger" id="cancelTransfer">${t('no')}</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    $('#confirmTransfer').onclick = () => { executeTransfer(ue, targetId); modal.remove(); render(); };
+    $('#cancelTransfer').onclick = () => { modal.remove(); };
+}
+
+function executeTransfer(ue, targetId) {
+    const unitIndex = state.units.findIndex(u => u.id === ue.id);
+    if (unitIndex === -1) return;
+    state.units.splice(unitIndex, 1);
+    
+    if (!state.receivedUnits) state.receivedUnits = [];
+    state.receivedUnits.push({ ...ue, owner: targetId, from: ue.owner, timestamp: Date.now() });
+    
+    const now = new Date();
+    state.transactions.push({
+        from: ue.owner, to: targetId, triad: ue.triad, number: ue.number, color: ue.color,
+        timestamp: now.getTime(), timeStr: now.toLocaleTimeString()
+    });
+    
+    toast(t('ueTransferred', { num: ue.number }), 'success');
+}
+
+function checkNormViolations() {
+    const violations = [];
+    const byReceiver = {};
+    state.transactions.forEach(t => {
+        if (!byReceiver[t.to]) byReceiver[t.to] = [];
+        byReceiver[t.to].push(t);
+    });
+    
+    Object.entries(byReceiver).forEach(([receiverId, txs]) => {
+        const byFromAndTriad = {};
+        txs.forEach(t => {
+            const key = `${t.from}_${t.triad}`;
+            if (!byFromAndTriad[key]) byFromAndTriad[key] = [];
+            byFromAndTriad[key].push(t);
+        });
+        
+        Object.entries(byFromAndTriad).forEach(([key, group]) => {
+            if (group.length > 1) {
+                const [fromId, triad] = key.split('_');
+                group.slice(1).forEach(t => {
+                    violations.push({
+                        id: t.timestamp, from: t.from, to: t.to, triad: t.triad, number: t.number,
+                        msg: `${getParticipantName(PARTICIPANTS.find(p => p.id === fromId))} → ${getParticipantName(PARTICIPANTS.find(p => p.id === receiverId))}: >1 "${getTriadName(triad)}" (№${t.number})`
+                    });
+                    
+                    const receivedIndex = state.receivedUnits.findIndex(u => 
+                        u.triad === t.triad && u.number === t.number && u.owner === receiverId
+                    );
+                    if (receivedIndex !== -1) {
+                        const unit = state.receivedUnits[receivedIndex];
+                        state.receivedUnits.splice(receivedIndex, 1);
+                        state.units.push({ ...unit, owner: t.from, to: null, from: undefined });
+                    }
+                    state.transactions = state.transactions.filter(tx => tx.timestamp !== t.timestamp);
+                });
+            }
+        });
+    });
+    
+    return violations;
+}
+
+// === ЭКРАН 3.5: ВОЗВРАТ ===
+function renderReturn(container) {
+    container.innerHTML = `
+        <div class="screen screen-center">
+            <div class="modal" style="max-width: 500px; border-color: var(--accent-warning); box-shadow: 0 0 40px rgba(239, 68, 68, 0.2);">
+                <div style="color: var(--accent-warning); margin-bottom: 1rem;">${icon('alert', 48)}</div>
+                <h1 class="modal-title" style="color: var(--accent-warning);">${t('returnJournal')}</h1>
+                <p class="text-muted mb-4">${t('returnDetected')}<br>${t('returnAuto')}</p>
+                <div class="mb-6 p-2 rounded" style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color);">
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>${t('attempt')}</span>
+                        <span class="font-bold text-primary">${state.returnAttempts} / 3</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2.5">
+                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: ${(state.returnAttempts / 3) * 100}%"></div>
+                    </div>
+                </div>
+                <div class="registry mb-6" style="max-height: 200px; text-align: left;">
+                    <div class="registry-title">${t('returnedToSenders')}</div>
+                    ${state.violations.map(v => `
+                        <div class="registry-item" style="color: ${TRIADS[v.triad].color}; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>↩</span> ${v.msg}
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="btn btn-primary btn-lg w-full" id="btnContinueReturn">${t('continueRedistribution')}</button>
+            </div>
+        </div>
+    `;
+    $('#btnContinueReturn').onclick = () => { state.currentStage = 3; render(); };
+}
+
+// === ФУНКЦИЯ: Снимок результатов текущего кона ===
+function getCurrentKonSnapshot() {
+    const participants = PARTICIPANTS.map(p => {
+        const sent = state.transactions.filter(t => t.from === p.id).length;
+        const received = (state.receivedUnits || []).filter(u => u.owner === p.id).length;
+        const burned = state.units.filter(u => u.owner === p.id).length;
+        const score = (sent * 2) + received - burned;
+        return { id: p.id, name: getParticipantName(p), sent, received, burned, score };
+    });
+    return {
+        konNumber: state.currentKon + 1,
+        date: new Date().toLocaleDateString(state.language === 'ru' ? 'ru-RU' : 'en-US'),
+        transactions: [...state.transactions],
+        participants
+    };
+}
+
+// === ФУНКЦИЯ: Агрегирование всех конов (сводная таблица) ===
+// ВАЖНО: Показывается только если есть хотя бы 1 завершённый кон в истории
+function getAggregatedSummaryRows() {
+    // Если нет истории — возвращаем пустой массив (сводная не показывается)
+    if (!state.gameHistory || state.gameHistory.length < 1) return [];
+    
+    const totals = {};
+    
+    // Суммируем все предыдущие коны из истории
+    state.gameHistory.forEach(session => {
+        (session.participants || []).forEach(p => {
+            if (!totals[p.id]) totals[p.id] = { name: p.name, sent: 0, received: 0, burned: 0, score: 0 };
+            totals[p.id].sent += p.sent || 0;
+            totals[p.id].received += p.received || 0;
+            totals[p.id].burned += p.burned || 0;
+            totals[p.id].score += p.score || 0;
+        });
+    });
+    
+    // Добавляем текущий кон
+    const currentSnapshot = getCurrentKonSnapshot();
+    currentSnapshot.participants.forEach(p => {
+        if (!totals[p.id]) totals[p.id] = { name: p.name, sent: 0, received: 0, burned: 0, score: 0 };
+        totals[p.id].sent += p.sent || 0;
+        totals[p.id].received += p.received || 0;
+        totals[p.id].burned += p.burned || 0;
+        totals[p.id].score += p.score || 0;
+    });
+    
+    return Object.entries(totals).map(([id, row]) => ({ id, ...row })).sort((a, b) => b.score - a.score);
+}
+
+// === ЭКРАН 4: РЕЗУЛЬТАТЫ ===
+function renderResults(container) {
+    // Итоговая таблица — результат за прошедший кон
+    let stats = PARTICIPANTS.map(p => {
+        const sent = state.transactions.filter(t => t.from === p.id).length;
+        const received = (state.receivedUnits || []).filter(u => u.owner === p.id).length;
+        const burned = state.units.filter(u => u.owner === p.id).length;
+        const score = (sent * 2) + (received * 1) - (burned * 1);
+        const spirituality = Math.min(100, Math.max(0, (score / 30) * 100));
+        return { ...p, sent, received, burned, score, spirituality };
+    });
+    
+    stats.sort((a, b) => b.score - a.score);
+    const totalScore = stats.reduce((s, r) => s + r.score, 0);
+    
+    // Сводная таблица — только если есть история (появляется после 2-го кона)
+    const aggregatedRows = getAggregatedSummaryRows();
+    
+    container.innerHTML = `
+        <div class="screen">
+            <div style="color: var(--accent-primary); margin-bottom: 1rem;">${icon('sun', 48)}</div>
+            <h1 class="text-3xl text-gradient-success mb-2">${t('resultsTitle')}</h1>
+            <p class="text-muted mb-2">${t('resultsSubtitle')}</p>
+            <p class="text-muted text-sm mb-4">${t('konNumber', { num: state.currentKon + 1 })}</p>
+            
+            <!-- Итоговая таблица (за текущий кон) -->
+            <div class="table-container mb-6">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>${t('place')}</th>
+                            <th>${t('participant')}</th>
+                            <th class="text-center">${t('score')}</th>
+                            <th class="text-center" style="font-size: 0.75rem">${t('gave')}<br>(x2)</th>
+                            <th class="text-center" style="font-size: 0.75rem">${t('received')}<br>(x1)</th>
+                            <th class="text-center" style="font-size: 0.75rem">${t('burned')}<br>(-1)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${stats.map((s, idx) => `
+                            <tr ${s.id === '5' ? 'style="background: rgba(168, 85, 247, 0.1);"' : ''}>
+                                <td class="font-bold text-muted">#${idx + 1}</td>
+                                <td>
+                                    <div class="flex flex-col">
+                                        <span>${getParticipantName(s)}</span>
+                                        <div class="spirituality-bar mt-1" style="height: 4px; max-width: 100px;">
+                                            <div class="spirituality-fill" style="width: ${s.spirituality}%; background: ${s.id === '5' ? 'var(--triad-purple)' : 'var(--accent-success)'}"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center font-bold text-xl text-primary">${s.score}</td>
+                                <td class="text-center text-muted">${s.sent}</td>
+                                <td class="text-center text-success">${s.received}</td>
+                                <td class="text-center text-danger">${s.burned}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                    <tfoot>
+                        <tr><td colspan="2" class="text-right">${t('totalSpirituality')}</td><td colspan="4" class="text-center font-bold text-lg">${totalScore}</td></tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="flex gap-4 flex-wrap justify-center">
+                <button class="btn btn-secondary" id="btnViewRegistry">${t('registry')}</button>
+                <button class="btn btn-secondary" id="btnContacts">${t('contacts')}</button>
+                <button class="btn btn-success btn-lg" id="btnNewDay">${icon('sun')} ${t('newDay')}</button>
+                <button class="btn btn-danger" id="btnRestart">${t('restart')}</button>
+            </div>
+            
+            <!-- Сводная таблица (сумма всех конов, только после 2-го кона) -->
+            ${aggregatedRows.length ? `
+                <div class="table-container mt-6">
+                    <h3 class="mb-3">${t('summaryTitle')}</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>${t('participant')}</th>
+                                <th class="text-center">${t('summarySent')}</th>
+                                <th class="text-center">${t('summaryReceived')}</th>
+                                <th class="text-center">${t('summaryBurned')}</th>
+                                <th class="text-center">${t('summaryScore')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${aggregatedRows.map(row => `
+                                <tr>
+                                    <td>${row.name}</td>
+                                    <td class="text-center">${row.sent}</td>
+                                    <td class="text-center">${row.received}</td>
+                                    <td class="text-center">${row.burned}</td>
+                                    <td class="text-center font-bold">${row.score}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    $('#btnViewRegistry').onclick = showFullRegistry;
+    $('#btnContacts').onclick = () => { state.currentStage = 6; render(); };
+    
+    // === ИСПРАВЛЕННАЯ ЛОГИКА "НОВЫЙ КОН" ===
+    $('#btnNewDay').onclick = () => {
+        // 1. СОХРАНЯЕМ результаты текущего кона в историю
+        const snapshot = getCurrentKonSnapshot();
+        state.gameHistory = [...(state.gameHistory || []), snapshot];
+        
+        // 2. УВЕЛИЧИВАЕМ номер кона
+        state.currentKon++;
+        
+        // 3. СБРАСЫВАЕМ состояние для нового кона
+        state.activeParticipant = 0;
+        state.participantSelections = { 1: [], 2: [], 3: [], 4: [] };
+        state.selectedScenario = null;
+        state.units = [];
+        state.receivedUnits = [];
+        state.transactions = [];
+        state.returnAttempts = 0;
+        state.violations = [];
+        
+        // 4. ПЕРЕХОДИМ к эмиссии (Акт 2.0)
+        state.currentStage = 2;
+        
+        // 5. ПОКАЗЫВАЕМ уведомление
+        toast(t('newDayToast'), 'success');
+        
+        // 6. СОХРАНЯЕМ и рендерим
+        saveState();
+        render();
+    };
+    
+    $('#btnRestart').onclick = () => {
+        localStorage.removeItem('pigmalion_state');
+        location.reload();
+    };
+}
+
+function showFullRegistry() {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
+            <h3 class="modal-title">${t('registryTitle')}</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>${t('registryTime')}</th><th>${t('registryFrom')}</th><th>${t('registryTo')}</th><th>${t('registryTriad')}</th><th>${t('registryUENum')}</th></tr>
+                    </thead>
+                    <tbody>
+                        ${state.transactions.length === 0 
+                            ? `<tr><td colspan="5" class="text-center text-muted">${t('registryNoData')}</td></tr>`
+                            : state.transactions.map(t => {
+                                const triadColor = t.color || TRIADS[t.triad]?.color;
+                                return `
+                                <tr>
+                                    <td class="text-xs text-muted">${t.timeStr || '--:--'}</td>
+                                    <td>${t.from === '1' ? `::${state.okKey}::` : getParticipantName(PARTICIPANTS.find(p => p.id === t.from))}</td>
+                                    <td>${getParticipantName(PARTICIPANTS.find(p => p.id === t.to))}</td>
+                                    <td><span style="display: inline-block; width: 10px; height: 10px; background: ${triadColor}; border-radius: 50%; margin-right: 5px;"></span>${getTriadName(t.triad)}</td>
+                                    <td class="font-bold">${t.number}</td>
+                                </tr>
+                            `}).join('')
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-actions mt-4"><button class="btn btn-primary" id="closeRegistry">${t('close')}</button></div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    modal.onclick = (e) => { if (e.target === modal || e.target.id === 'closeRegistry') modal.remove(); };
+}
+
+// === ЭКРАН 6: КОНТАКТЫ ===
+function renderContacts(container) {
+    container.innerHTML = `
+        <div class="screen screen-center">
+            <h1 class="text-3xl text-gradient mb-6">::OP𝕯EH 𝕯AP::</h1>
+            <h4 class="text-lg text-secondary mb-4">(Олег Головатюк)</h4>
+            <p class="text-sm text-muted mb-4">${t('authorDesc')}</p>
+            <div class="card mb-6 contacts-section" style="max-width: 400px;">
+                <h3 class="text-lg mb-4">${t('contactsTitle')}</h3>
+                <div class="flex items-center gap-4 mb-3">${icon('phone')}<span>+7 999-989-17-19</span></div>
+                <div class="flex items-center gap-4">${icon('mail')}<span>ORDENp@gmail.com</span></div>
+            </div>
+            <p>QR-код</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://messenger.online.sberbank.ru/sl/VvHl8yfbJQhRQugcf" alt="QR Payment" class="mb-6" style="border-radius: var(--radius);">
+            <div class="manifest"><p>${t('fundraising')}</p></div>
+            <a href="https://messenger.online.sberbank.ru/sl/VvHl8yfbJQhRQugcf"  target="_blank" rel="noopener noreferrer" class="text-primary text-sm break-all block mb-2">online.sberbank.ru/...</a>
+            <p class="text-xs text-muted">${t('donationRange')}</p>
+            <div class="manifest"><p>${t('proverb')}</p></div>
+            <button class="btn btn-primary mt-6" id="btnBackToResults">${t('backToResults')}</button>
+        </div>
+    `;
+    $('#btnBackToResults').onclick = () => { state.currentStage = 5; render(); };
+}
+
+// === ИНИЦИАЛИЗАЦИЯ ===
+document.addEventListener('DOMContentLoaded', () => {
+    loadState();
+    render();
+});
+    </script>
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106573807', 'ym');
+        ym(106573807, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/106573807" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</body>
+</html>
