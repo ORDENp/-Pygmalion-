@@ -58,8 +58,9 @@
       activation = new Date(em.getTime());
     }
 
-    // Сгорание: следующая полночь ПОСЛЕ ДАТЫ ЭМИССИИ (всегда em.date + 1)
-    const burn = new Date(em.getFullYear(), em.getMonth(), em.getDate() + 1, 0, 0, 0, 0);
+    // Сгорание: импульс (+2 дня), активный (+1 день) — синхронизировано с calculateBurnAt()
+    const burnDays = (emMs >= RHYTHM.T2000 || emMs < RHYTHM.T0400) ? 2 : 1;
+    const burn = new Date(em.getFullYear(), em.getMonth(), em.getDate() + burnDays, 0, 0, 0, 0);
 
     return { activationTime: activation, burnTime: burn };
   }
