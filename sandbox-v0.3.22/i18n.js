@@ -19,11 +19,12 @@
   async function load(lang) {
     I18N.lang = lang;
 
-    // Пробуем относительный путь (локально), затем абсолютный (GitHub Pages)
-    const paths = [
-      `assets/i18n/${lang}.json`,               // локально: из корня песочницы
-      `/-Pygmalion-/assets/i18n/${lang}.json`,  // GitHub Pages
-    ];
+    // i18n.js - заменить строки 20-25 на:
+const paths = [
+  `../assets/i18n/${lang}.json}`,            // На уровень вверх от sandbox-v0.3.22
+  `assets/i18n/${lang}.json},                // Для GitHub Pages (относительно корня)
+  `/-Pygmalion-/assets/i18n/${lang}.json}`, // Fallback для GitHub Pages
+];
 
     for (const path of paths) {
       try {
