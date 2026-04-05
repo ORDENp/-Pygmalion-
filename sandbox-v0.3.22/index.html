@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pygmalion v0.3.22 «Билингво» — Числовое сдерживание</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="sandbox">
+
+  <!-- Header -->
+  <header class="sandbox-header">
+    <div class="brand">
+      <span class="brand-name">Pygmalion</span>
+      <span class="version">v0.3.22 «Билингво»</span>
+    </div>
+
+    <!-- Бейдж О.К. -->
+    <div class="ok-badge-container" id="ok-badge-container" style="display: none;">
+      <div class="ok-badge" id="ok-badge">
+        <span class="ok-icon" id="ok-icon">🔑</span>
+        <span class="ok-value" id="ok-value">::____::</span>
+        <span class="ok-date" id="ok-date"></span>
+      </div>
+    </div>
+
+    <div class="current-datetime">
+      <span class="datetime-value" id="current-datetime">--.--.---- --:--:--</span>
+      <div class="lang-switch">
+        <button class="lang-btn" data-set-lang="ru">RU</button>
+        <button class="lang-btn" data-set-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="sandbox-container">
+    
+    <!-- Акт 1: ПЛАН (Эмиссия) -->
+    <section class="act act-1" id="act-emission">
+      <!-- Заголовок и состояние в одну линию -->
+      <div class="act-1-top-row">
+        <div class="act-1-title">
+          <h2 data-i18n="act1_title">::про.1.П.Л.А.Н.::📋(Эмиссия)</h2>
+          <p class="act-desc" data-i18n="act1_desc">Закажите Учётные Единицы (У.Е.) для Признания Присутствия</p>
+        </div>
+
+        <!-- Блок состояний -->
+        <div class="state-block">
+          <div class="ue-status-display">
+            <span class="ue-status-item ue-status-active">
+              <span class="ue-status-label">Активные:</span>
+              <span class="ue-status-value" id="ue-active">0</span>
+            </span>
+            <span class="ue-status-item ue-status-impulse">
+              <span class="ue-status-label">Импульс:</span>
+              <span class="ue-status-value" id="ue-impulse">0</span>
+            </span>
+            <span class="ue-status-item ue-status-given">
+              <span class="ue-status-label">Отдано:</span>
+              <span class="ue-status-value" id="ue-given">0</span>
+            </span>
+          </div>
+
+          <div class="um-balance-inline">
+            <span class="um-balance-label">У.М.:</span>
+            <span class="um-balance-value" id="um-balance">5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="emission-control">
+        <label data-i18n="act1_select">Выберите У.Е. по номерам:</label>
+        <div class="ue-options">
+          <button class="ue-btn triad-btn" data-triad="T1">№ 1-3 (Знания)</button>
+          <button class="ue-btn triad-btn" data-triad="T2">№ 4-6 (Практики)</button>
+          <button class="ue-btn triad-btn" data-triad="T3">№ 7-9 (Творчество)</button>
+          <button class="ue-btn triad-btn" data-triad="T4">№ 10-12 (ЗОЖ/досуг)</button>
+          <button class="ue-btn special-btn" data-triad="T5" disabled title="Доступно после активации ≥1 триады">№21 (безопасность/бартер.)</button>
+        </div>
+
+        <!-- Таймер и индикаторы У.Е. (импульс) + кнопка Эмитировать -->
+        <div class="timer-ue-row">
+          <div class="timer-display">
+            <span data-i18n="act1_timer">До сгорания У.Е.:</span>
+            <span class="timer-value" id="burn-timer">--:--:--</span>
+          </div>
+          <div class="indicators-a-container">
+            <div class="ue-indicators impulse" id="impulse-indicators">
+              <span class="ue-indicator" data-ue="1">—</span>
+              <span class="ue-indicator" data-ue="2">—</span>
+              <span class="ue-indicator" data-ue="3">—</span>
+              <span class="ue-indicator" data-ue="4">—</span>
+              <span class="ue-indicator" data-ue="5">—</span>
+              <span class="ue-indicator" data-ue="6">—</span>
+              <span class="ue-indicator" data-ue="7">—</span>
+              <span class="ue-indicator" data-ue="8">—</span>
+              <span class="ue-indicator" data-ue="9">—</span>
+              <span class="ue-indicator" data-ue="10">—</span>
+              <span class="ue-indicator" data-ue="11">—</span>
+              <span class="ue-indicator" data-ue="12">—</span>
+              <span class="ue-indicator" data-ue="21">—</span>
+            </div>
+            <button class="btn-primary emit-btn" data-i18n="act1_emit">Эмитировать</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Индикатор фазы (между Актом 1 и Актом 2) -->
+    <div class="phase-indicator-bar">
+      <div class="phase-info-row">
+        <span class="phase-icon" id="phase-icon">🌞</span>
+        <span class="phase-name" id="phase-name">Действие</span>
+        <span class="phase-desc" id="phase-desc">04:00 – 19:55</span>
+      </div>
+      
+      <!-- Шкала духовности (репутационный тонус) -->
+      <div class="spiritual-scale-wrapper">
+        <span class="scale-label">Зеркало присутствия:</span>
+        <div class="spiritual-scale-container">
+          <div class="scale-center" id="scale-center"></div>
+          <div id="spiritual-fill" class="scale-fill" style="width: 0%;"></div>
+        </div>
+        <span id="spiritual-value" class="scale-value">0%</span>
+      </div>
+    </div>
+
+    <!-- Акт 2: ТОК-ОРАКУЛ-С (Передача / ro.DAG) -->
+    <section class="act act-2" id="act-transfer">
+      <!-- Индикаторы активных У.Е. (для передачи) + кнопка Передать -->
+      <div class="transfer-indicators-section">
+        <label data-i18n="act2_select_ue">Выберите У.Е. для передачи:</label>
+        <div class="indicators-b-container">
+          <div class="ue-indicators active" id="active-indicators">
+            <span class="ue-indicator" data-ue="1">—</span>
+            <span class="ue-indicator" data-ue="2">—</span>
+            <span class="ue-indicator" data-ue="3">—</span>
+            <span class="ue-indicator" data-ue="4">—</span>
+            <span class="ue-indicator" data-ue="5">—</span>
+            <span class="ue-indicator" data-ue="6">—</span>
+            <span class="ue-indicator" data-ue="7">—</span>
+            <span class="ue-indicator" data-ue="8">—</span>
+            <span class="ue-indicator" data-ue="9">—</span>
+            <span class="ue-indicator" data-ue="10">—</span>
+            <span class="ue-indicator" data-ue="11">—</span>
+            <span class="ue-indicator" data-ue="12">—</span>
+            <span class="ue-indicator" data-ue="21">—</span>
+          </div>
+          <button class="btn-primary transfer-btn" data-i18n="act2_transfer">Передать</button>
+        </div>
+        <p class="indicator-hint">Кликните на У.Е. чтобы выбрать для передачи</p>
+      </div>
+
+      <div class="act-2-header-row">
+        <h2 data-i18n="act2_title">::про.2.Т.О.К.-О.Р.А.К.У.Л.-С.::🔄(Передача)</h2>
+        <div class="recipient-block">
+          <label class="recipient-label-inline" for="recipient" data-i18n="act2_recipient_label">Благодаримый:</label>
+          <input type="text" id="recipient" data-i18n-placeholder="act2_recipient_placeholder">
+          <button class="btn-recipient-select" id="recipient-label" title="Нажмите для выбора из списка О.К.">📋</button>
+        </div>
+      </div>
+      <p class="act-desc" data-i18n="act2_desc">Передайте благодарность и создайте связь в ro.DAG</p>
+
+      <!-- ro.DAG граф (разделён на 2 реестра) -->
+      <div class="dag-split-container">
+        <div class="dag-split-left">
+          <button class="btn-registry" id="open-uz-registry">
+            Все твои У.Е. на сегодня
+          </button>
+        </div>
+        <div class="dag-split-right">
+          <button class="btn-registry" id="open-transactions-registry">
+            📜 Реестр всех транзакций
+          </button>
+        </div>
+      </div>
+
+      <div class="transfer-control">
+        <!-- v0.3.5: Поле количества скрыто, выбор через клики -->
+        <input type="hidden" id="transfer-amount" value="1">
+
+        <label data-i18n="act2_refs">Ссылки на предыдущие акты (ro.DAG):</label>
+        <div class="refs-control" id="refs-control">
+          <p class="refs-empty-hint">Кликните на транзакцию из ленты ниже (макс. 3)</p>
+          <div class="refs-display" id="refs-display">
+            <!-- Динамически: последние 3 транзакции -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Акт 3: КОЛ-ЛИЦО-ОБЛИК (Отражение) -->
+    <section class="act act-3" id="act-reflection">
+      <div class="act-3-header">
+        <h2 data-i18n="act3_title">::про.3.К.О.Л.ЛИЦО-ОБЛИК::🪞(Отражение)</h2>
+        <button class="btn-archive" id="open-incoming-archive">📜 Редактируемый архив У.М.</button>
+      </div>
+      <p class="act-desc" data-i18n="act3_desc">Ваш репутационный образ в НОД.- Платформе</p>
+      
+      <div class="reflection-visual">
+        <div class="flower-of-life" id="flower-visual">
+          <svg viewBox="0 0 200 200" class="flower-svg">
+            <!-- Центр -->
+            <circle cx="100" cy="100" r="25" class="flower-center" id="flower-center" data-domain="core"/>
+            <!-- Лепестки -->
+            <circle cx="100" cy="60" r="20" class="flower-petal" data-domain="knowledge"/>
+            <circle cx="134.6" cy="80" r="20" class="flower-petal" data-domain="care"/>
+            <circle cx="134.6" cy="120" r="20" class="flower-petal" data-domain="creativity"/>
+            <circle cx="100" cy="140" r="20" class="flower-petal" data-domain="wisdom"/>
+            <circle cx="65.4" cy="120" r="20" class="flower-petal" data-domain="trust"/>
+            <circle cx="65.4" cy="80" r="20" class="flower-petal" data-domain="participation"/>
+          </svg>
+        </div>
+        
+        <div class="domains-legend" id="domains-legend">
+          <div class="domain-item"><span class="domain-color" style="background:#ef4444"></span>Знания</div>
+          <div class="domain-item"><span class="domain-color" style="background:#22c55e"></span>Забота</div>
+          <div class="domain-item"><span class="domain-color" style="background:#facc15"></span>Творчество</div>
+          <div class="domain-item"><span class="domain-color" style="background:#a855f7"></span>Мудрость</div>
+          <div class="domain-item"><span class="domain-color" style="background:#3b82f6"></span>Доверие</div>
+          <div class="domain-item"><span class="domain-color" style="background:#ef4444"></span>Участие</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Акт 4: ВЕС (Итоги) -->
+    <section class="act act-4" id="act-weight">
+      <h2 data-i18n="act4_title">::про.4.В.Е.С.::⚖️(Итоги)</h2>
+      <p class="act-desc" data-i18n="act4_desc">Ваш репутационный вес</p>
+
+      <div class="weight-formula">
+        <div class="formula-display">
+          <span class="formula-label" data-i18n="act4_formula">Формула:</span>
+          <code>(У.Е. Отдано × 2) + (У.Е. Принято × 1) − (Сгорело × 1)</code>
+        </div>
+        
+        <div class="weight-table-container">
+          <table class="weight-table">
+            <thead>
+              <tr>
+                <th>Показатель</th>
+                <th>За сегодня</th>
+                <th>Всего</th>
+                <th>Средний</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Отдано ×2:</strong></td>
+                <td id="today-given-x2">0</td>
+                <td id="total-given-x2">0</td>
+                <td id="avg-given">0.0</td>
+              </tr>
+              <tr>
+                <td><strong>Принято ×1:</strong></td>
+                <td id="today-received-x1">0</td>
+                <td id="total-received-x1">0</td>
+                <td id="avg-received">0.0</td>
+              </tr>
+              <tr>
+                <td><strong>Сгорело −1:</strong></td>
+                <td id="today-burned-x1">0</td>
+                <td id="total-burned-x1">0</td>
+                <td id="avg-burned">0.0</td>
+              </tr>
+              <tr class="weight-total-row">
+                <td><strong>ВЕС:</strong></td>
+                <td><strong id="today-weight">0</strong></td>
+                <td><strong id="total-weight">0</strong></td>
+                <td><strong id="avg-weight">0.0</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Модальные окна реестров -->
+    <div id="ok-list-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Список всех О.К. (участников)</h3>
+          <button class="modal-close" id="close-ok-list">&times;</button>
+        </div>
+        <div class="modal-body" id="ok-list-content">
+          <p class="registry-placeholder">Загрузка списка...</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="uz-registry-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Все твои У.Е. на сегодня</h3>
+          <button class="modal-close" id="close-uz-registry">&times;</button>
+        </div>
+        <div class="modal-body" id="uz-registry-content">
+          <p class="registry-placeholder">Загрузка реестра...</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="transactions-registry-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>📜 Реестр всех транзакций</h3>
+          <button class="modal-close" id="close-transactions-registry">&times;</button>
+        </div>
+        <div class="modal-body" id="transactions-registry-content">
+          <p class="registry-placeholder">Загрузка реестра...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно редактируемого архива входящих У.М. (v0.3.25) -->
+    <div id="incoming-archive-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>📜 Редактируемый архив входящих У.М.</h3>
+          <button class="modal-close" id="close-incoming-archive">&times;</button>
+        </div>
+        <div class="modal-body" id="incoming-archive-content">
+          <p class="registry-placeholder">Загрузка архива...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно подтверждения передачи (v0.3.19) -->
+    <div id="transfer-confirm-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content modal-content--transfer">
+        <div class="modal-header">
+          <h3>✦ Акт передачи</h3>
+          <button class="btn-primary btn-confirm-transfer-header" id="header-confirm-transfer-btn">✦ Подтвердить</button>
+          <button class="modal-close" id="close-transfer-confirm">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Информация о передаче -->
+          <div class="transfer-summary">
+            <p class="summary-row"><span>Получатель:</span> <strong id="confirm-recipient">—</strong></p>
+            <p class="summary-row"><span>У.Е.:</span> <strong id="confirm-ue-count">0</strong></p>
+          </div>
+
+          <!-- Поля для гостей (обязательно) -->
+          <div id="guest-fields" class="transfer-fields" style="display: none;">
+            <p class="fields-hint fields-hint--required">⚠️ Для отправки гостю необходим временный ключ (в.К.)</p>
+            <div class="form-group">
+              <label for="temporary-key">Временный ключ (телефон или e-mail):</label>
+              <input type="text" id="temporary-key" placeholder="+7900-000-00-00 или name@example.com или R.I.P." class="form-input">
+            </div>
+          </div>
+
+          <!-- Опциональные поля (для всех) -->
+          <div class="transfer-fields transfer-fields--optional">
+            <p class="fields-hint">Дополнительно (необязательно):</p>
+
+            <!-- Сообщение / Благодарность (перенесено вверх) -->
+            <div class="form-group">
+              <label for="gratitude-reason">Благодарность за что:</label>
+              <select id="gratitude-reason" class="form-input">
+                <option value="">(выбери из списка или напиши сам)</option>
+                <option value="custom">(напиши сам … )</option>
+                <option value="За мудрость">За мудрость</option>
+                <option value="За мудрость паузы">За мудрость паузы</option>
+                <option value="За благое намерение">За благое намерение</option>
+                <option value="За старание">За старание</option>
+                <option value="За организацию">За организацию</option>
+                <option value="За подвижничество">За подвижничество</option>
+                <option value="За жертвенность">За жертвенность</option>
+                <option value="За жесткость">За жесткость</option>
+                <option value="За конкретику">За конкретику</option>
+                <option value="За самообладание">За самообладание</option>
+                <option value="За душевность">За душевность</option>
+                <option value="За сердечность">За сердечность</option>
+                <option value="За сострадание">За сострадание</option>
+                <option value="За приглашение">За приглашение</option>
+                <option value="За экологию сознания">За экологию сознания</option>
+                <option value="За передачу «живого знания»">За передачу «живого знания»</option>
+                <option value="За честную обратную связь">За честную обратную связь</option>
+                <option value="За бережное отношение к чужому времени">За бережное отношение к чужому времени</option>
+                <option value="За смелость быть «белой вороной»">За смелость быть «белой вороной»</option>
+                <option value="За пробуждение интереса">За пробуждение интереса</option>
+                <option value="За дисциплину планирования">За дисциплину планирования</option>
+                <option value="За отказ от накопления">За отказ от накопления</option>
+                <option value="За сотворчество">За сотворчество</option>
+                <option value="За «световой след»">За «световой след»</option>
+                <option value="За верность слову">За верность слову</option>
+                <option value="За сохранение человеческого">За сохранение человеческого</option>
+                <option value="За «дар воли»">За «дар воли»</option>
+                <option value="За качественный вопрос">За качественный вопрос</option>
+                <option value="За навигацию в хаосе">За навигацию в хаосе</option>
+                <option value="За укрепление связей">За укрепление связей</option>
+                <option value="За чистоту мотивации">За чистоту мотивации</option>
+                <option value="За мужество признать заблуждение">За мужество признать заблуждение</option>
+                <option value="За «тихое присутствие»">За «тихое присутствие»</option>
+              </select>
+            </div>
+
+            <!-- Поле для ручного ввода (появляется при выборе «напиши сам») -->
+            <div class="form-group" id="custom-message-group" style="display: none;">
+              <label for="custom-message">Твоё сообщение:</label>
+              <input type="text" id="custom-message" placeholder="Впиши свой вариант…" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label for="delivery-term">Срок доставки:</label>
+              <select id="delivery-term" class="form-input">
+                <option value="">(срок доставки)</option>
+                <option value="1-3 дня">1-3 дня</option>
+                <option value="1-7 дней">1-7 дней</option>
+                <option value="1-14 дней">1-14 дней</option>
+                <option value="1 месяц">1 месяц</option>
+                <option value="по договорённости">по договорённости</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="buyout-date">Дата выкупа У.М.:</label>
+              <input type="text" id="buyout-date" placeholder="дд.мм.гг (например: 31.06.27)" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label for="ok3">О.К.-3 (резервный получатель):</label>
+              <input type="text" id="ok3" placeholder="(О.К.-3)" class="form-input">
+            </div>
+          </div>
+
+          <!-- Кнопка отмены (внизу) -->
+          <div class="modal-actions modal-actions--bottom">
+            <button class="btn-secondary" id="cancel-transfer">Отмена</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="sandbox-footer">
+    <p data-i18n="footer_canon">Canon v0.3.21 · Протокол · 2026</p>
+    <p data-i18n="footer_ethics">Этический стоп-кран активен: нет блокчейна, нет токенов, нет сбора данных</p>
+
+    <!-- Ссылка на создание О.К. -->
+    <div id="no-ok-warning" style="display: none; margin-top: 1rem;">
+      <p style="color: var(--accent-yellow); margin-bottom: 0.5rem;">
+        ⚠️ У вас нет О.К. — числового следа в системе
+      </p>
+      <a href="threshold.html" class="btn-primary" style="display: inline-block; padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+        ✦ Создать О.К. на Пороге
+      </a>
+    </div>
+
+    <!-- Панель разработчика -->
+    <div class="dev-panel" id="dev-panel">
+      <button class="btn-dev-panel" id="toggle-dev-panel" title="Показать/скрыть панель разработчика">
+        ⚙️ Dev Panel
+      </button>
+
+      <div class="dev-panel-content" id="dev-panel-content" style="display: none;">
+        <h4 style="margin-bottom: 0.75rem; color: var(--accent-blue);">🔧 Панель разработчика</h4>
+
+        <!-- Очистка и сброс -->
+        <div class="dev-panel-section">
+          <button class="btn-dev" id="clear-storage" title="Очистить всё состояние">
+            🗑 Очистить localStorage
+          </button>
+          <button class="btn-dev btn-dev-warning" id="reset-ok-key" title="Сбросить О.К.">
+            ✕ Сброс О.К.
+          </button>
+          <button class="btn-dev btn-dev-info" id="reset-ok-multi" title="Сбросить О.К. для нового ввода (мультисброс)">
+            🔄 Мультисброс О.К.
+          </button>
+          <button class="btn-dev btn-dev-warning" id="reset-triad-selection" title="Сбросить выбор триад">
+            ✕ Сброс выбора триад
+          </button>
+        </div>
+
+        <!-- Тест времени -->
+        <div class="dev-panel-section">
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+            ⏱ Тест времени (зона тишины 19:55-20:00, сгорание 0:00):
+          </p>
+          <div class="dev-time-buttons">
+            <button class="btn-dev btn-dev-time" data-time="03:59" title="Перед активной фазой (impulse → active)">03:59 🌙</button>
+            <button class="btn-dev btn-dev-time" data-time="04:00" title="Начало активной фазы">04:00 🌞</button>
+            <button class="btn-dev btn-dev-time" data-time="19:54" title="Перед зоной тишины">19:54 🔇</button>
+            <button class="btn-dev btn-dev-time" data-time="20:00" title="Начало фазы сна (эмиссия impulse)">20:00 🌙</button>
+            <button class="btn-dev btn-dev-time" data-time-offset="+24h" title="Добавить 24 часа (полный цикл)">+ 24 часа</button>
+            <button class="btn-dev btn-dev-time" data-time-offset="+5min" title="Добавить 5 минут">+ 5 минут</button>
+            <button class="btn-dev btn-dev-time" data-time-offset="-5min" title="Минус 5 минут">- 5 минут</button>
+            <button class="btn-dev btn-dev-time" data-time-offset="+4h" title="Добавить 4 часа">+ 4 часа</button>
+            <button class="btn-dev btn-dev-time" data-time-offset="+8h" title="Добавить 8 часов">+ 8 часов</button>
+            <button class="btn-dev btn-dev-success" id="reset-time" title="Вернуть реальное время">
+              🔄 Сброс времени
+            </button>
+          </div>
+          <p class="dev-time-status" id="dev-time-status" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Реальное время
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Скрипты (порядок важен!) -->
+<!-- 0. i18n (локализация) -->
+<script src="i18n.js"></script>
+<!-- 1. Ритм (время/фазы) -->
+<script src="timeRhythm.js"></script>
+<!-- 2. След (хранилище/ro.DAG) — ДО logic -->
+<script src="storage.js"></script>
+<!-- 3. Жизнь (бизнес-логика) -->
+<script src="logic.js"></script>
+</body>
+</html>
