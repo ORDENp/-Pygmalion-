@@ -2663,7 +2663,7 @@ function initMusicToggle() {
     if (!musicBtn) return;
 
     // Путь к музыке в репозитории GitHub Pages
-    const audio = new Audio('/-Pygmalion-/assets/audio/olegDal.mp3');
+    const audio = new Audio('/-Pygmalion-/assets/audio/olegDal.tmp');
     audio.loop = true;
     audio.volume = 0.5;
 
