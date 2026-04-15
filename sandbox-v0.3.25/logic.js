@@ -1,6 +1,6 @@
 /**
  * ========================================
- * ПИГМАЛИОН — Песочница v0.3.23
+ * ПИГМАЛИОН — Песочница v0.3.25
  * Логика эмиссии (интегрирован TimeRhythm)
  * ========================================
  */
@@ -2662,24 +2662,30 @@ function initMusicToggle() {
     const musicBtn = document.getElementById('music-toggle');
     if (!musicBtn) return;
 
+    // Путь к музыке в репозитории GitHub Pages
+    const audio = new Audio('/-Pygmalion-/assets/audio/Олег Даль - Есть только миг (mp3ostrov.com).mp3');
+    audio.loop = true;
+    audio.volume = 0.5;
+
     let isPlaying = false;
 
     musicBtn.addEventListener('click', () => {
         isPlaying = !isPlaying;
 
         if (isPlaying) {
-            musicBtn.classList.add('active');
-            musicBtn.title = 'Выключить музыку';
-            console.log('[Музыка] Включена (placeholder — аудио будет добавлено позже)');
-            // TODO: Здесь будет инициализация Audio API
-            // const audio = new Audio('/path/to/music.mp3');
-            // audio.loop = true;
-            // audio.play();
+            audio.play().then(() => {
+                musicBtn.classList.add('active');
+                musicBtn.title = 'Выключить музыку';
+                console.log('[Музыка] Включена: Олег Даль - Есть только миг');
+            }).catch(err => {
+                console.error('[Музыка] Ошибка воспроизведения:', err);
+                isPlaying = false;
+            });
         } else {
+            audio.pause();
             musicBtn.classList.remove('active');
             musicBtn.title = 'Включить музыку';
             console.log('[Музыка] Выключена');
-            // TODO: audio.pause();
         }
     });
 }
