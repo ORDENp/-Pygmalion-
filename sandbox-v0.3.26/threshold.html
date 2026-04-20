@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Порог: Рождение О.К. — Pygmalion v0.3.22 «Билингво»</title>
+  <!-- Favicon --> <link rel="icon" type="image/x-icon" href="/-Pygmalion-/favicon.ico"> 
+  <!-- Google Analytics (async) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JK86H56MJ"></script> 
+  <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-2JK86H56MJ'); </script> </head> <body class="home">
+    
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-threshold.css">
+</head>
+<body>
+
+  <!-- Кнопки переключения языка -->
+  <div class="lang-switch" id="threshold-lang-switch">
+    <button class="lang-btn" data-set-lang="ru">RU</button>
+    <button class="lang-btn" data-set-lang="en">EN</button>
+  </div>
+
+  <!-- === ПУТЕВОЙ КАМЕНЬ (Модальное окно-заставка) === -->
+  <div id="waystone-overlay" class="waystone-overlay">
+    <div class="waystone-container">
+      <!-- Символ: 4 точки в круге -->
+      <div class="waystone-symbol">
+        <svg viewBox="0 0 100 100" class="symbol-svg">
+          <circle cx="50" cy="50" r="48" class="symbol-ring"/>
+          <circle cx="50" cy="25" r="4" class="symbol-dot"/>
+          <circle cx="75" cy="50" r="4" class="symbol-dot"/>
+          <circle cx="50" cy="75" r="4" class="symbol-dot"/>
+          <circle cx="25" cy="50" r="4" class="symbol-dot"/>
+        </svg>
+      </div>
+
+      <h1 class="waystone-title" data-i18n="ws_title">:: ПPЯMOЙ ПУTЬ ::</h1>
+
+      <p class="waystone-intro" data-i18n-html="ws_intro">
+        Прежде чем создать У.Е., создай себя.<br>
+        Твой О.К. — это след в цифровом песке.
+      </p>
+
+      <!-- Три пути -->
+      <div class="three-paths">
+        <!-- Налево -->
+        <div class="path-option path-left">
+          <div class="path-icon">⚖️</div>
+          <h3 data-i18n="ws_path_left_title">Налево «женатым быть»</h3>
+          <p class="path-desc" data-i18n="ws_path_left_desc">
+            Возврат в старый мир бытовых обязательств и семейного эгоизма.
+            Биологическое инферно вместо эволюции человека.
+          </p>
+          <button class="path-btn path-exit" id="path-left-exit-btn" data-i18n="ws_path_left_exit">
+          </button>
+        </div>
+
+        <!-- Прямо -->
+        <div class="path-option path-center">
+          <div class="path-icon">🜃</div>
+          <h3 data-i18n="ws_path_center_title">::ГЛAВHAЯ 𝕯OPOГA::</h3>
+          <p class="path-desc" data-i18n-html="ws_path_center_desc1">
+            Тут не Регистрация в эко_системе; здесь учреждают присутствие.<br>
+            Здесь ::ТЫ:: оставляешь свой след.
+          </p>
+          <button class="path-btn path-enter" id="path-enter-btn" data-i18n="ws_path_enter">
+            ✦ Получить свой О.К.
+          </button>
+          <p class="path-desc-continued" data-i18n-html="ws_path_center_desc2">
+            <br>Твой ::О.К.:: (Открытый Ключик) — это не пароль,<br>
+            форма достоинства в нашем числовом пространстве.<br>
+            Это граница твоего присутствия.<br><br>
+            Вход в новый мир начинается где Твой выбор — твой след.
+          </p>
+          <p class="path-note" data-i18n-html="ws_path_note">
+            От 3 до 50 символов.<br>
+            Без спешки.
+          </p>
+        </div>
+
+        <!-- Направо -->
+        <div class="path-option path-right">
+          <div class="path-icon">💰</div>
+          <h3 data-i18n="ws_path_right_title">Направо «богатым быть»</h3>
+          <p class="path-desc" data-i18n="ws_path_right_desc">
+            Если ты ищешь выгоду — здесь её нет.<br>
+            Богат не тот, кто накопил, а тот, кто отдал.
+          </p>
+          <button class="path-btn path-exit" id="path-exit-btn" data-i18n="ws_path_left_exit">
+          </button>
+        </div>
+      </div>
+
+      <p class="waystone-footer" data-i18n="ws_footer">
+        Для тех 1–2% осознанных, готовых к «работе духа»
+      </p>
+    </div>
+  </div>
+
+  <!-- === ПОРОГ: ЧисСлоБукВ === -->
+  <div id="threshold-container" class="threshold-container" style="display: none;">
+    <div class="threshold-wrapper">
+
+      <!-- Заголовок -->
+      <div class="threshold-header">
+        <h1 class="threshold-title" data-i18n="th_title">🔑 Порог: Рождение О.К.</h1>
+        <p class="threshold-subtitle" data-i18n="th_subtitle">
+          Создайте свой Открытый Ключик через «ЧисСлоБукВ»
+        </p>
+      </div>
+
+      <!-- Этическое предупреждение -->
+      <div class="threshold-ethics">
+        <p data-i18n-html="th_ethics">
+          ⚠️ Вы входите в пространство нематериальной ценности.<br>
+          Ваш О.К. — это акт самоопределения, а не регистрация.
+        </p>
+      </div>
+
+      <!-- Отображение О.К. -->
+      <div class="ok-display-container">
+        <div class="ok-display-wrapper">
+          <div class="ok-display" id="ok-display">_</div>
+          <button class="btn-copy" id="btn-copy-ok" title="Копировать О.К. в буфер">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="ok-length" id="ok-length">0 / 50</div>
+        <div class="copy-feedback" id="copy-feedback" data-i18n="th_copy_feedback">Скопировано!</div>
+      </div>
+
+      <!-- Виртуальная клавиатура ЧисСлоБукВ (React-версия) -->
+      <div class="chislobukv-keyboard" id="keyboard">
+        <!-- Генерируется JS -->
+      </div>
+
+      <!-- Кнопка подтверждения -->
+      <div class="threshold-actions">
+        <button id="confirm-ok-btn" class="btn-primary" disabled data-i18n="th_confirm">
+          ✦ Подтвердить О.К.
+        </button>
+      </div>
+
+      <!-- Информация -->
+      <div class="threshold-info">
+        <p data-i18n-html="th_info">
+          О.К. сохраняется только в вашем браузере.<br>
+          Это не пароль — это ваш «числовой след».
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- === СКРИПТЫ === -->
+  <script src="i18n.js"></script>
+  <script src="threshold.js"></script>
+  <script src="/-Pygmalion-/assets/js/lang.js" defer></script> 
+  <!-- Yandex Metrika (async, в конце) --> <script type="text/javascript"> (function(m,e,t,r,i,k,a){ m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date(); for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } } k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a) })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym'); ym(106573807, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true }); </script> <noscript> <div><img src="https://mc.yandex.ru/watch/106573807" style="position:absolute; left:-9999px;" alt="" /></div> </noscript> <!-- i18n engine (defer) --> 
+</body>
+</html>
