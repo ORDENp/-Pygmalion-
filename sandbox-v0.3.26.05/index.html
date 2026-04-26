@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>НОД.- Платформа "Пигмалион"</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Favicon --> <link rel="icon" type="image/x-icon" href="/-Pygmalion-/favicon.ico"> 
+  <!-- Google Analytics (async) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JK86H56MJ"></script> 
+  <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-2JK86H56MJ'); </script>
+</head>
+<body class="sandbox">
+
+  <!-- Header -->
+  <header class="sandbox-header">
+    <div class="brand">
+      <span class="brand-name">Pygmalion</span>
+      <span class="version">v0.3.26 "Иммунитет Импульса"</span>
+    </div>
+
+    <!-- Бейдж О.К. -->
+    <div class="ok-badge-container" id="ok-badge-container" style="display: none;">
+      <div class="ok-badge" id="ok-badge">
+        <span class="ok-icon" id="ok-icon">🔑</span>
+        <span class="ok-value" id="ok-value">::____::</span>
+        <span class="ok-date" id="ok-date"></span>
+      </div>
+    </div>
+
+    <div class="current-datetime">
+      <span class="datetime-value" id="current-datetime">--.--.---- --:--:--</span>
+      <div class="lang-switch">
+        <button class="lang-btn" data-set-lang="ru">RU</button>
+        <button class="lang-btn" data-set-lang="en">EN</button>
+      </div>
+      <!-- Кнопка музыки (v0.3.25) -->
+      <button class="music-toggle" id="music-toggle" title="Включить музыку">🎵</button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="sandbox-container">
+    
+    <!-- Акт 1: П.Л.А.Н. (Эмиссия) -->
+    <section class="act act-1" id="act-emission">
+      <!-- Заголовок и состояние в одну линию -->
+      <div class="act-1-top-row">
+        <div class="act-1-title">
+          <h2 data-i18n="act1_title">::про.1.П.Л.А.Н.::📋(Эмиссия)</h2>
+          <p class="act-desc" data-i18n="act1_desc">Закажите Учётные Единицы (У.Е.) для Признания Присутствия</p>
+        </div>
+
+        <!-- Блок состояний -->
+        <div class="state-block">
+          <div class="ue-status-display">
+            <span class="ue-status-item ue-status-active">
+              <span class="ue-status-label" data-i18n="status_active">Активные:</span>
+              <span class="ue-status-value" id="ue-active">0</span>
+            </span>
+            <span class="ue-status-item ue-status-impulse">
+              <span class="ue-status-label" data-i18n="status_impulse_label">Импульс:</span>
+              <span class="ue-status-value" id="ue-impulse">0</span>
+            </span>
+            <span class="ue-status-item ue-status-given">
+              <span class="ue-status-label" data-i18n="status_given">Отдано:</span>
+              <span class="ue-status-value" id="ue-given">0</span>
+            </span>
+          </div>
+
+          <div class="um-balance-inline">
+            <span class="um-balance-label" data-i18n="um_balance_label">У.М.:</span>
+            <span class="um-balance-value" id="um-balance">5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="emission-control">
+        <!-- Система вкладок -->
+        <div class="act1-tabs">
+          <button class="act1-tab active" data-tab="emission" data-i18n="act1_tab_emission">Выберите У.Е. по номерам</button>
+          <button class="act1-tab" data-tab="daily" data-i18n="act1_tab_daily">Ежедневник</button>
+          <button class="act1-tab" data-tab="weekly" data-i18n="act1_tab_weekly">Еженедельник</button>
+        </div>
+
+        <!-- Вкладка: Эмиссия У.Е. -->
+        <div class="act1-tab-content active" id="tab-emission">
+          <div class="ue-options">
+            <button class="ue-btn triad-btn" data-triad="T1" data-i18n="triad_T1">№ 1-3 (Знания)</button>
+            <button class="ue-btn triad-btn" data-triad="T2" data-i18n="triad_T2">№ 4-6 (Практики)</button>
+            <button class="ue-btn triad-btn" data-triad="T3" data-i18n="triad_T3">№ 7-9 (Творчество)</button>
+            <button class="ue-btn triad-btn" data-triad="T4" data-i18n="triad_T4">№ 10-12 (ЗОЖ/Досуг)</button>
+            <button class="ue-btn special-btn" data-triad="T5" disabled title="Доступно после активации ≥1 триады">№21 (безопасность/бартер.)</button>
+          </div>
+
+          <!-- Таймер и индикаторы У.Е. (импульс) + кнопка Эмитировать -->
+          <div class="timer-ue-row">
+            <div class="timer-display">
+              <span data-i18n="act1_timer">До сгорания У.Е.:</span>
+              <span class="timer-value" id="burn-timer">--:--:--</span>
+            </div>
+            <div class="indicators-a-container">
+              <div class="ue-indicators impulse" id="impulse-indicators">
+                <span class="ue-indicator" data-ue="1">—</span>
+                <span class="ue-indicator" data-ue="2">—</span>
+                <span class="ue-indicator" data-ue="3">—</span>
+                <span class="ue-indicator" data-ue="4">—</span>
+                <span class="ue-indicator" data-ue="5">—</span>
+                <span class="ue-indicator" data-ue="6">—</span>
+                <span class="ue-indicator" data-ue="7">—</span>
+                <span class="ue-indicator" data-ue="8">—</span>
+                <span class="ue-indicator" data-ue="9">—</span>
+                <span class="ue-indicator" data-ue="10">—</span>
+                <span class="ue-indicator" data-ue="11">—</span>
+                <span class="ue-indicator" data-ue="12">—</span>
+                <span class="ue-indicator" data-ue="21">—</span>
+              </div>
+              <button class="btn-primary emit-btn" data-i18n="act1_emit">Эмитировать</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Вкладка: Ежедневник -->
+        <div class="act1-tab-content" id="tab-daily">
+          <div class="daily-planner">
+            <p class="planner-hint">Планирование дня с 04:00 до 00:00. В полночь список дел уходит в историю.</p>
+            <div class="daily-timeline" id="daily-timeline">
+              <!-- Будет заполнено через JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Вкладка: Еженедельник -->
+        <div class="act1-tab-content" id="tab-weekly">
+          <div class="weekly-planner">
+            <p class="planner-hint">Планирование мероприятий и встреч на 3-4 недели вперёд.</p>
+            <div class="weekly-calendar" id="weekly-calendar">
+              <!-- Будет заполнено через JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Индикатор фазы (между Актом 1 и Актом 2) -->
+    <div class="phase-indicator-bar">
+      <div class="phase-info-row">
+        <span class="phase-icon" id="phase-icon">🌞</span>
+        <span class="phase-name" id="phase-name" data-i18n="phase_action">Действие</span>
+        <span class="phase-desc" id="phase-desc">04:00 – 19:55</span>
+      </div>
+      
+      <!-- Шкала духовности (репутационный тонус) -->
+      <div class="spiritual-scale-wrapper">
+        <span class="scale-label" data-i18n="mirror_label">Зеркало присутствия:</span>
+        <div class="spiritual-scale-container">
+          <div class="scale-center" id="scale-center"></div>
+          <div id="spiritual-fill" class="scale-fill" style="width: 0%;"></div>
+        </div>
+        <span id="spiritual-value" class="scale-value">0%</span>
+      </div>
+    </div>
+
+    <!-- Акт 2: ТОК-ОРАКУЛ-С (Передача / ro.DAG) -->
+    <section class="act act-2" id="act-transfer">
+      <!-- Индикаторы активных У.Е. (для передачи) + кнопка Передать -->
+      <div class="transfer-indicators-section">
+        <label data-i18n="act2_select_ue">Выберите У.Е. для передачи:</label>
+        <div class="indicators-b-container">
+          <div class="ue-indicators active" id="active-indicators">
+            <span class="ue-indicator" data-ue="1">—</span>
+            <span class="ue-indicator" data-ue="2">—</span>
+            <span class="ue-indicator" data-ue="3">—</span>
+            <span class="ue-indicator" data-ue="4">—</span>
+            <span class="ue-indicator" data-ue="5">—</span>
+            <span class="ue-indicator" data-ue="6">—</span>
+            <span class="ue-indicator" data-ue="7">—</span>
+            <span class="ue-indicator" data-ue="8">—</span>
+            <span class="ue-indicator" data-ue="9">—</span>
+            <span class="ue-indicator" data-ue="10">—</span>
+            <span class="ue-indicator" data-ue="11">—</span>
+            <span class="ue-indicator" data-ue="12">—</span>
+            <span class="ue-indicator" data-ue="21">—</span>
+          </div>
+          <button class="btn-primary transfer-btn" data-i18n="act2_transfer">Передать</button>
+        </div>
+        <p class="indicator-hint" data-i18n="transfer_hint">Кликните на У.Е. чтобы выбрать для передачи</p>
+      </div>
+
+      <div class="act-2-header-row">
+        <h2 data-i18n="act2_title">::про.2.Т.О.К.-О.Р.А.К.У.Л.-С.::🔄(Передача)</h2>
+        <div class="recipient-block">
+          <label class="recipient-label-inline" for="recipient" data-i18n="act2_recipient_label">Благодаримый:</label>
+          <input type="text" id="recipient" data-i18n-placeholder="act2_recipient_placeholder" placeholder="Выберите из списка или впишите своего @Получателя">
+          <button class="btn-recipient-select" id="recipient-label" title="Нажмите для выбора из списка О.К.">📋</button>
+        </div>
+      </div>
+      <p class="act-desc" data-i18n="act2_desc">Передайте благодарность и создайте связь в ro.DAG</p>
+
+      <!-- ro.DAG граф (разделён на 2 реестра) -->
+      <div class="dag-split-container">
+        <div class="dag-split-left">
+          <button class="btn-registry" id="open-uz-registry" data-i18n="btn_registry_ue">
+            Все твои У.Е. на сегодня
+          </button>
+        </div>
+        <div class="dag-split-right">
+          <button class="btn-registry" id="open-transactions-registry" data-i18n="registry_full_title">
+            📜 Реестр всех транзакций
+          </button>
+        </div>
+      </div>
+
+      <div class="transfer-control">
+        <!-- v0.3.5: Поле количества скрыто, выбор через клики -->
+        <input type="hidden" id="transfer-amount" value="1">
+
+        <label data-i18n="act2_refs">Ссылки на предыдущие акты (ro.DAG):</label>
+        <div class="refs-control" id="refs-control">
+          <p class="refs-empty-hint">Кликните на транзакцию из ленты ниже (макс. 3)</p>
+          <div class="refs-display" id="refs-display">
+            <!-- Динамически: последние 3 транзакции -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Акт 3: КОЛ-ЛИЦО-ОБЛИК (Отражение) -->
+    <section class="act act-3" id="act-reflection">
+      <div class="act-3-header">
+        <h2 data-i18n="act3_title">::про.3.К.О.Л.ЛИЦО-ОБЛИК::🪞(Отражение)</h2>
+        <button class="btn-archive" id="open-incoming-archive" data-i18n="incoming_archive_title">📜 Редактируемый архив У.М.</button>
+      </div>
+      <p class="act-desc" data-i18n="act3_desc">Ваш репутационный образ в НОД.- Платформе</p>
+
+      <div class="reflection-visual">
+        <div class="flower-of-life" id="flower-visual">
+          <svg viewBox="0 0 200 200" class="flower-svg">
+            <!-- Центр -->
+            <circle cx="100" cy="100" r="25" class="flower-center" id="flower-center" data-domain="core"/>
+            <!-- Лепестки -->
+            <circle cx="100" cy="60" r="20" class="flower-petal" data-domain="knowledge"/>
+            <circle cx="134.6" cy="80" r="20" class="flower-petal" data-domain="care"/>
+            <circle cx="134.6" cy="120" r="20" class="flower-petal" data-domain="creativity"/>
+            <circle cx="100" cy="140" r="20" class="flower-petal" data-domain="wisdom"/>
+            <circle cx="65.4" cy="120" r="20" class="flower-petal" data-domain="trust"/>
+            <circle cx="65.4" cy="80" r="20" class="flower-petal" data-domain="participation"/>
+          </svg>
+        </div>
+        
+        <div class="domains-legend" id="domains-legend">
+          <div class="domain-item"><span class="domain-color" style="background:#ef4444"></span><span data-i18n="domain_knowledge">Знания</span></div>
+          <div class="domain-item"><span class="domain-color" style="background:#22c55e"></span><span data-i18n="domain_care">Забота</span></div>
+          <div class="domain-item"><span class="domain-color" style="background:#facc15"></span><span data-i18n="domain_creativity">Творчество</span></div>
+          <div class="domain-item"><span class="domain-color" style="background:#a855f7"></span><span data-i18n="domain_wisdom">Мудрость</span></div>
+          <div class="domain-item"><span class="domain-color" style="background:#3b82f6"></span><span data-i18n="domain_trust">Доверие</span></div>
+          <div class="domain-item"><span class="domain-color" style="background:#ef4444"></span><span data-i18n="domain_participation">Участие</span></div>
+        </div>
+      </div>
+
+      <!-- === Строка статусов (v0.3.23) — перемещена из ::про.4.:: (v0.3.25) === -->
+      <div class="statuses-section">
+        <div class="statuses-row" id="statuses-row">
+          <div class="status-item is-active" data-status="participant" data-i18n="status_participant">
+            <span class="status-icon">✓</span>
+            <span class="status-label">Участник</span>
+          </div>
+          <div class="status-item" data-status="coParticipant" data-i18n="status_co_participant">
+            <span class="status-icon">○</span>
+            <span class="status-label">Соучастник</span>
+          </div>
+          <div class="status-item" data-status="coWarrior" data-i18n="status_co_warrior">
+            <span class="status-icon">○</span>
+            <span class="status-label">СоРатник</span>
+          </div>
+          <div class="status-item" data-status="warrior" data-i18n="status_warrior">
+            <span class="status-icon">○</span>
+            <span class="status-label">Ратник</span>
+          </div>
+          <div class="status-item" data-status="coInvestor" data-i18n="status_co_investor">
+            <span class="status-icon">○</span>
+            <span class="status-label">Соинвестор</span>
+          </div>
+          <div class="status-item" data-status="investor" data-i18n="status_investor">
+            <span class="status-icon">○</span>
+            <span class="status-label">Инвестор</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- === Оценки входящих У.М. (v0.3.23) — РАБОЧИЙ БЛОК === -->
+      <div class="valuations-section">
+        <button class="btn-valuations-toggle" id="toggle-valuations" data-i18n="toggle_valuations">
+          📊 Оценки входящих У.М.
+        </button>
+        <div id="valuations-list" class="valuations-list" style="display: none;">
+          <p class="valuations-empty" data-i18n="valuations_empty">Оценок пока нет</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Акт 4: ВЕС (Итоги) -->
+    <section class="act act-4" id="act-weight">
+      <div class="act-header-with-status">
+        <div class="act-header-left">
+          <h2 data-i18n="act4_title">::про.4.В.Е.С.::⚖️(Итоги)</h2>
+          <p class="act-desc" data-i18n="act4_desc">Ваш репутационный вес</p>
+        </div>
+        <!-- Индикатор статуса соЮзов и соВетов -->
+        <div class="unions-councils-status">
+          <span class="status-label" data-i18n="unions_councils_status_label">соЮз/соВет:</span>
+          <span class="status-indicator" id="unions-councils-indicator" data-status="0">0</span>
+        </div>
+      </div>
+
+      <div class="weight-formula">
+        <div class="formula-display">
+          <span class="formula-label" data-i18n="act4_formula">Формула:</span>
+          <code data-i18n-html="weight_formula_code">(У.Е. Отдано × 2) + (У.М. Принято × 1) − (Сгорело У.Е. × 1)</code>
+        </div>
+        
+        <div class="weight-table-container">
+          <table class="weight-table">
+            <thead>
+              <tr>
+                <th data-i18n="weight_indicator">Показатель</th>
+                <th data-i18n="weight_today">За сегодня</th>
+                <th data-i18n="weight_total">Всего</th>
+                <th data-i18n="weight_avg">Средний</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong data-i18n="weight_given_label">Отдано ×2:</strong></td>
+                <td id="today-given-x2">0</td>
+                <td id="total-given-x2">0</td>
+                <td id="avg-given">0.0</td>
+              </tr>
+              <tr>
+                <td><strong data-i18n="weight_received_label">Принято ×1:</strong></td>
+                <td id="today-received-x1">0</td>
+                <td id="total-received-x1">0</td>
+                <td id="avg-received">0.0</td>
+              </tr>
+              <tr>
+                <td><strong data-i18n="weight_burned_label">Сгорело −1:</strong></td>
+                <td id="today-burned-x1">0</td>
+                <td id="total-burned-x1">0</td>
+                <td id="avg-burned">0.0</td>
+              </tr>
+              <tr class="weight-total-row">
+                <td><strong data-i18n="weight_total_label">ВЕС:</strong></td>
+                <td><strong id="today-weight">0</strong></td>
+                <td><strong id="total-weight">0</strong></td>
+                <td><strong id="avg-weight">0.0</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Акт 4,5: Б.Б.О.О.С.С. (Меридианы и Широты) -->
+    <section class="act act-5" id="act-bbooss">
+      <h2 data-i18n="act5_title">::про.4,5.Б.Б.О.О.С.С.::🧭(Саморегулирование)</h2>
+      <p class="act-desc" data-i18n="act5_desc">орДена (меридианы), отДелы (широты), соЮзы и соВеты (наполнение и направление)</p>
+
+      <!-- Ордена: SVG-круг 600×600, 8 сторон света (v0.3.25) -->
+      <div class="orders-section">
+        <h3 data-i18n="orders_title">🛡️ Ордена (Меридианы)</h3>
+
+        <!-- Чат орДенов: вкладки ::02::-::09:: -->
+        <details class="order-chat" id="order-chat">
+          <summary class="order-chat-toggle" data-i18n="chat_write_order_head">💬 Написать главе орДена</summary>
+          <div class="order-chat-content">
+            <div class="order-chat-tabs" id="order-chat-tabs">
+              <button class="order-chat-tab" data-order="02">::02::</button>
+              <button class="order-chat-tab" data-order="03">::03::</button>
+              <button class="order-chat-tab" data-order="04">::04::</button>
+              <button class="order-chat-tab" data-order="05">::05::</button>
+              <button class="order-chat-tab" data-order="06">::06::</button>
+              <button class="order-chat-tab" data-order="07">::07::</button>
+              <button class="order-chat-tab" data-order="08">::08::</button>
+              <button class="order-chat-tab disabled" data-order="09" title="Доступно с v2.0.1">::09:: (v2.0.1)</button>
+            </div>
+            <div class="order-chat-messages" id="order-chat-messages">
+              <p class="order-chat-empty" data-i18n="chat_select_order">Выберите орДен для общения</p>
+            </div>
+            <div class="order-chat-input-row" id="order-chat-input-row" style="display:none;">
+              <input type="text" id="order-chat-input" data-i18n-placeholder="chat_input_placeholder" placeholder="Ваше сообщение…" class="order-chat-input" maxlength="500" />
+              <button class="order-chat-send" id="order-chat-send">→</button>
+            </div>
+          </div>
+        </details>
+
+        <div class="orders-circle-container">
+          <svg class="orders-circle" viewBox="0 0 600 600" id="orders-svg">
+            <!-- ::01:: — ЦЕНТР (Полюс) -->
+            <g class="order-center-group" id="order-01-group" style="cursor:pointer">
+              <circle cx="300" cy="300" r="50" class="order-center-circle" id="order-01-circle"/>
+              <text x="300" y="295" text-anchor="middle" class="order-center-label" id="order-01-label">::01::</text>
+              <text x="300" y="315" text-anchor="middle" class="order-center-sublabel" data-i18n="order_01_sublabel">Хранители</text>
+              <text x="300" y="335" text-anchor="middle" class="order-center-status" id="order-01-status">○</text>
+            </g>
+
+            <!-- 8 сторон света: секторы r=55→140 -->
+            <!-- Формула: x = 300 + r*cos(θ), y = 300 + r*sin(θ), θ=0 → ВВЕРХ (N) -->
+
+            <!-- ::02:: СЕВЕР (270° до 315°) -->
+            <g class="order-sector-group" data-order="02" id="order-02-group" style="cursor:pointer">
+              <path class="order-sector" id="order-02-sector"
+                d="M 300,160 A 140,140 0 0,1 399.0,201.0 L 338.9,261.1 A 55,55 0 0,0 300,245 Z"/>
+              <text x="342" y="210" text-anchor="middle" class="order-sector-label-inside" id="order-02-label">::02::</text>
+              <text x="342" y="228" text-anchor="middle" class="order-sector-status-inside" id="order-02-status">○</text>
+            </g>
+
+            <!-- ::03:: СЕВЕРО-ВОСТОК (315° до 0°) -->
+            <g class="order-sector-group" data-order="03" id="order-03-group" style="cursor:pointer">
+              <path class="order-sector" id="order-03-sector"
+                d="M 399.0,201.0 A 140,140 0 0,1 440,300 L 355,300 A 55,55 0 0,0 338.9,261.1 Z"/>
+              <text x="379" y="265" text-anchor="middle" class="order-sector-label-inside" id="order-03-label">::03::</text>
+              <text x="379" y="283" text-anchor="middle" class="order-sector-status-inside" id="order-03-status">○</text>
+            </g>
+
+            <!-- ::04:: ВОСТОК (0° до 45°) -->
+            <g class="order-sector-group" data-order="04" id="order-04-group" style="cursor:pointer">
+              <path class="order-sector" id="order-04-sector"
+                d="M 440,300 A 140,140 0 0,1 399.0,399.0 L 338.9,338.9 A 55,55 0 0,0 355,300 Z"/>
+              <text x="380" y="329" text-anchor="middle" class="order-sector-label-inside" id="order-04-label">::04::</text>
+              <text x="380" y="347" text-anchor="middle" class="order-sector-status-inside" id="order-04-status">○</text>
+            </g>
+
+            <!-- ::05:: ЮГО-ВОСТОК (45° до 90°) -->
+            <g class="order-sector-group" data-order="05" id="order-05-group" style="cursor:pointer">
+              <path class="order-sector" id="order-05-sector"
+                d="M 399.0,399.0 A 140,140 0 0,1 300,440 L 300,355 A 55,55 0 0,0 338.9,338.9 Z"/>
+              <text x="336" y="375" text-anchor="middle" class="order-sector-label-inside" id="order-05-label">::05::</text>
+              <text x="336" y="393" text-anchor="middle" class="order-sector-status-inside" id="order-05-status">○</text>
+            </g>
+
+            <!-- ::06:: ЮГ (90° до 135°) -->
+            <g class="order-sector-group" data-order="06" id="order-06-group" style="cursor:pointer">
+              <path class="order-sector" id="order-06-sector"
+                d="M 300,440 A 140,140 0 0,1 201.0,399.0 L 261.1,338.9 A 55,55 0 0,0 300,355 Z"/>
+              <text x="265" y="379" text-anchor="middle" class="order-sector-label-inside" id="order-06-label">::06::</text>
+              <text x="265" y="397" text-anchor="middle" class="order-sector-status-inside" id="order-06-status">○</text>
+            </g>
+
+            <!-- ::07:: ЮГО-ЗАПАД (135° до 180°) -->
+            <g class="order-sector-group" data-order="07" id="order-07-group" style="cursor:pointer">
+              <path class="order-sector" id="order-07-sector"
+                d="M 201.0,399.0 A 140,140 0 0,1 160,300 L 245,300 A 55,55 0 0,0 261.1,338.9 Z"/>
+              <text x="212" y="333" text-anchor="middle" class="order-sector-label-inside" id="order-07-label">::07::</text>
+              <text x="212" y="351" text-anchor="middle" class="order-sector-status-inside" id="order-07-status">○</text>
+            </g>
+
+            <!-- ::08:: ЗАПАД (180° до 225°) -->
+            <g class="order-sector-group" data-order="08" id="order-08-group" style="cursor:pointer">
+              <path class="order-sector" id="order-08-sector"
+                d="M 160,300 A 140,140 0 0,1 201.0,201.0 L 261.1,261.1 A 55,55 0 0,0 245,300 Z"/>
+              <text x="220" y="265" text-anchor="middle" class="order-sector-label-inside" id="order-08-label">::08::</text>
+              <text x="220" y="283" text-anchor="middle" class="order-sector-status-inside" id="order-08-status">○</text>
+            </g>
+
+            <!-- ::09:: СЕВЕРО-ЗАПАД (225° до 270°) — неактивна до v2.0.1 -->
+            <g class="order-sector-group" data-order="09" id="order-09-group" style="cursor:not-allowed; opacity:0.4">
+              <path class="order-sector" id="order-09-sector"
+                d="M 201.0,201.0 A 140,140 0 0,1 300,160 L 300,245 A 55,55 0 0,0 261.1,261.1 Z"/>
+              <text x="263" y="216" text-anchor="middle" class="order-sector-label-inside" id="order-09-label">::09::</text>
+              <text x="263" y="234" text-anchor="middle" class="order-sector-status-inside" id="order-09-status">🔒</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Отделы: сетка 4×4 + ::о0:: отдельно (v0.3.24) -->
+      <div class="departments-section">
+        <h3 data-i18n="departments_title">📋 Отделы (Широты)</h3>
+
+        <!-- Чат отДелов: колесо-селектор ::о0::-::о16:: -->
+        <details class="dept-chat" id="dept-chat">
+          <summary class="dept-chat-toggle" data-i18n="chat_write_dept_head">💬 Написать главе отДела</summary>
+          <div class="dept-chat-content">
+            <div class="dept-chat-selector">
+              <label for="dept-chat-select" data-i18n="select_dept">Выберите отДел:</label>
+              <select id="dept-chat-select" class="dept-chat-wheel">
+                <option value="о0">::о0:: (Временный)</option>
+                <option value="о1">::о1::</option>
+                <option value="о2">::о2::</option>
+                <option value="о3">::о3::</option>
+                <option value="о4">::о4::</option>
+                <option value="о5">::о5::</option>
+                <option value="о6">::о6::</option>
+                <option value="о7">::о7::</option>
+                <option value="о8">::о8::</option>
+                <option value="о9">::о9::</option>
+                <option value="о10">::о10::</option>
+                <option value="о11">::о11::</option>
+                <option value="о12">::о12::</option>
+                <option value="о13">::о13::</option>
+                <option value="о14">::о14::</option>
+                <option value="о15">::о15::</option>
+                <option value="о16">::о16::</option>
+              </select>
+            </div>
+            <div class="dept-chat-messages" id="dept-chat-messages">
+              <p class="dept-chat-empty" data-i18n="select_dept">Выберите отДел для общения</p>
+            </div>
+            <div class="dept-chat-input-row" id="dept-chat-input-row" style="display:none;">
+              <input type="text" id="dept-chat-input" data-i18n-placeholder="chat_input_placeholder" placeholder="Ваше сообщение…" class="dept-chat-input" maxlength="500" />
+              <button class="dept-chat-send" id="dept-chat-send">→</button>
+            </div>
+          </div>
+        </details>
+
+        <!-- Сетка 4×4 (::о1::-::о16::) -->
+        <div class="departments-grid" id="departments-grid">
+          <!-- Ряд 1 -->
+          <button class="dept-btn" data-dept="о1" data-i18n-title="dept_о1" title="НЕ НАСИЛИЯ (добровольности)"><span class="dept-label">::о1::</span><span class="dept-status" id="dept-о1-status">○</span></button>
+          <button class="dept-btn" data-dept="о2" data-i18n-title="dept_о2" title="ПРАВДИВОСТИ"><span class="dept-label">::о2::</span><span class="dept-status" id="dept-о2-status">○</span></button>
+          <button class="dept-btn" data-dept="о3" data-i18n-title="dept_о3" title="ВОЗДЕРЖАНИЯ"><span class="dept-label">::о3::</span><span class="dept-status" id="dept-о3-status">○</span></button>
+          <button class="dept-btn" data-dept="о4" data-i18n-title="dept_о4" title="ОТКАЗА ОТ ВОРОВСТВА"><span class="dept-label">::о4::</span><span class="dept-status" id="dept-о4-status">○</span></button>
+
+          <!-- Ряд 2 -->
+          <button class="dept-btn" data-dept="о5" data-i18n-title="dept_о5" title="НЕ КОПИТЬ НЕ НАКАПЛИВАТЬ (аскезы)"><span class="dept-label">::о5::</span><span class="dept-status" id="dept-о5-status">○</span></button>
+          <button class="dept-btn" data-dept="о6" data-i18n-title="dept_о6" title="ЧИСТОТЫ (мыслей и пространства)"><span class="dept-label">::о6::</span><span class="dept-status" id="dept-о6-status">○</span></button>
+          <button class="dept-btn" data-dept="о7" data-i18n-title="dept_о7" title="ДУХ ПРАКТИК"><span class="dept-label">::о7::</span><span class="dept-status" id="dept-о7-status">○</span></button>
+          <button class="dept-btn" data-dept="о8" data-i18n-title="dept_о8" title="ПРЕДАННОСТЬ РОДУ И ДЕЛУ"><span class="dept-label">::о8::</span><span class="dept-status" id="dept-о8-status">○</span></button>
+
+          <!-- Ряд 3 -->
+          <button class="dept-btn" data-dept="о9" data-i18n-title="dept_о9" title="ИЗУЧЕНИЯ ВЕД (живых знаний)"><span class="dept-label">::о9::</span><span class="dept-status" id="dept-о9-status">○</span></button>
+          <button class="dept-btn" data-dept="о10" data-i18n-title="dept_о10" title="УДОВЛЕТВОРЁННОСТИ"><span class="dept-label">::о10::</span><span class="dept-status" id="dept-о10-status">○</span></button>
+          <button class="dept-btn" data-dept="о11" data-i18n-title="dept_о11" title="ОСАНКИ, ОСНОВЫ"><span class="dept-label">::о11::</span><span class="dept-status" id="dept-о11-status">○</span></button>
+          <button class="dept-btn" data-dept="о12" data-i18n-title="dept_о12" title="УПРАВЛЕНИЯ «ЖИВОЙ ЭНЕРГИЕЙ»"><span class="dept-label">::о12::</span><span class="dept-status" id="dept-о12-status">○</span></button>
+
+          <!-- Ряд 4 -->
+          <button class="dept-btn" data-dept="о13" data-i18n-title="dept_о13" title="ОТВЛЕЧЁННОСТИ (восстановления сил)"><span class="dept-label">::о13::</span><span class="dept-status" id="dept-о13-status">○</span></button>
+          <button class="dept-btn" data-dept="о14" data-i18n-title="dept_о14" title="КОНЦЕНТРАЦИИ (сплочённости)"><span class="dept-label">::о14::</span><span class="dept-status" id="dept-о14-status">○</span></button>
+          <button class="dept-btn" data-dept="о15" data-i18n-title="dept_о15" title="МЕДИТАЦИИ"><span class="dept-label">::о15::</span><span class="dept-status" id="dept-о15-status">○</span></button>
+          <button class="dept-btn" data-dept="о16" data-i18n-title="dept_о16" title="САМОРЕАЛИЗАЦИИ"><span class="dept-label">::о16::</span><span class="dept-status" id="dept-о16-status">○</span></button>
+        </div>
+
+        <!-- ::о0:: — отдельная кнопка (Зеро), перенесена ПОД сетку (v0.3.25) -->
+        <div class="dept-zero-row">
+          <button class="dept-btn dept-zero" data-dept="о0" id="dept-о0" data-i18n-title="dept_о0" title="ВРЕМЕННЫЙ (переходный)">
+            <span class="dept-label-zero">::о0::</span>
+            <span class="dept-status-zero" id="dept-о0-status">○</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Союзы и Советы -->
+      <div class="unions-councils-section">
+        <h3 data-i18n="unions_councils_title">🤝 Союзы и Советы</h3>
+
+        <!-- Союз -->
+        <div class="union-form">
+          <h4 data-i18n="union_title">Мой соЮз</h4>
+          <p class="union-hint" data-i18n="union_hint">до 100 знаков, до 6 слов, 5 пробелов между ними</p>
+          <div class="union-input-row">
+            <input type="text" id="union-name-input" class="union-input" data-i18n-placeholder="union_name_placeholder" placeholder="My unIon · up to 100 chars, up to 6 words, 5 spaces between them +16 R.U. v2.0.1." maxlength="100" />
+            <select id="union-order-select" class="union-order-select">
+              <option value="" data-i18n="union_select_order">Выберите Орден…</option>
+              <option value="02">::02:: — орден «Воинов и защитников»</option>
+              <option value="03">::03:: — орден «Дерево ремёсел»</option>
+              <option value="04">::04:: — орден «Земледельцев»</option>
+              <option value="05">::05:: — орден «Воспитателей детей и попечителей сирот»</option>
+              <option value="06">::06:: — орден «Архитекторов, проектировщиков и строителей»</option>
+              <option value="07">::07:: — орден «Организаторы Индивидуального питания»</option>
+              <option value="08">::08:: — орден «Учёные, исследователи, изобретатели и Новаторы»</option>
+            </select>
+            <button class="btn-union-create" id="btn-create-union" data-i18n="btn_union_create">Учредить</button>
+          </div>
+          <!-- Клавиатура удалена — ввод с устройства (v0.3.25) -->
+          <div id="unions-list" class="unions-list">
+            <p class="unions-empty" data-i18n="unions_empty">Союзов пока нет</p>
+          </div>
+        </div>
+
+        <!-- Совет -->
+        <div class="council-form">
+          <h4 data-i18n="council_title">Мой соВет</h4>
+          <p class="council-hint" data-i18n="council_hint">до 100 знаков, до 6 слов, 5 пробелов между ними</p>
+          <div class="council-input-row">
+            <input type="text" id="council-name-input" class="council-input" data-i18n-placeholder="council_name_placeholder" placeholder="My coUncil · up to 100 chars, up to 6 words, 5 spaces between them +16 R.U. v2.0.1." maxlength="100" />
+            <select id="council-dept-select" class="council-dept-select">
+              <option value="" data-i18n="council_select_dept">Выберите Отдел…</option>
+              <option value="о1">::о1:: — НЕ НАСИЛИЯ (добровольности)</option>
+              <option value="о2">::о2:: — ПРАВДИВОСТИ</option>
+              <option value="о3">::о3:: — ВОЗДЕРЖАНИЯ</option>
+              <option value="о4">::о4:: — ОТКАЗА ОТ ВОРОВСТВА</option>
+              <option value="о5">::о5:: — НЕ КОПИТЬ НЕ НАКАПЛИВАТЬ (аскезы)</option>
+              <option value="о6">::о6:: — ЧИСТОТЫ (мыслей и пространства)</option>
+              <option value="о7">::о7:: — ДУХ ПРАКТИК</option>
+              <option value="о8">::о8:: — ПРЕДАННОСТЬ РОДУ И ДЕЛУ</option>
+              <option value="о9">::о9:: — ИЗУЧЕНИЯ ВЕД (живых знаний)</option>
+              <option value="о10">::о10:: — УДОВЛЕТВОРЁННОСТИ</option>
+              <option value="о11">::о11:: — ОСАНКИ, ОСНОВЫ</option>
+              <option value="о12">::о12:: — УПРАВЛЕНИЯ «ЖИВОЙ ЭНЕРГИЕЙ»</option>
+              <option value="о13">::о13:: — ОТВЛЕЧЁННОСТИ (восстановления сил)</option>
+              <option value="о14">::о14:: — КОНЦЕНТРАЦИИ (сплочённости)</option>
+              <option value="о15">::о15:: — МЕДИТАЦИИ</option>
+              <option value="о16">::о16:: — САМОРЕАЛИЗАЦИИ</option>
+            </select>
+            <button class="btn-council-create" id="btn-create-council" data-i18n="btn_council_create">Учредить</button>
+          </div>
+          <!-- Клавиатура удалена — ввод с устройства (v0.3.25) -->
+          <div id="councils-list" class="councils-list">
+            <p class="councils-empty" data-i18n="councils_empty">Советов пока нет</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Модальные окна реестров -->
+    <div id="ok-list-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="recipient_list_title">Список всех О.К. (участников)</h3>
+          <button class="modal-close" id="close-ok-list">&times;</button>
+        </div>
+        <div class="modal-body" id="ok-list-content">
+          <p class="registry-placeholder">Загрузка списка...</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="uz-registry-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="uz_registry_title">Все твои У.Е. на сегодня</h3>
+          <button class="modal-close" id="close-uz-registry">&times;</button>
+        </div>
+        <div class="modal-body" id="uz-registry-content">
+          <p class="registry-placeholder">Загрузка реестра...</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="transactions-registry-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="registry_full_title">📜 Реестр всех транзакций</h3>
+          <button class="modal-close" id="close-transactions-registry">&times;</button>
+        </div>
+        <div class="modal-body" id="transactions-registry-content">
+          <p class="registry-placeholder">Загрузка реестра...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно редактируемого архива входящих У.М. (v0.3.25) -->
+    <div id="incoming-archive-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 data-i18n="incoming_archive_title">📜 Редактируемый архив входящих У.М.</h3>
+          <button class="modal-close" id="close-incoming-archive">&times;</button>
+        </div>
+        <div class="modal-body" id="incoming-archive-content">
+          <p class="registry-placeholder">Загрузка архива...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно подтверждения передачи (v0.3.19) -->
+    <div id="transfer-confirm-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content modal-content--transfer">
+        <div class="modal-header">
+          <h3>✦ Акт передачи</h3>
+          <button class="btn-primary btn-confirm-transfer-header" id="header-confirm-transfer-btn">✦ Подтвердить</button>
+          <button class="modal-close" id="close-transfer-confirm">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Информация о передаче -->
+          <div class="transfer-summary">
+            <p class="summary-row"><span>Получатель:</span> <strong id="confirm-recipient">—</strong></p>
+            <p class="summary-row"><span>У.Е.:</span> <strong id="confirm-ue-count">0</strong></p>
+          </div>
+
+          <!-- Поля для гостей (обязательно) -->
+          <div id="guest-fields" class="transfer-fields" style="display: none;">
+            <p class="fields-hint fields-hint--required">⚠️ Для отправки гостю необходим временный ключ (в.К.)</p>
+
+            <!-- Система вкладок для типа временного ключа -->
+            <div class="vk-tabs">
+              <button class="vk-tab active" data-tab="rip">R.I.P.</button>
+              <button class="vk-tab" data-tab="phone">Телефон</button>
+              <button class="vk-tab" data-tab="email">Email</button>
+              <button class="vk-tab" data-tab="phone-email">Телефон + Email</button>
+            </div>
+
+            <!-- Вкладка RIP -->
+            <div class="vk-tab-content active" id="tab-rip">
+              <div class="form-group">
+                <label for="rip-years">Годы жизни:</label>
+                <input type="text" id="rip-years" placeholder=".1828.-.1910." class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="rip-gratitude">Благодарность за что (обязательно):</label>
+                <input type="text" id="rip-gratitude" placeholder="За что благодарите…" class="form-input" required>
+              </div>
+            </div>
+
+            <!-- Вкладка Phone -->
+            <div class="vk-tab-content" id="tab-phone">
+              <div class="form-group">
+                <label for="vk-phone">Телефон:</label>
+                <input type="text" id="vk-phone" placeholder="+7900-000-00-00" class="form-input">
+              </div>
+            </div>
+
+            <!-- Вкладка Email -->
+            <div class="vk-tab-content" id="tab-email">
+              <div class="form-group">
+                <label for="vk-email">Email:</label>
+                <input type="text" id="vk-email" placeholder="name@example.com" class="form-input">
+              </div>
+            </div>
+
+            <!-- Вкладка Phone + Email -->
+            <div class="vk-tab-content" id="tab-phone-email">
+              <div class="form-group">
+                <label for="vk-phone-combo">Телефон:</label>
+                <input type="text" id="vk-phone-combo" placeholder="+7900-000-00-00" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="vk-email-combo">Email:</label>
+                <input type="text" id="vk-email-combo" placeholder="name@example.com" class="form-input">
+              </div>
+            </div>
+          </div>
+
+          <!-- Опциональные поля (для всех) -->
+          <div class="transfer-fields transfer-fields--optional">
+            <p class="fields-hint">Дополнительно (необязательно):</p>
+
+            <!-- Сообщение / Благодарность -->
+            <div class="form-group">
+              <label for="gratitude-reason">Благодарность за что:</label>
+              <select id="gratitude-reason" class="form-input">
+                <option value="">(выбери из списка или напиши сам)</option>
+                <option value="custom">(напиши сам … )</option>
+                <option value="За мудрость">За мудрость</option>
+                <option value="За мудрость паузы">За мудрость паузы</option>
+                <option value="За благое намерение">За благое намерение</option>
+                <option value="За старание">За старание</option>
+                <option value="За организацию">За организацию</option>
+                <option value="За подвижничество">За подвижничество</option>
+                <option value="За жертвенность">За жертвенность</option>
+                <option value="За жесткость">За жесткость</option>
+                <option value="За конкретику">За конкретику</option>
+                <option value="За самообладание">За самообладание</option>
+                <option value="За душевность">За душевность</option>
+                <option value="За сердечность">За сердечность</option>
+                <option value="За сострадание">За сострадание</option>
+                <option value="За приглашение">За приглашение</option>
+                <option value="За экологию сознания">За экологию сознания</option>
+                <option value="За передачу «живого знания»">За передачу «живого знания»</option>
+                <option value="За честную обратную связь">За честную обратную связь</option>
+                <option value="За бережное отношение к чужому времени">За бережное отношение к чужому времени</option>
+                <option value="За смелость быть «белой вороной»">За смелость быть «белой вороной»</option>
+                <option value="За пробуждение интереса">За пробуждение интереса</option>
+                <option value="За дисциплину планирования">За дисциплину планирования</option>
+                <option value="За отказ от накопления">За отказ от накопления</option>
+                <option value="За сотворчество">За сотворчество</option>
+                <option value="За «световой след»">За «световой след»</option>
+                <option value="За верность слову">За верность слову</option>
+                <option value="За сохранение человеческого">За сохранение человеческого</option>
+                <option value="За «дар воли»">За «дар воли»</option>
+                <option value="За качественный вопрос">За качественный вопрос</option>
+                <option value="За навигацию в хаосе">За навигацию в хаосе</option>
+                <option value="За укрепление связей">За укрепление связей</option>
+                <option value="За чистоту мотивации">За чистоту мотивации</option>
+                <option value="За мужество признать заблуждение">За мужество признать заблуждение</option>
+                <option value="За «тихое присутствие»">За «тихое присутствие»</option>
+              </select>
+            </div>
+
+            <!-- Поле для ручного ввода -->
+            <div class="form-group" id="custom-message-group" style="display: none;">
+              <label for="custom-message">Твоё сообщение:</label>
+              <input type="text" id="custom-message" placeholder="Впиши свой вариант…" class="form-input">
+            </div>
+
+            <div class="form-group" id="delivery-term-group">
+              <label for="delivery-term">Срок доставки:</label>
+              <select id="delivery-term" class="form-input">
+                <option value="">(срок доставки)</option>
+                <option value="1-3 дня">1-3 дня</option>
+                <option value="1-7 дней">1-7 дней</option>
+                <option value="1-14 дней">1-14 дней</option>
+                <option value="1 месяц">1 месяц</option>
+                <option value="по договорённости">по договорённости</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="buyout-date-group">
+              <label for="buyout-date">Дата выкупа У.М.:</label>
+              <input type="text" id="buyout-date" placeholder="дд.мм.гг (например: 31.06.27)" class="form-input">
+            </div>
+
+            <div class="form-group" id="ok3-group">
+              <label for="ok3">О.К.-3 (резервный получатель):</label>
+              <input type="text" id="ok3" placeholder="(О.К.-3)" class="form-input">
+            </div>
+          </div>
+
+          <!-- Кнопка отмены (внизу) -->
+          <div class="modal-actions modal-actions--bottom">
+            <button class="btn-secondary" id="cancel-transfer">Отмена</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="sandbox-footer">
+    <p data-i18n="footer_canon">Canon v0.3.26 · "Иммунитет Импульса" · 2026</p>
+    <p data-i18n="footer_ethics">Этический стоп-кран активен: нет блокчейна, нет токенов, нет сбора данных</p>
+
+    <!-- Ссылка на создание О.К. -->
+    <div id="no-ok-warning" style="display: none; margin-top: 1rem;">
+      <p data-i18n="no_ok_warning" style="color: var(--accent-yellow); margin-bottom: 0.5rem;">
+        ⚠️ У вас нет О.К. — числового следа в НОД.-Платформе
+      </p>
+      <a href="threshold.html" class="btn-primary" data-i18n="create_ok_btn" style="display: inline-block; padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+        ✦ Создать О.К. на Пороге
+      </a>
+    </div>
+  </footer>
+  <!-- Yandex Metrika (async, в конце) --> <script type="text/javascript"> (function(m,e,t,r,i,k,a){ m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date(); for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } } k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a) })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym'); ym(106573807, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true }); </script> <noscript> <div><img src="https://mc.yandex.ru/watch/106573807" style="position:absolute; left:-9999px;" alt="" />
+  </div> </noscript> <!-- i18n engine (defer) -->
+
+  <!-- Скрипты (порядок важен!) -->
+<!-- 0. i18n (локализация) -->
+<script src="i18n.js"></script>
+<!-- 1. Ритм (время/фазы) -->
+<script src="timeRhythm.js"></script>
+<!-- 2. След (хранилище/ro.DAG) — ДО logic -->
+<script src="storage.js"></script>
+<!-- 3. Жизнь (бизнес-логика) -->
+<script src="logic.js"></script>
+ </body>
+</html>
