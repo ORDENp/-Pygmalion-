@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Порог — Pygmalion</title>
+  <script src="../i18n/i18n.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(180deg, #0d0d12 0%, #0a0a0f 100%);
+      color: #e8e8f0;
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .threshold-container {
+      max-width: 600px;
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 300;
+      color: #e8e8f0;
+      margin-bottom: 40px;
+      letter-spacing: 0.5px;
+    }
+
+    .threshold-text {
+      font-size: 16px;
+      color: #a8a8b8;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .threshold-text strong {
+      color: #e8e8f0;
+      font-weight: 400;
+    }
+
+    .principles {
+      margin: 40px 0;
+      padding: 30px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid #25252f;
+      text-align: left;
+    }
+
+    .principle {
+      font-size: 15px;
+      color: #a8a8b8;
+      margin-bottom: 16px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .principle:before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #68687a;
+    }
+
+    .principle:last-child {
+      margin-bottom: 0;
+    }
+
+    .ok-input-section {
+      margin: 40px 0;
+    }
+
+    .ok-input-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 12px;
+    }
+
+    #ok_input {
+      width: 100%;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.8);
+      font-family: 'Georgia', serif;
+      font-size: 16px;
+      text-align: center;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    #ok_input:focus {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    #ok_input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .actions {
+      margin-top: 40px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 32px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Georgia', serif;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .btn-primary {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .btn-primary:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .status-message {
+      margin-top: 20px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      min-height: 20px;
+    }
+
+    .status-message.error {
+      color: rgba(255,100,100,0.8);
+    }
+
+    .status-message.success {
+      color: rgba(100,255,150,0.8);
+    }
+
+    .lang-switch {
+      position: fixed;
+      top: 30px;
+      right: 40px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .lang-switch a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      margin-left: 12px;
+      cursor: pointer;
+    }
+
+    .lang-switch a:hover {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .lang-switch a.active {
+      color: rgba(255,255,255,0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-switch">
+    <a href="#" data-lang="ru" class="active">RU</a>
+    <a href="#" data-lang="en">EN</a>
+  </div>
+
+  <div class="threshold-container">
+    <h1 data-i18n="threshold.title">Порог</h1>
+
+    <p class="threshold-text" data-i18n="threshold.intro">
+      Вы стоите на пороге пространства, где присутствие фиксируется, а не накапливается.
+    </p>
+
+    <div class="principles">
+      <div class="principle" data-i18n="threshold.principle_1">
+        Каждый день система эмитирует 6 импульсов. Вы выбираете, куда направить своё внимание.
+      </div>
+      <div class="principle" data-i18n="threshold.principle_2">
+        В полночь UTC все импульсы сгорают. Это не потеря — это выдох системы.
+      </div>
+      <div class="principle" data-i18n="threshold.principle_3">
+        Остаётся только след — геометрия связей, которую вы создали.
+      </div>
+      <div class="principle" data-i18n="threshold.principle_4">
+        Система дышит сама. Поле живёт во времени без наблюдателя.
+      </div>
+    </div>
+
+    <p class="threshold-text" data-i18n="threshold.question">
+      Готовы ли вы войти в это пространство и оставить свой след?
+    </p>
+
+    <div class="ok-input-section">
+      <div class="ok-input-label" data-i18n="threshold.ok_label">Ваш Открытый Ключик (О.К.)</div>
+      <input
+        type="text"
+        id="ok_input"
+        placeholder="::ok::"
+        data-i18n-placeholder="threshold.ok_placeholder"
+        maxlength="50"
+      />
+    </div>
+
+    <div class="actions">
+      <a href="../index.html" class="btn" data-i18n="threshold.back">Назад</a>
+      <button id="cross_threshold" class="btn btn-primary" disabled data-i18n="threshold.cross">Пересечь порог</button>
+    </div>
+
+    <div id="status_message" class="status-message"></div>
+  </div>
+
+  <script>
+    // Инициализация i18n
+    const i18n = new I18n();
+    i18n.init().then(() => {
+      // Обновить placeholder
+      const input = document.getElementById('ok_input');
+      input.placeholder = i18n.t('threshold.ok_placeholder');
+    });
+
+    // Переключение языка
+    document.querySelectorAll('[data-lang]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const lang = e.target.getAttribute('data-lang');
+        i18n.setLanguage(lang);
+
+        // Обновить активный класс
+        document.querySelectorAll('[data-lang]').forEach(l => l.classList.remove('active'));
+        e.target.classList.add('active');
+
+        // Обновить placeholder
+        const input = document.getElementById('ok_input');
+        input.placeholder = i18n.t('threshold.ok_placeholder');
+      });
+    });
+
+    // Валидация О.К.
+    const okInput = document.getElementById('ok_input');
+    const crossBtn = document.getElementById('cross_threshold');
+    const statusMsg = document.getElementById('status_message');
+
+    okInput.addEventListener('input', () => {
+      const value = okInput.value.trim();
+      const isValid = /^::[0-9A-Za-z._-]+::$/.test(value);
+      crossBtn.disabled = !isValid;
+
+      if (value && !isValid) {
+        statusMsg.textContent = i18n.t('threshold.error_format');
+        statusMsg.className = 'status-message error';
+      } else {
+        statusMsg.textContent = '';
+        statusMsg.className = 'status-message';
+      }
+    });
+
+    // Пересечение порога
+    crossBtn.addEventListener('click', async () => {
+      const okKey = okInput.value.trim();
+
+      if (!okKey) return;
+
+      crossBtn.disabled = true;
+      statusMsg.textContent = i18n.t('threshold.crossing');
+      statusMsg.className = 'status-message';
+
+      try {
+        // Отправить акт THRESHOLD_CROSSED
+        const response = await fetch('http://localhost:3000/api/threshold', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ok_key: okKey })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          statusMsg.textContent = i18n.t('threshold.success');
+          statusMsg.className = 'status-message success';
+
+          // Перенаправить на поле через 1.5 секунды
+          setTimeout(() => {
+            window.location.href = `field.html?ok=${encodeURIComponent(okKey)}`;
+          }, 1500);
+        } else {
+          statusMsg.textContent = data.error || i18n.t('threshold.error_unknown');
+          statusMsg.className = 'status-message error';
+          crossBtn.disabled = false;
+        }
+      } catch (error) {
+        console.error('Threshold error:', error);
+        statusMsg.textContent = i18n.t('threshold.error_network');
+        statusMsg.className = 'status-message error';
+        crossBtn.disabled = false;
+      }
+    });
+
+    // Enter для отправки
+    okInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !crossBtn.disabled) {
+        crossBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>

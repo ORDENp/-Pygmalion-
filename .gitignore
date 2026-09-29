@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node build artifacts
+dist/
+build/
+coverage/
+.nyc_output/
+
+# AI agents
+.mimocode/
+.graphify/
+
+# Backups
+*.bak
+*.bak.*

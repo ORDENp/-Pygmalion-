@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pygmalion — Т.О.К.</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0f;
+      color: rgba(255,255,255,0.75);
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 6vh 20px;
+    }
+    main { max-width: 560px; width: 100%; }
+    .glyph { font-size: 12px; letter-spacing: 3px; color: rgba(255,255,255,0.25); margin-bottom: 24px; }
+    h1 { font-weight: 300; font-size: 26px; margin-bottom: 12px; }
+    .sense { line-height: 1.7; font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 30px; }
+    .stage { margin-bottom: 30px; }
+    .stage-label {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 14px;
+    }
+    input[type=text] {
+      width: 100%; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8); padding: 12px 14px; font-size: 13px;
+    }
+    .ue-group { margin-bottom: 14px; }
+    .ue-group-name { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+    .ue-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ue {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.5);
+      padding: 8px 12px; cursor: pointer; font-size: 11px; user-select: none;
+      transition: border-color .3s, color .3s;
+    }
+    .ue.on { border-color: rgba(255,200,140,0.55); color: rgba(255,255,255,0.9); }
+    .norm-hint { color: rgba(255,255,255,0.3); font-size: 12px; margin-top: 12px; line-height: 1.7; }
+    button.confirm {
+      background: none;
+      border: 1px solid rgba(255,200,140,0.4);
+      color: rgba(255,220,180,0.9);
+      padding: 12px 28px; font-size: 13px; cursor: pointer;
+      transition: background .3s;
+    }
+    button.confirm:hover { background: rgba(255,200,140,0.08); }
+    button.confirm:disabled { opacity: .3; cursor: default; }
+    .error { color: rgba(255,150,150,0.8); font-size: 13px; min-height: 18px; margin-top: 12px; }
+    .answer {
+      border-left: 1px solid rgba(255,200,140,0.45);
+      padding: 4px 0 4px 18px; line-height: 1.8; font-size: 14px;
+      display: none;
+    }
+    .answer .notice { color: rgba(255,220,150,0.85); font-size: 13px; margin-top: 10px; }
+    .answer .returned { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 8px; }
+    .answer .step { color: rgba(255,255,255,0.4); font-size: 13px; margin-top: 14px; }
+    .answer .step a { color: rgba(255,220,180,0.85); text-decoration: none; }
+    .mode, .back { position: fixed; font-size: 10px; color: rgba(255,255,255,0.2); text-decoration: none; }
+    .mode { bottom: 16px; right: 20px; }
+    .back { top: 20px; left: 20px; font-size: 11px; color: rgba(255,255,255,0.25); }
+    .back:hover { color: rgba(255,255,255,0.5); }
+    .um-link { font-size: 12px; color: rgba(255,255,255,0.35); }
+    .um-link a { color: rgba(255,220,180,0.8); text-decoration: none; }
+  </style>
+</head>
+<body>
+<a class="back" href="/plan.html">← П.Л.А.Н.</a>
+<main>
+  <div class="glyph">::про.2.Т.О.К.-О.Р.А.К.У.Л.-С.::</div>
+  <h1>Передать благодарность</h1>
+  <p class="sense" id="sense"></p>
+
+  <div class="stage">
+    <div class="stage-label">Ваше О.К.</div>
+    <input type="text" id="ok" placeholder="::ваше.О.К.::" value="::anna::">
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Кому</div>
+    <input type="text" id="target" list="registryList" placeholder="::О.К.того.кого.благодарите::">
+    <datalist id="registryList"></datalist>
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Отметьте У.Е. из вашего актива</div>
+    <div id="balance"></div>
+    <div class="norm-hint">Правило нормы: одному человеку в день — по 1 У.Е. из каждой триады. Если отметите больше — излишек сам вернётся в актив, и вы увидите уведомление.</div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Действие</div>
+    <button class="confirm" id="confirm" disabled>Передать благодарность</button>
+    <div class="error" id="error"></div>
+  </div>
+
+  <div class="answer" id="answer"></div>
+
+  <div class="um-link">Особая благодарность — <a href="/markers.html">передача У.М. из баланса маркеров →</a></div>
+
+  <div id="scaleLine" style="margin-top:36px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;font-size:12px;color:rgba(255,255,255,0.35);line-height:1.8;"></div>
+</main>
+<div class="mode" id="mode"></div>
+
+<script>
+const TRIAD_NAMES = { T1: 'Знания', T2: 'Практики', T3: 'Творчество', T4: 'Досуг/ЗОЖ', T5: '№21' };
+const marked = new Set();
+
+const balanceEl = document.getElementById('balance');
+const confirmBtn = document.getElementById('confirm');
+const errorEl = document.getElementById('error');
+const answerEl = document.getElementById('answer');
+const modeEl = document.getElementById('mode');
+
+fetch('/api/protocols/про.2?status=participant')
+  .then(r => r.json())
+  .then(p => { senseEl.textContent = p.screen.sense; });
+
+// Реестр У.З. — подсказки получателя
+fetch('/api/registry?sort=ok')
+  .then(r => r.json())
+  .then(({ entries }) => {
+    document.getElementById('registryList').innerHTML =
+      entries.filter(e => e.status === 'participant')
+        .map(e => `<option value="${e.ok}">`)
+        .join('');
+  });
+
+function loadBalance() {
+  const ok = document.getElementById('ok').value.trim();
+  marked.clear();
+  fetch('/api/ue?actor_ok=' + encodeURIComponent(ok))
+    .then(r => r.json())
+    .then(({ balance }) => {
+      balanceEl.innerHTML = '';
+      confirmBtn.disabled = true;
+      if (!balance.length) {
+        balanceEl.innerHTML = '<div class="norm-hint">Актив пуст. Начните с П.Л.А.Н. — ежедневная эмиссия создаёт живые У.Е.</div>';
+        return;
+      }
+      const groups = {};
+      balance.forEach(u => (groups[u.triad] = groups[u.triad] || []).push(u));
+      Object.keys(groups).sort().forEach(t => {
+        const g = document.createElement('div');
+        g.className = 'ue-group';
+        g.innerHTML = `<div class="ue-group-name">${TRIAD_NAMES[t] || t} — ${groups[t].length} У.Е.</div>`;
+        const list = document.createElement('div');
+        list.className = 'ue-list';
+        groups[t].forEach(u => {
+          const el = document.createElement('div');
+          el.className = 'ue';
+          el.textContent = u.ue_uuid.split('-').slice(-1)[0];
+          el.title = u.ue_uuid;
+          el.onclick = () => {
+            marked.has(u.ue_uuid) ? marked.delete(u.ue_uuid) : marked.add(u.ue_uuid);
+            el.classList.toggle('on', marked.has(u.ue_uuid));
+            confirmBtn.disabled = marked.size === 0;
+            errorEl.textContent = '';
+          };
+          list.appendChild(el);
+        });
+        g.appendChild(list);
+        balanceEl.appendChild(g);
+      });
+    });
+}
+function loadScale() {
+  const ok = document.getElementById('ok').value.trim();
+  Promise.all([
+    fetch('/api/scale?actor_ok=' + encodeURIComponent(ok)).then(r => r.json()),
+    fetch('/api/kol?actor_ok=' + encodeURIComponent(ok)).then(r => r.json())
+  ]).then(([scale, kol]) => {
+    document.getElementById('scaleLine').innerHTML =
+      `Шкала духовности: <b style="color:rgba(255,255,255,0.7)">${scale.percent}%</b> динамики — линия изменений во времени, не оценка человека.<br>` +
+      `К.О.Л.: за сегодня ${kol.today} ед. · всего ${kol.total} ед. · ${kol.per_day} ед./сутки — количество отражённых событий.`;
+  });
+}
+document.getElementById('ok').addEventListener('change', loadBalance);
+loadBalance();
+loadScale();
+
+confirmBtn.onclick = async () => {
+  errorEl.textContent = '';
+  confirmBtn.disabled = true;
+  try {
+    const r = await fetch('/api/protocols/про.2/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        actor_ok: document.getElementById('ok').value.trim(),
+        target_ok: document.getElementById('target').value.trim(),
+        marked_ue: [...marked]
+      })
+    });
+    const data = await r.json();
+    if (!r.ok) {
+      errorEl.textContent = data.message || data.error || 'Передача не состоялась.';
+      confirmBtn.disabled = false;
+      return;
+    }
+    modeEl.textContent = data.mode === 'isolated'
+      ? 'изолированный режим: акты не записаны в acts_log (БД не подключена)' : '';
+    let html = `<div>${data.answer.text}</div>`;
+    if (data.notice) html += `<div class="notice">${data.notice}</div>`;
+    if (data.choice.returned.length) {
+      html += `<div class="returned">Вернулись в актив: ${data.choice.returned.map(u => u.ue_uuid.split('-').slice(-1)[0]).join(', ')}</div>`;
+    }
+    html += `<div class="step">${data.next_step.text} <a href="/kol.html">Открыть отражение →</a></div>`;
+    answerEl.innerHTML = html;
+    answerEl.style.display = 'block';
+    answerEl.scrollIntoView({ behavior: 'smooth' });
+    loadBalance();
+    loadScale();
+  } catch (e) {
+    errorEl.textContent = 'Система не отвечает.';
+    confirmBtn.disabled = false;
+  }
+};
+</script>
+</body>
+</html>

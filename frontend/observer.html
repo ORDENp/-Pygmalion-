@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pygmalion Observer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0d0d12;
+      color: #e8e8f0;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .observer-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .observer-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #25252f;
+    }
+
+    .observer-title {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: #68687a;
+    }
+
+    .separator {
+      margin: 2rem 0;
+      border: none;
+      border-top: 1px solid #25252f;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 400;
+      color: #68687a;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+      color: #e8e8f0;
+    }
+
+    .data-label {
+      color: #a8a8b8;
+      min-width: 200px;
+    }
+
+    .data-value {
+      color: #e8e8f0;
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .phase-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .phase-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    .phase-name {
+      color: #a8a8b8;
+      min-width: 120px;
+    }
+
+    .phase-count {
+      color: #68687a;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      flex: 1;
+      text-align: right;
+    }
+
+    .footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #25252f;
+      text-align: center;
+      color: #68687a;
+      font-size: 11px;
+    }
+
+    .error-message {
+      color: #ef4444;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* Loading state */
+    .loading {
+      text-align: center;
+      color: #68687a;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="observer-container">
+    <div class="observer-header">
+      <div class="observer-title">PYGMALION OBSERVER</div>
+    </div>
+
+    <hr class="separator">
+
+    <div id="observer-content" class="loading">
+      Loading...
+    </div>
+
+    <div class="footer" id="footer">
+      Updated: --
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:3000';
+    const REFRESH_INTERVAL = 10000; // 10 seconds
+
+    let refreshTimer = null;
+
+    async function loadObserverData() {
+      try {
+        const response = await fetch(`${API_BASE}/api/observer`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        renderObserverData(data);
+
+      } catch (error) {
+        console.error('Observer error:', error);
+        renderError(error.message);
+      }
+    }
+
+    function renderObserverData(data) {
+      const container = document.getElementById('observer-content');
+
+      // Format timestamps
+      const currentUTC = formatTimestamp(data.metronome.current_utc);
+      const nextBurnIn = calculateTimeUntil(data.metronome.next_burn_at);
+
+      // Build phase list — only non-zero, sorted by count descending
+      const phases = Object.entries(data.cycle_phases)
+        .filter(([_, count]) => count > 0)
+        .sort((a, b) => b[1] - a[1])
+        .map(([name, count]) => `
+          <div class="phase-item">
+            <span class="phase-name">${name}</span>
+            <span class="phase-count">${'.'.repeat(Math.min(count, 20))} ${count}</span>
+          </div>
+        `).join('');
+
+      const html = `
+        <div class="section">
+          <div class="section-title">METRONOME</div>
+          <div class="data-row">
+            <span class="data-label">Next burn</span>
+            <span class="data-value">${nextBurnIn}</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">FIELD STATES</div>
+          <div class="phase-grid">
+            ${phases}
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">TREE</div>
+          <div class="data-row">
+            <span class="data-label">rooted</span>
+            <span class="data-value">${data.ro_dag.in_tree}</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">echoed</span>
+            <span class="data-value">${data.ro_dag.received_um}</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">drifting</span>
+            <span class="data-value">${data.ro_dag.outside_tree}</span>
+          </div>
+        </div>
+
+        <hr class="separator">
+      `;
+
+      container.innerHTML = html;
+
+      // Update footer — just time, no "Updated:" label
+      document.getElementById('footer').textContent = currentUTC;
+    }
+
+    function renderError(message) {
+      const container = document.getElementById('observer-content');
+      container.innerHTML = `<div class="error-message">Error: ${message}</div>`;
+      document.getElementById('footer').textContent = 'Update failed';
+    }
+
+    function formatTimestamp(isoString) {
+      if (!isoString) return '--';
+      const date = new Date(isoString);
+      return date.toISOString().replace('T', ' ').substring(0, 19);
+    }
+
+    function calculateTimeUntil(isoString) {
+      if (!isoString) return '--';
+      const target = new Date(isoString);
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff < 0) return '0h 0m 0s';
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      return `${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // Initial load
+    loadObserverData();
+
+    // Auto-refresh every 10 seconds
+    refreshTimer = setInterval(loadObserverData, REFRESH_INTERVAL);
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      if (refreshTimer) {
+        clearInterval(refreshTimer);
+      }
+    });
+  </script>
+</body>
+</html>

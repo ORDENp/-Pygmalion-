@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pygmalion — Баланс У.М.</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0f;
+      color: rgba(255,255,255,0.75);
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 6vh 20px;
+    }
+    main { max-width: 560px; width: 100%; }
+    .glyph { font-size: 12px; letter-spacing: 3px; color: rgba(255,255,255,0.25); margin-bottom: 24px; }
+    h1 { font-weight: 300; font-size: 26px; margin-bottom: 12px; }
+    .sense { line-height: 1.7; font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 28px; }
+    .stage { margin-bottom: 28px; }
+    .stage-label {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 14px;
+    }
+    input[type=text] {
+      width: 100%; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8); padding: 12px 14px; font-size: 13px;
+    }
+    .sort { display: flex; gap: 10px; }
+    .sort button {
+      background: none; border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.45); padding: 7px 14px; font-size: 12px; cursor: pointer;
+    }
+    .sort button.on { border-color: rgba(180,160,255,0.5); color: rgba(255,255,255,0.85); }
+    .markers { display: flex; flex-direction: column; gap: 8px; }
+    .marker {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      padding: 12px 14px; cursor: pointer; font-size: 13px; user-select: none;
+      transition: border-color .3s;
+    }
+    .marker.on { border-color: rgba(180,160,255,0.6); }
+    .marker .id { color: rgba(255,255,255,0.85); }
+    .marker .meta { color: rgba(255,255,255,0.35); font-size: 11px; margin-top: 4px; }
+    .trace { color: rgba(180,160,255,0.55); font-size: 11px; margin-top: 6px; line-height: 1.6; }
+    .norm-hint { color: rgba(255,255,255,0.3); font-size: 12px; margin-top: 12px; line-height: 1.7; }
+    button.confirm {
+      background: none;
+      border: 1px solid rgba(180,160,255,0.45);
+      color: rgba(210,200,255,0.9);
+      padding: 12px 28px; font-size: 13px; cursor: pointer;
+      transition: background .3s;
+    }
+    button.confirm:hover { background: rgba(180,160,255,0.08); }
+    button.confirm:disabled { opacity: .3; cursor: default; }
+    .error { color: rgba(255,150,150,0.8); font-size: 13px; min-height: 18px; margin-top: 12px; }
+    .answer {
+      border-left: 1px solid rgba(180,160,255,0.5);
+      padding: 4px 0 4px 18px; line-height: 1.8; font-size: 14px; display: none;
+    }
+    .mode, .back { position: fixed; font-size: 10px; color: rgba(255,255,255,0.2); text-decoration: none; }
+    .mode { bottom: 16px; right: 20px; }
+    .back { top: 20px; left: 20px; font-size: 11px; color: rgba(255,255,255,0.25); }
+    .back:hover { color: rgba(255,255,255,0.5); }
+  </style>
+</head>
+<body>
+<a class="back" href="/tok.html">← Т.О.К.</a>
+<main>
+  <div class="glyph">::про.2.Т.О.К. — У.М.::</div>
+  <h1>Баланс маркеров</h1>
+  <p class="sense">У.М. — знак особой, более высокой благодарности. Каждый маркер несёт световой след — путь признания через людей. Один У.М. — одному человеку в день.</p>
+
+  <div class="stage">
+    <div class="stage-label">Ваше О.К.</div>
+    <input type="text" id="ok" placeholder="::ваше.О.К.::" value="::anna::">
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Баланс</div>
+    <div class="sort" style="margin-bottom:14px;">
+      <button id="sortByDate" class="on">по дате</button>
+      <button id="sortByOrigin">по происхождению</button>
+      <span style="width:12px"></span>
+      <button id="fltAll" class="on">все</button>
+      <button id="fltReceived">полученные</button>
+      <button id="fltPlatform">якорь</button>
+    </div>
+    <div class="markers" id="markers"></div>
+    <div class="norm-hint" id="hint"></div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Кому передать — из реестра всех У.З.</div>
+    <input type="text" id="target" placeholder="::начните.вводить.О.К.::  например ::0" autocomplete="off">
+    <div class="markers" id="registry" style="margin-top:10px;"></div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Действие</div>
+    <button class="confirm" id="confirm" disabled>Передать У.М.</button>
+    <div class="error" id="error"></div>
+  </div>
+
+  <div class="answer" id="answer"></div>
+
+  <div class="scale-line" id="scaleLine" style="margin-top:36px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;font-size:12px;color:rgba(255,255,255,0.35);line-height:1.8;"></div>
+</main>
+<div class="mode" id="mode"></div>
+
+<script>
+let sort = 'date';
+let filter = '';
+let chosen = null;
+
+const markersEl = document.getElementById('markers');
+const confirmBtn = document.getElementById('confirm');
+const errorEl = document.getElementById('error');
+const answerEl = document.getElementById('answer');
+const modeEl = document.getElementById('mode');
+
+document.getElementById('sortByDate').onclick = () => { sort = 'date'; refreshSort(); load(); };
+document.getElementById('sortByOrigin').onclick = () => { sort = 'origin'; refreshSort(); load(); };
+document.getElementById('fltAll').onclick = () => { filter = ''; refreshFilter(); load(); };
+document.getElementById('fltReceived').onclick = () => { filter = 'received'; refreshFilter(); load(); };
+document.getElementById('fltPlatform').onclick = () => { filter = 'platform'; refreshFilter(); load(); };
+function refreshSort() {
+  document.getElementById('sortByDate').classList.toggle('on', sort === 'date');
+  document.getElementById('sortByOrigin').classList.toggle('on', sort === 'origin');
+}
+function refreshFilter() {
+  document.getElementById('fltAll').classList.toggle('on', filter === '');
+  document.getElementById('fltReceived').classList.toggle('on', filter === 'received');
+  document.getElementById('fltPlatform').classList.toggle('on', filter === 'platform');
+}
+
+function loadScale() {
+  const ok = document.getElementById('ok').value.trim();
+  Promise.all([
+    fetch('/api/scale?actor_ok=' + encodeURIComponent(ok)).then(r => r.json()),
+    fetch('/api/kol?actor_ok=' + encodeURIComponent(ok)).then(r => r.json())
+  ]).then(([scale, kol]) => {
+    document.getElementById('scaleLine').innerHTML =
+      `Шкала духовности: <b style="color:rgba(255,255,255,0.7)">${scale.percent}%</b> динамики — линия изменений во времени, не оценка человека.<br>` +
+      `К.О.Л.: за сегодня ${kol.today} ед. · всего ${kol.total} ед. · ${kol.per_day} ед./сутки — количество отражённых событий.`;
+  });
+}
+
+function load() {
+  const ok = document.getElementById('ok').value.trim();
+  chosen = null;
+  confirmBtn.disabled = true;
+  fetch('/api/markers?actor_ok=' + encodeURIComponent(ok) + '&sort=' + sort + '&filter=' + filter)
+    .then(r => r.json())
+    .then(({ markers }) => {
+      markersEl.innerHTML = '';
+      if (!markers.length) {
+        document.getElementById('hint').textContent = 'Баланс пуст.';
+        return;
+      }
+      document.getElementById('hint').textContent =
+        'Правило: 1 У.М. для 1 О.К. в день. Выберите один маркер и получателя.';
+      markers.forEach(m => {
+        const el = document.createElement('div');
+        el.className = 'marker';
+        el.innerHTML =
+          `<div class="id">${m.um_id}</div>` +
+          `<div class="meta">${m.origin === 'platform' ? 'от Платформы' : 'получен от человека'} · ${new Date(m.created_at).toLocaleDateString('ru-RU')}</div>` +
+          `<div class="trace">след: ${m.trace.join(' → ')}</div>`;
+        el.onclick = () => {
+          chosen = m.um_id;
+          [...markersEl.children].forEach(c => c.classList.remove('on'));
+          el.classList.add('on');
+          confirmBtn.disabled = false;
+          errorEl.textContent = '';
+        };
+        markersEl.appendChild(el);
+      });
+    });
+}
+document.getElementById('ok').addEventListener('change', load);
+load();
+loadScale();
+
+// Реестр У.З.: живой поиск получателя
+let targetOk = '';
+const registryEl = document.getElementById('registry');
+const targetInput = document.getElementById('target');
+
+targetInput.addEventListener('input', () => {
+  targetOk = targetInput.value.trim();
+  const q = targetInput.value.trim();
+  fetch('/api/registry?search=' + encodeURIComponent(q) + '&sort=ok')
+    .then(r => r.json())
+    .then(({ entries }) => {
+      registryEl.innerHTML = '';
+      entries.slice(0, 8).forEach(e => {
+        const el = document.createElement('div');
+        el.className = 'marker';
+        el.innerHTML =
+          `<div class="id">${e.ok}</div>` +
+          `<div class="meta">${e.status === 'rip' ? 'r.i.p. — наблюдает' : e.status === 'guest' ? 'гость — передача невозможна' : 'участник'} · У.М.: ${e.um_active}</div>`;
+        if (e.status !== 'rip' && e.status !== 'guest') {
+          el.onclick = () => {
+            targetOk = e.ok;
+            targetInput.value = e.ok;
+            [...registryEl.children].forEach(c => c.classList.remove('on'));
+            el.classList.add('on');
+            errorEl.textContent = '';
+          };
+        } else {
+          el.style.opacity = '.4';
+          el.style.cursor = 'default';
+        }
+        registryEl.appendChild(el);
+      });
+      if (!entries.length) {
+        registryEl.innerHTML = '<div class="norm-hint">Никого не найдено в реестре У.З.</div>';
+      }
+    });
+});
+
+confirmBtn.onclick = async () => {
+  errorEl.textContent = '';
+  confirmBtn.disabled = true;
+  try {
+    const r = await fetch('/api/markers/transfer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        actor_ok: document.getElementById('ok').value.trim(),
+        um_id: chosen,
+        target_ok: targetOk
+      })
+    });
+    const data = await r.json();
+    if (!r.ok) {
+      errorEl.textContent = data.message || data.error || 'Передача не состоялась.';
+      confirmBtn.disabled = false;
+      return;
+    }
+    modeEl.textContent = data.mode === 'isolated'
+      ? 'изолированный режим: акт не записан в acts_log (БД не подключена)' : '';
+    answerEl.innerHTML = `<div>${data.answer.text}</div>` +
+      `<div style="color:rgba(255,255,255,0.4);font-size:13px;margin-top:14px;">${data.next_step.text}</div>`;
+    answerEl.style.display = 'block';
+    answerEl.scrollIntoView({ behavior: 'smooth' });
+    load();
+    loadScale();
+  } catch (e) {
+    errorEl.textContent = 'Система не отвечает.';
+    confirmBtn.disabled = false;
+  }
+};
+</script>
+</body>
+</html>
