@@ -1,0 +1,10 @@
+# Нормализация переводов строк — предотвращает CRLF-шум в diff
+* text=auto eol=lf
+
+# Бинарные файлы не трогать
+*.docx binary
+*.pdf binary
+*.JPG binary
+*.jpg binary
+*.png binary
+*.ico binary

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pygmalion — Живое поле</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0f;  /* deep (deepest level of immersion) */
+      overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+    #controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+      z-index: 10;
+    }
+    #controls input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+      padding: 6px 12px;
+      margin-top: 8px;
+      width: 160px;
+      font-size: 11px;
+    }
+    #controls input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    #status {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      color: rgba(255,255,255,0.2);
+      font-size: 10px;
+      text-align: right;
+      white-space: pre-line;
+      max-width: 300px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div id="controls">
+  <input type="text" id="ok_input" placeholder="::ok::" value="::test123::">
+</div>
+
+<div id="status">
+  <div id="field_status"></div>
+</div>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let W, H, CX, CY;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  CX = W / 2;
+  CY = H / 2;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ============================================================
+// Состояние
+// ============================================================
+
+let state = {
+  nodes: [],
+  edges: [],
+  markers: [],
+  field: { connections: 'sparse', activity: 'quiet' },
+  trace: {
+    last_act_at: null,
+    silence_hours: null,
+    face_window: 'silent',
+    form_hint: 'emerging',
+    burn_echo: { active: false, phase: 'release' }
+  },
+  cycle: {
+    phase: null,
+    hint: null
+  },
+  isAbsoluteZero: false,
+  silenceFade: 1.0 // Глобальный множитель прозрачности при длительном молчании
+};
+
+let t = 0;
+
+// ============================================================
+// Вычисление silenceFade на основе silence_hours
+// ============================================================
+
+function calculateSilenceFade() {
+  if (!state.trace.silence_hours) return 1.0;
+
+  const hours = state.trace.silence_hours;
+
+  // До 48 часов — нормальная прозрачность
+  if (hours < 48) return 1.0;
+
+  // После 48 часов — плавное затухание до 0.15
+  // 48h → 1.0, 72h → 0.5, 96h+ → 0.15
+  const fadeStart = 48;
+  const fadeEnd = 96;
+
+  if (hours >= fadeEnd) return 0.15;
+
+  const fadeProgress = (hours - fadeStart) / (fadeEnd - fadeStart); // 0..1
+  return 1.0 - (fadeProgress * 0.85); // 1.0 → 0.15
+}
+
+// ============================================================
+// Загрузка данных из /api/field
+// ============================================================
+
+async function loadField() {
+  const ok_id = document.getElementById('ok_input').value.trim();
+  if (!ok_id) return;
+
+  try {
+    // Загрузить данные поля
+    const fieldRes = await fetch(`http://localhost:3000/api/field/${ok_id}`);
+    const fieldData = await fieldRes.json();
+
+    // Загрузить данные зеркала (для cycle)
+    const mirrorRes = await fetch(`http://localhost:3000/api/mirror/${ok_id}`);
+    const mirrorData = await mirrorRes.json();
+
+    // Проверка на Абсолютный ноль
+    if (fieldData.state === 'absolute_zero') {
+      state.isAbsoluteZero = true;
+      state.nodes = [];
+      state.edges = [];
+      state.markers = [];
+      state.field = fieldData.field;
+      state.trace = fieldData.trace;
+      state.cycle = mirrorData.cycle || { phase: 'gestation', hint: null };
+
+      // Отобразить подсказку для ::0::
+      const hint = state.cycle.hint || 'Созревание';
+      document.getElementById('field_status').textContent = `::0:: · ${hint}`;
+      return;
+    }
+
+    state.isAbsoluteZero = false;
+
+    // Преобразование в визуальные узлы с ro.DAG статусом
+    state.nodes = fieldData.nodes.map((node, i) => {
+      const nodeId = typeof node === 'string' ? node : node.ok_id;
+      const roDagStatus = typeof node === 'object' ? node.ro_dag_status : { received_um: false, sent_ue: false, in_tree: false };
+
+      return {
+        id: nodeId,
+        x: (Math.random() - 0.5) * 0.6,
+        y: (Math.random() - 0.5) * 0.6,
+        vx: 0,
+        vy: 0,
+        role: nodeId === ok_id ? 'self' : 'other',
+        targetX: null, // Для кристаллизации
+        targetY: null,
+        ro_dag_status: roDagStatus
+      };
+    });
+
+    // Рёбра
+    state.edges = fieldData.edges.map(e => ({
+      from: e.from_ok,
+      to: e.to_ok,
+      type: e.edge_type.toLowerCase(),
+      meta: e.meta
+    }));
+
+    // Маркеры (У.М.)
+    state.markers = fieldData.markers.map(m => ({
+      from: m.author_ok,
+      to: m.act_actor_ok,
+      type: m.marker_type,
+      scope: m.witness_scope
+    }));
+
+    // Поле
+    state.field = fieldData.field;
+
+    // Trace (двойная природа: ЛИЦО / ОБЛИК)
+    state.trace = fieldData.trace || {
+      last_act_at: null,
+      silence_hours: null,
+      face_window: 'silent',
+      form_hint: 'emerging',
+      burn_echo: { active: false, phase: 'release' }
+    };
+
+    // Цикл присутствия
+    state.cycle = mirrorData.cycle || { phase: null, hint: null };
+
+    // Вычислить silenceFade на основе silence_hours
+    state.silenceFade = calculateSilenceFade();
+
+    // Статус — минимальный, с подсказкой цикла
+    const statusParts = [];
+    if (state.trace.face_window !== 'silent') statusParts.push(state.trace.face_window);
+    if (state.trace.form_hint !== 'emerging') statusParts.push(state.trace.form_hint);
+    if (state.trace.burn_echo?.active) statusParts.push('echo');
+
+    let statusText = statusParts.join(' · ') || '—';
+
+    // Добавить подсказку цикла (если есть)
+    if (state.cycle.hint) {
+      statusText += `\n${state.cycle.hint}`;
+    }
+
+    document.getElementById('field_status').textContent = statusText;
+
+  } catch (err) {
+    console.error('Failed to load field:', err);
+    document.getElementById('field_status').textContent = 'error';
+  }
+}
+
+// Загрузить при старте
+loadField();
+
+// Автозагрузка при изменении input (с debounce)
+let loadTimeout;
+document.getElementById('ok_input').addEventListener('input', () => {
+  clearTimeout(loadTimeout);
+  loadTimeout = setTimeout(loadField, 800);
+});
+
+// ============================================================
+// Физика (мягкое отталкивание + притяжение по рёбрам)
+// ============================================================
+
+function updatePhysics() {
+  if (state.isAbsoluteZero) return; // Нет физики для ::0::
+
+  const repulsion = 0.02;
+  let attraction = 0.01;
+  const damping = 0.85;
+
+  // ОБЛИК — кристаллизация при settled
+  const isSettled = state.trace.form_hint === 'settled';
+  const isSteady = state.trace.form_hint === 'steady';
+  const isForming = state.trace.form_hint === 'forming';
+
+  // При settled — усиливаем притяжение к целевым координатам
+  if (isSettled) {
+    // Инициализация целевых координат при первом settled
+    for (const node of state.nodes) {
+      if (node.targetX === null) {
+        node.targetX = node.x;
+        node.targetY = node.y;
+      }
+    }
+    attraction = 0.03; // Усиленное притяжение
+  } else if (isSteady) {
+    attraction = 0.015; // Умеренное притяжение
+  } else if (isForming) {
+    attraction = 0.008; // Слабое притяжение (первый след)
+  }
+  if (isSettled) {
+    // Инициализация целевых координат при первом settled
+    for (const node of state.nodes) {
+      if (node.targetX === null) {
+        node.targetX = node.x;
+        node.targetY = node.y;
+      }
+    }
+    attraction = 0.03; // Усиленное притяжение
+  } else if (isSteady) {
+    attraction = 0.015; // Умеренное притяжение
+  }
+
+  // Отталкивание между узлами
+  for (let i = 0; i < state.nodes.length; i++) {
+    for (let j = i + 1; j < state.nodes.length; j++) {
+      const a = state.nodes[i];
+      const b = state.nodes[j];
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const dist = Math.sqrt(dx*dx + dy*dy) + 0.01;
+      const force = repulsion / (dist * dist);
+      const fx = (dx / dist) * force;
+      const fy = (dy / dist) * force;
+      a.vx -= fx;
+      a.vy -= fy;
+      b.vx += fx;
+      b.vy += fy;
+    }
+  }
+
+  // Притяжение по рёбрам
+  for (const edge of state.edges) {
+    const a = state.nodes.find(n => n.id === edge.from);
+    const b = state.nodes.find(n => n.id === edge.to);
+    if (!a || !b) continue;
+
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const dist = Math.sqrt(dx*dx + dy*dy) + 0.01;
+    const force = (dist - 0.3) * attraction;
+    const fx = (dx / dist) * force;
+    const fy = (dy / dist) * force;
+    a.vx += fx;
+    a.vy += fy;
+    b.vx -= fx;
+    b.vy -= fy;
+  }
+
+  // Кристаллизация — притяжение к целевым координатам при settled
+  if (isSettled) {
+    for (const node of state.nodes) {
+      if (node.targetX !== null) {
+        const dx = node.targetX - node.x;
+        const dy = node.targetY - node.y;
+        const force = 0.05; // Сила притяжения к целевой позиции
+        node.vx += dx * force;
+        node.vy += dy * force;
+      }
+    }
+  }
+
+  // Применение скорости + затухание
+  for (const node of state.nodes) {
+    node.x += node.vx;
+    node.y += node.vy;
+
+    // Усиленное затухание при settled (минимизация дрейфа)
+    const nodeDamping = isSettled ? 0.7 : damping;
+    node.vx *= nodeDamping;
+    node.vy *= nodeDamping;
+
+    // Границы (мягкие)
+    if (Math.abs(node.x) > 0.8) node.vx *= -0.5;
+    if (Math.abs(node.y) > 0.8) node.vy *= -0.5;
+  }
+}
+
+// ============================================================
+// Рендеринг
+// ============================================================
+
+function toScreen(x, y) {
+  return {
+    x: CX + x * Math.min(W, H) * 0.4,
+    y: CY + y * Math.min(H, W) * 0.4
+  };
+}
+
+function drawField() {
+  if (state.isAbsoluteZero) {
+    // Абсолютный ноль (::0::) — режим "Gestation" (созревание)
+    // Базовое тёмное поле
+    ctx.fillStyle = 'rgba(10,10,15,1)';
+    ctx.fillRect(0, 0, W, H);
+
+    // Слабое мерцание потенциала (очень медленное дыхание)
+    const gestationPulse = Math.sin(t * 0.01) * 0.03 + 0.05;
+
+    // Центральный узел ::0:: — имеет массу, но не имеет вектора
+    const centerRadius = 10;
+    const centerOpacity = 0.08 + gestationPulse;
+
+    // Узел в центре
+    ctx.beginPath();
+    ctx.arc(CX, CY, centerRadius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(200,200,220,${centerOpacity})`;
+    ctx.fill();
+
+    // Минимальный glow (потенциальность)
+    const glowGradient = ctx.createRadialGradient(CX, CY, 0, CX, CY, centerRadius * 4);
+    glowGradient.addColorStop(0, `rgba(220,220,240,${centerOpacity * 0.5})`);
+    glowGradient.addColorStop(1, 'rgba(220,220,240,0)');
+    ctx.fillStyle = glowGradient;
+    ctx.beginPath();
+    ctx.arc(CX, CY, centerRadius * 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Надпись ::0:: (состояние покоя)
+    const textOpacity = 0.06 + gestationPulse * 0.5;
+    ctx.fillStyle = `rgba(255,255,255,${textOpacity})`;
+    ctx.font = '48px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('::0::', CX, CY + 80);
+
+    // Подпись "Gestation" (созревание)
+    ctx.font = '14px monospace';
+    ctx.fillStyle = `rgba(200,200,220,${textOpacity * 0.8})`;
+    ctx.fillText('gestation', CX, CY + 110);
+
+    return;
+  }
+
+  // ЛИЦО — фоновое дыхание (зависит от face_window)
+  let faceIntensity = 0.02;
+  if (state.trace.face_window === 'alive') {
+    faceIntensity = 0.12; // Высокочастотное дыхание
+  } else if (state.trace.face_window === 'cooling') {
+    faceIntensity = 0.06; // Замедленное дыхание
+  }
+
+  // Burn Echo — dissipation (рассеивание, выдох системы)
+  let burnEchoEffect = 0;
+  let burnEchoWave = 0;
+  if (state.trace.burn_echo?.active) {
+    // Фаза 1: Кратковременный импульс (0-30% цикла)
+    // Фаза 2: Плавное затухание НИЖЕ базового уровня (30-100% цикла)
+    const burnPhase = (t % 200) / 200; // 0..1 цикл
+
+    if (burnPhase < 0.3) {
+      // Импульс: быстрое нарастание
+      burnEchoEffect = (burnPhase / 0.3) * 0.08; // 0 → 0.08
+    } else {
+      // Dissipation: затухание ниже нормы
+      const fadePhase = (burnPhase - 0.3) / 0.7; // 0..1
+      burnEchoEffect = 0.08 * (1 - fadePhase) - 0.05 * fadePhase; // 0.08 → -0.05
+    }
+
+    // Волна расслабления (расширяющийся круг от центра)
+    burnEchoWave = burnPhase; // 0..1 линейное расширение
+  }
+
+  // ОБЛИК — базовое свечение (не зависит от активности)
+  const shapeGlow = 0.02;
+
+  const alpha = 0.2 + Math.sin(t * 0.02) * faceIntensity + burnEchoEffect + shapeGlow;
+  ctx.fillStyle = `rgba(10,10,15,${alpha})`;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawEdges() {
+  if (state.isAbsoluteZero) return;
+
+  for (const edge of state.edges) {
+    const a = state.nodes.find(n => n.id === edge.from);
+    const b = state.nodes.find(n => n.id === edge.to);
+    if (!a || !b) continue;
+
+    const pa = toScreen(a.x, a.y);
+    const pb = toScreen(b.x, b.y);
+
+    // ОБЛИК — статичная геометрия (кривая Безье без дрейфа)
+    const mx = (pa.x + pb.x) / 2;
+    const my = (pa.y + pb.y) / 2;
+
+    ctx.beginPath();
+    ctx.moveTo(pa.x, pa.y);
+    ctx.quadraticCurveTo(mx, my, pb.x, pb.y);
+
+    // Базовый цвет (ОБЛИК — постоянное слабое свечение)
+    let baseColor, baseOpacity, lineWidth;
+    if (edge.type === 'recognition') {
+      baseColor = 'rgba(255,200,100,';
+      baseOpacity = 0.3;
+      lineWidth = 2;
+    } else if (edge.type === 'flow') {
+      baseColor = 'rgba(100,150,255,';
+      baseOpacity = 0.25;
+      lineWidth = 1.5;
+    } else {
+      baseColor = 'rgba(150,150,150,';
+      baseOpacity = 0.15;
+      lineWidth = 1;
+    }
+
+    // ЛИЦО — импульсы по рёбрам (зависит от face_window)
+    let faceImpulse = 0;
+    if (state.trace.face_window === 'alive') {
+      faceImpulse = Math.sin(t * 0.08 + a.x * 10) * 0.25; // Высокочастотные импульсы
+    } else if (state.trace.face_window === 'cooling') {
+      faceImpulse = Math.sin(t * 0.04 + a.x * 10) * 0.12; // Замедленные импульсы
+    }
+
+    // Burn Echo — краткая вспышка на рёбрах, затем резкое снижение
+    let burnEchoBoost = 0;
+    if (state.trace.burn_echo?.active) {
+      // Вспышка в начале, затем быстрое затухание
+      const burnPhase = Math.sin(t * 0.1);
+      if (burnPhase > 0) {
+        burnEchoBoost = burnPhase * 0.3; // Вспышка
+      } else {
+        burnEchoBoost = burnPhase * 0.1; // Резкое снижение (расслабление)
+      }
+    }
+
+    // Применить silenceFade
+    const finalOpacity = (baseOpacity + faceImpulse + burnEchoBoost) * state.silenceFade;
+    ctx.strokeStyle = baseColor + finalOpacity + ')';
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+  }
+}
+
+function drawMarkers() {
+  if (state.isAbsoluteZero) return;
+
+  // У.М. как свечение на рёбрах
+  for (const marker of state.markers) {
+    const a = state.nodes.find(n => n.id === marker.from);
+    const b = state.nodes.find(n => n.id === marker.to);
+    if (!a || !b) continue;
+
+    const pa = toScreen(a.x, a.y);
+    const pb = toScreen(b.x, b.y);
+    const mx = (pa.x + pb.x) / 2;
+    const my = (pa.y + pb.y) / 2;
+
+    // Цвет зависит от marker_type
+    let color = 'rgba(255,200,100,';
+    if (marker.type === 'gratitude') color = 'rgba(255,150,80,';
+    if (marker.type === 'alignment') color = 'rgba(100,150,255,';
+    if (marker.type === 'witness') color = 'rgba(200,200,220,';
+    if (marker.type === 'support') color = 'rgba(100,200,150,';
+
+    // Интенсивность зависит от witness_scope
+    let intensity = 0.3;
+    if (marker.scope === 'personal') intensity = 0.6;
+    if (marker.scope === 'observation') intensity = 0.4;
+    if (marker.scope === 'indirect') intensity = 0.2;
+
+    // Пульсация — мягче при cooling
+    let pulseSpeed = 0.05;
+    if (state.trace.face_window === 'alive') {
+      pulseSpeed = 0.08; // Быстрая пульсация
+    } else if (state.trace.face_window === 'cooling') {
+      pulseSpeed = 0.04; // Замедленная пульсация
+    }
+
+    const pulse = 0.5 + Math.sin(t * pulseSpeed) * 0.5;
+
+    // Применить silenceFade
+    const markerOpacity = (intensity * pulse) * state.silenceFade;
+    const glowOpacity = (intensity * 0.3) * state.silenceFade;
+
+    ctx.beginPath();
+    ctx.arc(mx, my, 8 + pulse * 4, 0, Math.PI * 2);
+    ctx.fillStyle = color + markerOpacity + ')';
+    ctx.fill();
+
+    // Свечение
+    const gradient = ctx.createRadialGradient(mx, my, 0, mx, my, 20);
+    gradient.addColorStop(0, color + glowOpacity + ')');
+    gradient.addColorStop(1, color + '0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(mx - 20, my - 20, 40, 40);
+  }
+}
+
+function drawNodes() {
+  if (state.isAbsoluteZero) return;
+
+  for (const node of state.nodes) {
+    const p = toScreen(node.x, node.y);
+
+    // ro.DAG статус узла
+    const roDag = node.ro_dag_status || { received_um: false, sent_ue: false, in_tree: false };
+
+    // Проверка на Предстоятеля (::00::) — ствол Древа
+    const isPredstoyatel = node.id === '::00::';
+
+    // ОБЛИК — базовый размер (не зависит от "важности")
+    let radius = node.role === 'self' ? 12 : 8;
+
+    // Предстоятель (::00::) — ствол, не доминирующий центр
+    if (isPredstoyatel) {
+      radius = 9; // Средний размер, не максимальный
+    }
+
+    // Узел-инициатор (in_tree) — слегка больше
+    else if (roDag.in_tree) {
+      radius *= 1.15;
+    }
+
+    // ЛИЦО — пульсация и дрейф (зависит от face_window)
+    let pulse = 1.0;
+    let jitter = { x: 0, y: 0 };
+
+    // ОБЛИК — при settled полностью прекращается дрейф (вечный узор)
+    const isSettled = state.trace.form_hint === 'settled';
+
+    if (state.trace.face_window === 'alive' && !isSettled) {
+      // Высокочастотная пульсация
+      pulse = 1 + Math.sin(t * 0.1 + node.x * 10) * 0.2;
+
+      // Узлы вне Древа дрейфуют по периферии сильнее
+      const driftMultiplier = roDag.received_um ? 1.0 : 1.5;
+      jitter.x = Math.sin(t * 0.05 + node.x * 5) * 3 * driftMultiplier;
+      jitter.y = Math.cos(t * 0.05 + node.y * 5) * 3 * driftMultiplier;
+    } else if (state.trace.face_window === 'cooling' && !isSettled) {
+      // Замедленная пульсация
+      pulse = 1 + Math.sin(t * 0.04 + node.x * 10) * 0.1;
+
+      const driftMultiplier = roDag.received_um ? 1.0 : 1.5;
+      jitter.x = Math.sin(t * 0.02 + node.x * 5) * 1.5 * driftMultiplier;
+      jitter.y = Math.cos(t * 0.02 + node.y * 5) * 1.5 * driftMultiplier;
+    }
+    // При silent ИЛИ settled — pulse = 1.0, jitter = 0 (статичные узлы, вечный узор)
+
+    // ОБЛИК — базовая прозрачность (зависит от ro.DAG статуса)
+    let baseOpacity = node.role === 'self' ? 0.6 : 0.4;
+
+    // Узел вне Древа (received_um = false) — сниженная яркость
+    if (!roDag.received_um) {
+      baseOpacity *= 0.6;
+    }
+
+    // Узел внутри Древа (received_um = true) — устойчивое свечение
+    if (roDag.received_um && !roDag.in_tree) {
+      baseOpacity *= 1.1;
+    }
+
+    // Узел-инициатор (in_tree) — выраженное присутствие
+    if (roDag.in_tree) {
+      baseOpacity *= 1.25;
+    }
+
+    // ЛИЦО — дополнительная яркость при активности
+    let faceBoost = 0;
+    if (state.trace.face_window === 'alive') faceBoost = 0.25;
+    else if (state.trace.face_window === 'cooling') faceBoost = 0.12;
+
+    // Burn Echo — краткая вспышка, затем резкое снижение (расслабление)
+    let burnEchoBoost = 0;
+    if (state.trace.burn_echo?.active) {
+      const burnPhase = Math.sin(t * 0.1);
+      if (burnPhase > 0) {
+        burnEchoBoost = burnPhase * 0.2; // Вспышка
+      } else {
+        burnEchoBoost = burnPhase * 0.05; // Резкое снижение
+      }
+    }
+
+    // Применить silenceFade (затухание при длительном молчании >48h)
+    const opacity = Math.min(baseOpacity + faceBoost + burnEchoBoost, 1.0) * state.silenceFade;
+
+    // Цвет зависит от ro.DAG статуса
+    let color;
+    if (node.role === 'self') {
+      color = `rgba(255,255,255,${opacity})`;
+    } else if (isPredstoyatel) {
+      // Предстоятель (::00::) — ствол, нейтральный оттенок без доминирования
+      color = `rgba(200,200,200,${opacity * 0.9})`;
+    } else if (roDag.in_tree) {
+      // Узел-инициатор — тёплый оттенок
+      color = `rgba(220,210,200,${opacity})`;
+    } else if (roDag.received_um) {
+      // Узел внутри Древа — нейтральный
+      color = `rgba(200,200,220,${opacity})`;
+    } else {
+      // Узел вне Древа — холодный оттенок, потенциал
+      color = `rgba(180,190,210,${opacity})`;
+    }
+
+    // Контур узла
+    ctx.beginPath();
+    ctx.arc(p.x + jitter.x, p.y + jitter.y, radius * pulse, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    // Тонкий контур для узлов вне Древа
+    if (!roDag.received_um) {
+      ctx.strokeStyle = `rgba(180,190,210,${opacity * 0.5})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // ОБЛИК — постоянное свечение (не зависит от активности)
+    let glowIntensity = 0.15;
+    let glowRadius = radius * 2;
+
+    // Состояние forming — первый след, слегка усиленное свечение
+    if (state.trace.form_hint === 'forming' && node.role === 'self') {
+      glowIntensity = 0.18;
+      glowRadius = radius * 2.2;
+    }
+
+    // Узел-инициатор — мягкий ореол участия
+    if (roDag.in_tree) {
+      glowIntensity = 0.22;
+      glowRadius = radius * 2.5;
+    }
+
+    const gradient = ctx.createRadialGradient(
+      p.x + jitter.x, p.y + jitter.y, 0,
+      p.x + jitter.x, p.y + jitter.y, glowRadius
+    );
+    gradient.addColorStop(0, `rgba(255,255,255,${glowIntensity})`);
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(p.x + jitter.x, p.y + jitter.y, glowRadius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// ============================================================
+// Главный цикл
+// ============================================================
+
+function loop() {
+  t++;
+  updatePhysics();
+  drawField();
+  drawEdges();
+  drawMarkers();
+  drawNodes();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+
+</body>
+</html>

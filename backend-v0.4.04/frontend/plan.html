@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pygmalion — П.Л.А.Н.</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0f;
+      color: rgba(255,255,255,0.75);
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 6vh 20px;
+    }
+    main { max-width: 560px; width: 100%; }
+    .glyph {
+      font-size: 12px; letter-spacing: 3px;
+      color: rgba(255,255,255,0.25); margin-bottom: 24px;
+    }
+    h1 { font-weight: 300; font-size: 26px; margin-bottom: 12px; }
+    .sense { line-height: 1.7; font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 36px; }
+    .stage { margin-bottom: 32px; }
+    .stage-label {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 14px;
+    }
+    .triads { display: flex; flex-wrap: wrap; gap: 10px; }
+    .triad {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.6);
+      padding: 12px 18px; cursor: pointer; font-size: 13px;
+      transition: border-color .3s, color .3s;
+      user-select: none;
+    }
+    .triad span { color: rgba(255,255,255,0.3); font-size: 11px; margin-left: 8px; }
+    .triad.on { border-color: rgba(120,180,255,0.5); color: rgba(255,255,255,0.9); }
+    .triad.disabled { opacity: .35; cursor: default; }
+    .ok-row { display: flex; gap: 10px; margin-bottom: 24px; }
+    .ok-row input {
+      flex: 1; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8); padding: 10px 14px; font-size: 13px;
+    }
+    button.confirm {
+      background: none;
+      border: 1px solid rgba(120,180,255,0.4);
+      color: rgba(160,200,255,0.9);
+      padding: 12px 28px; font-size: 13px; cursor: pointer;
+      transition: background .3s;
+    }
+    button.confirm:hover { background: rgba(120,180,255,0.08); }
+    button.confirm:disabled { opacity: .3; cursor: default; }
+    .answer {
+      border-left: 1px solid rgba(120,180,255,0.4);
+      padding: 4px 0 4px 18px; line-height: 1.8; font-size: 14px;
+      display: none;
+    }
+    .answer .step { color: rgba(255,255,255,0.4); font-size: 13px; margin-top: 14px; }
+    .answer .step a { color: rgba(160,200,255,0.8); text-decoration: none; }
+    .error { color: rgba(255,150,150,0.8); font-size: 13px; min-height: 18px; margin-top: 12px; }
+    .mode {
+      position: fixed; bottom: 16px; right: 20px;
+      color: rgba(255,255,255,0.2); font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <div class="glyph">::про.1.П.Л.А.Н.::</div>
+  <h1>План периода</h1>
+  <p class="sense" id="sense"></p>
+
+  <div class="ok-row">
+    <input type="text" id="ok" placeholder="::ваше.О.К.::" value="::test123::">
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Выбор — куда направить У.Е.</div>
+    <div class="triads" id="triads"></div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Действие</div>
+    <button class="confirm" id="confirm" disabled>Подтвердить план</button>
+    <div class="error" id="error"></div>
+  </div>
+
+  <div class="answer" id="answer"></div>
+</main>
+<div class="mode" id="mode"></div>
+
+<script>
+const TRIADS = [
+  { id: 'T1', name: 'Знания', ue: 3 },
+  { id: 'T2', name: 'Практики', ue: 3 },
+  { id: 'T3', name: 'Творчество', ue: 3 },
+  { id: 'T4', name: 'Досуг/ЗОЖ', ue: 3 },
+  { id: 'T5', name: '№21', ue: 1 }
+];
+
+const chosen = new Set();
+const triadsEl = document.getElementById('triads');
+const senseEl = document.getElementById('sense');
+const confirmBtn = document.getElementById('confirm');
+const errorEl = document.getElementById('error');
+const answerEl = document.getElementById('answer');
+const modeEl = document.getElementById('mode');
+
+// Смысл — от системы, не захардкожен
+fetch('/api/protocols/про.1?status=participant')
+  .then(r => r.json())
+  .then(p => { senseEl.textContent = p.screen.sense; });
+
+TRIADS.forEach(t => {
+  const el = document.createElement('div');
+  el.className = 'triad';
+  el.innerHTML = `${t.name}<span>${t.ue} У.Е.</span>`;
+  el.onclick = () => {
+    if (t.id === 'T5' && ![...chosen].some(c => ['T1','T2','T3','T4'].includes(c))) return;
+    chosen.has(t.id) ? chosen.delete(t.id) : chosen.add(t.id);
+    el.classList.toggle('on', chosen.has(t.id));
+    confirmBtn.disabled = chosen.size === 0;
+    errorEl.textContent = '';
+  };
+  triadsEl.appendChild(el);
+});
+
+confirmBtn.onclick = async () => {
+  errorEl.textContent = '';
+  confirmBtn.disabled = true;
+  try {
+    const r = await fetch('/api/protocols/про.1/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ actor_ok: document.getElementById('ok').value.trim(), triads: [...chosen] })
+    });
+    const data = await r.json();
+    if (!r.ok) {
+      errorEl.textContent = data.message || data.error || 'План не принят.';
+      confirmBtn.disabled = false;
+      return;
+    }
+    modeEl.textContent = data.mode === 'isolated'
+      ? 'изолированный режим: акт не записан в acts_log (БД не подключена)'
+      : '';
+    const names = data.choice.triads.map(t => t.name).join(', ');
+    answerEl.innerHTML =
+      `<div>${data.answer.text}</div>` +
+      `<div style="color:rgba(255,255,255,0.35);font-size:12px;margin-top:8px;">` +
+      `Период: ${data.answer.phase} · сгорание: ${new Date(data.answer.burn_at).toLocaleString('ru-RU')}</div>` +
+      `<div class="step">${data.next_step.text} <a href="/tok.html" style="color:rgba(160,200,255,0.85);text-decoration:none;">Передать благодарность →</a></div>`;
+    answerEl.style.display = 'block';
+    answerEl.scrollIntoView({ behavior: 'smooth' });
+  } catch (e) {
+    errorEl.textContent = 'Система не отвечает.';
+    confirmBtn.disabled = false;
+  }
+};
+</script>
+</body>
+</html>
